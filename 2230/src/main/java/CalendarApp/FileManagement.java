@@ -1,11 +1,13 @@
+package CalendarApp;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class saveHandler {
+public class FileManagement {
 
-    public final static String SAVE_FOLDER = "src/main/java/CalenderApp/savedCalendars/";
+    public final static String SAVE_FOLDER = "src/main/java/CalendarApp/savedCalendars/";
 
     // For now, it will only save the name.
     public void save(String filename) throws FileNotFoundException {
@@ -19,7 +21,7 @@ public class saveHandler {
 	}
 
     public static void main(String[] args) throws FileNotFoundException {
-        saveHandler test = new saveHandler();
+        FileManagement test = new FileManagement();
         test.save("testfile");
         System.out.println("test");
     }

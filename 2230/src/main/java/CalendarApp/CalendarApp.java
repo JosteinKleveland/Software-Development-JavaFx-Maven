@@ -1,10 +1,10 @@
-package CalenderApp;
+package CalendarApp;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class CalendarApp 
 {
     public static void main( String[] args )
     {
