@@ -2,7 +2,6 @@ package CalendarApp.core;
 
 import java.io.FileNotFoundException;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -32,7 +31,7 @@ public class CalendarController {
             //Text field is not empty, and the save handling is forwarded to FileManagement
             fileManagement.save(calendarName);
             outputField_txt.setText("Calendar name is saved");
-            calendarName.setText("");
+            calendarName_txt.setText("");
         }
         catch (FileNotFoundException e) {
             outputField_txt.setText("Could not save calendar name");
