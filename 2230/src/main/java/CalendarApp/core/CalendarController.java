@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 public class CalendarController {
-    private FileManagement fileManagement = new FileManagement();
+    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
 
     //Declare FXML elements from Calendar.fxml
     @FXML private Button saveName_btn;
@@ -29,7 +29,7 @@ public class CalendarController {
 
         try {
             //Text field is not empty, and the save handling is forwarded to FileManagement
-            fileManagement.save(calendarName);
+            calendarSaveHandler.save(calendarName);
             outputField_txt.setText("Calendar name is saved");
             calendarName_txt.setText("");
         }

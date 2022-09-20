@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
@@ -19,7 +18,7 @@ public class CalendarSaveHandler {
 		return SAVE_FOLDER + filename + ".json";
 	}
 
-    public void save(String filename) {
+    public static void save(String filename) throws FileNotFoundException {
         JSONObject calendarJSONObject = new JSONObject();
         calendarJSONObject.put("name", filename);
 
@@ -29,10 +28,10 @@ public class CalendarSaveHandler {
             file.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }       
+        }  
     }   
 
-    public void load(String filename) throws org.json.simple.parser.ParseException {
+    public static void load(String filename) throws FileNotFoundException {
         JSONParser jsonParser = new JSONParser();
          
         try (FileReader reader = new FileReader(filename))
@@ -43,7 +42,7 @@ public class CalendarSaveHandler {
             String name = (String) jsonObject.get("name");
             System.out.println(name);
 
-        } catch (FileNotFoundException e) {
+        } catch (org.json.simple.parser.ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
