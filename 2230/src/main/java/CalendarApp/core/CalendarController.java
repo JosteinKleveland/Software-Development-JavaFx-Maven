@@ -27,8 +27,13 @@ public class CalendarController {
             throw new IllegalArgumentException("Calendar name cannot be empty");
         }
 
+        if(calendarSaveHandler.checkIfFileExists(calendarName)) {
+            outputField_txt.setText("Calendar name exists from before");
+            throw new IllegalArgumentException("Calendar name exists from before");
+        }
+
         try {
-            //Text field is not empty, and the save handling is forwarded to FileManagement
+            //Text field is not empty, and the save handling is forwarded to CalendarSaveHandler
             CalendarSaveHandler.save(calendarName);
             outputField_txt.setText("Calendar name is saved");
             calendarName_txt.setText("");

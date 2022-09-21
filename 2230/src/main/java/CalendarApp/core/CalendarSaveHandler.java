@@ -18,6 +18,24 @@ public class CalendarSaveHandler {
 		return SAVE_FOLDER + filename + ".json";
 	}
 
+    /**
+     * @param filename
+     * @return
+     */
+    public boolean checkIfFileExists(String filename) {
+        File file = new File(getFilePath(filename));
+            if(file.isFile()) { 
+                return true;
+            }
+            else {
+                return false;
+            }
+    }
+
+    /**
+     * @param filename
+     * @throws FileNotFoundException
+     */
     public static void save(String filename) throws FileNotFoundException {
         JSONObject calendarJSONObject = new JSONObject();
         calendarJSONObject.put("name", filename);
@@ -31,6 +49,10 @@ public class CalendarSaveHandler {
         }  
     }   
 
+    /**
+     * @param filename - the file you want to read.
+     * @throws FileNotFoundException - throws when FileNotFound.
+     */
     public static void load(String filename) throws FileNotFoundException {
         JSONParser jsonParser = new JSONParser();
          
@@ -50,6 +72,9 @@ public class CalendarSaveHandler {
     } 
 
 
+    /**
+     * @return an ArrayList of all filenames in the savedCalendars directory.
+     */
     public ArrayList<String> getAllFileNames() {
 		ArrayList<String> filenames = new ArrayList<String>();
 
@@ -66,9 +91,11 @@ public class CalendarSaveHandler {
 		return filenames;
 	}
 
+    //For practical tests
     public static void main(String[] args) throws FileNotFoundException {
         CalendarSaveHandler fileHandler = new CalendarSaveHandler();
         CalendarSaveHandler.save("wamarlea");
+        System.out.println(fileHandler.checkIfFileExists("endremor"));
 
         System.out.println(fileHandler.getAllFileNames());
     }
