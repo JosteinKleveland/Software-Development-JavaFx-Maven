@@ -29,7 +29,7 @@ public class CalendarController {
 
         try {
             //Text field is not empty, and the save handling is forwarded to FileManagement
-            calendarSaveHandler.save(calendarName);
+            CalendarSaveHandler.save(calendarName);
             outputField_txt.setText("Calendar name is saved");
             calendarName_txt.setText("");
         }
