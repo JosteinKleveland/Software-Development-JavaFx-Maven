@@ -66,9 +66,9 @@ public class CalendarSaveHandler {
 		return filenames;
 	}
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         CalendarSaveHandler fileHandler = new CalendarSaveHandler();
-        fileHandler.save("wamarlea");
+        CalendarSaveHandler.save("wamarlea");
 
         System.out.println(fileHandler.getAllFileNames());
     }
