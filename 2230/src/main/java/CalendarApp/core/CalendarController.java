@@ -1,6 +1,7 @@
 package CalendarApp.core;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ public class CalendarController {
             throw new IllegalArgumentException("Calendar name cannot be empty");
         }
 
+        //Checks whether the calendar name exists from before.
         if(calendarSaveHandler.checkIfFileExists(calendarName)) {
             outputField_txt.setText("Calendar name exists from before");
             throw new IllegalArgumentException("Calendar name exists from before");
@@ -38,7 +40,7 @@ public class CalendarController {
             outputField_txt.setText("Calendar name is saved");
             calendarName_txt.setText("");
         }
-        catch (FileNotFoundException e) {
+        catch (IOException e) {
             outputField_txt.setText("Could not save calendar name");
             e.printStackTrace();
         }

@@ -10,17 +10,24 @@ import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+//Handles saving and loading of calendars.
 public class CalendarSaveHandler {
     
+    //Stores the string of the path to the directory where calendars are stored - in a CONSTANT.
     public final static String SAVE_FOLDER = "/workspace/gr2230/2230/src/main/java/CalendarApp/core/savedCalendars/";
 
+
+    /**
+     * @param filename - filename of calendar to be retrieved.
+     * @return path to .json calendar file.
+     */
     public static String getFilePath(String filename) {
 		return SAVE_FOLDER + filename + ".json";
 	}
 
     /**
-     * @param filename
-     * @return
+     * @param filename - name of calendar one wants to see if exists (name of calendar is same as its filename (w.out .filetype)).
+     * @return - true if the calendar exists, false if it doesn't.
      */
     public boolean checkIfFileExists(String filename) {
         File file = new File(getFilePath(filename));
@@ -33,25 +40,26 @@ public class CalendarSaveHandler {
     }
 
     /**
-     * @param filename
-     * @throws FileNotFoundException
+     * @param filename - the name of the calendar to be saved / stored.
+     * @throws IOException - throws IOException
+     * 
+     * Saves the name of the filename provided in a .json file.
+     * If it doens't exist from before, builds a .json file with the filename (calendar name) provided and stores the name inside.
      */
-    public static void save(String filename) throws FileNotFoundException {
+    public static void save(String filename) throws IOException {
         JSONObject calendarJSONObject = new JSONObject();
         calendarJSONObject.put("name", filename);
 
-        try {
-            FileWriter file = new FileWriter(getFilePath(filename));
-            file.write(calendarJSONObject.toJSONString());
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }  
+        FileWriter file = new FileWriter(getFilePath(filename));
+        file.write(calendarJSONObject.toJSONString());
+        file.close();
     }   
 
     /**
-     * @param filename - the file you want to read.
-     * @throws FileNotFoundException - throws when FileNotFound.
+     * @param filename - the name of the calendar one wants to retrieve.
+     * @throws FileNotFoundException - throws when the calendar name is not found.
+     * 
+     * For now, only reads the name of the calendar.
      */
     public static void load(String filename) throws FileNotFoundException {
         JSONParser jsonParser = new JSONParser();
@@ -91,8 +99,8 @@ public class CalendarSaveHandler {
 		return filenames;
 	}
 
-    //For practical tests
-    public static void main(String[] args) throws FileNotFoundException {
+    //For practical testing.
+    public static void main(String[] args) throws IOException {
         CalendarSaveHandler fileHandler = new CalendarSaveHandler();
         CalendarSaveHandler.save("wamarlea");
         System.out.println(fileHandler.checkIfFileExists("endremor"));
