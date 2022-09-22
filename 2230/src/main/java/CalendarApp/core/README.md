@@ -8,9 +8,9 @@ Timeplanen er i utgangspunktet ikke ment som en kalender med arrangementer som e
 
 **Eksempelbilder for å gjøre det lettere å se for seg funksjonaliteten til den ferdige applikasjonen**:
 
-[<img src="images/brukerbilde1.png" width="250"/>](eksempelbildeFerdigApplikasjon_1.png)
+[<img src="eksempelbildeFerdigApplikasjon_1.png" width="250"/>](eksempelbildeFerdigApplikasjon_1.png)
 
-[<img src="images/brukerbilde1.png" width="250"/>](eksempelbildeFerdigApplikasjon_2.png)
+[<img src="eksempelbildeFerdigApplikasjon_2.png" width="500"/>](eksempelbildeFerdigApplikasjon_2.png)
 
 
 #### Brukerhistorier
