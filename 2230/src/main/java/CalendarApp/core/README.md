@@ -8,9 +8,9 @@ Timeplanen er i utgangspunktet ikke ment som en kalender med arrangementer som e
 
 **Eksempelbilder for å gjøre det lettere å se for seg funksjonaliteten til den ferdige applikasjonen**:
 
-[<img src="eksempelbildeFerdigApplikasjon_1.png" width="250"/>](eksempelbildeFerdigApplikasjon_1.png)
+[<img src="images/eksempelbildeFerdigApplikasjon_1.png" width="250"/>](images/eksempelbildeFerdigApplikasjon_1.png)
 
-[<img src="eksempelbildeFerdigApplikasjon_2.png" width="500"/>](eksempelbildeFerdigApplikasjon_2.png)
+[<img src="images/eksempelbildeFerdigApplikasjon_2.png" width="500"/>](images/eksempelbildeFerdigApplikasjon_2.png)
 
 
 #### Brukerhistorier
@@ -24,6 +24,3 @@ Timeplanen er i utgangspunktet ikke ment som en kalender med arrangementer som e
 [<img src="images/brukerbilde3.png" width="250"/>](images/brukerbilde3.png)
 
 **Utfyllende brukerhistorie**: Jarl er en ny student på NTNU, som ønsker å bli mer strukturert. Selv om Jarl som student har variasjoner i timeplanen sin ønsker han først og fremst en oversikt over de faste aktivitetene sine. Han tar derfor i bruk MinKalender. Der kan han velge sine emner, samt legge til andre faste egne aktiviteter. For å finne igjen kalenderen sin, aksessere den fra flere enheter og gjøre forandringer gir Jarl kalenderen et uniktnavn.
-
-#### Ferdig applikasjon
-Den ferdige løsningen vil la 
