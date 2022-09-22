@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ public class CalendarSaveHandlerTest {
     
     //Check if testCalendar exsists, and delete it if so
     @BeforeEach
-    public static void testSetup(){
+    public void testSetup(){
         File file = new File(filePath);
         if(file.isFile()) {
             file.delete();
@@ -30,17 +30,17 @@ public class CalendarSaveHandlerTest {
 
     @Test
     @DisplayName("Check that correct file path is returned")
-    public static void getFilePathTest(){
-        assertEquals("/workspace/gr2230/2230/src/main/java/CalendarApp/core/savedCalendars/testCalendar.json", CalendarSaveHandler.getFilePath(testCalendarName));
+    public void getFilePathTest(){
+        assertEquals(filePath, CalendarSaveHandler.getFilePath(testCalendarName));
     }    
 
     @Test
     @DisplayName("Check that calendar is created and saved") 
-    public static void SaveCalendarTest(){
+    public void saveCalendarTest() throws IOException{
         // Create and save a new calendar
         try {
             CalendarSaveHandler.save(testCalendarName);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -48,6 +48,5 @@ public class CalendarSaveHandlerTest {
         File file = new File(filePath);
         assertTrue(file.exists());
     }
-
 
 }
