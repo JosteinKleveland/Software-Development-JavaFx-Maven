@@ -1,21 +1,22 @@
-#### Beskrivelse av appen
+#### Description of the app
 
-Appen skal bestå av en personlig timeplan for fast ukebasis. Her skal en bruker kunne opprette en timeplan og fylle den med innhold fra forhåndsbestemt opplegg, som faste yogatimer med et treningsstudio, eller egenbestemt opplegg, som ukentlige møter med familien. Appen skal så vise timeplanen på en oversiktlig måte ved hjelp av en tabellbasert grafisk visning.
+The app will consist of a personal timetable for a fixed weekly basis. Here, a user should be able to create a schedule and fill it with content from predetermined plans, such as regular yoga classes with a gym, or self-determined plans, such as weekly meetings with the family. The app must then show the timetable in a clear manner using a table-based graphic display.
 
-Bruker oppretter enkelt en timeplan med et unikt kalendarnavn i appen, og denne lagres så på server. Dermed kan bruker enkelt hente opp igjen timeplanen sin på andre enheter ved hjelp av det unike kalendernavnet som timeplanen ble generert under. Brukeren kan når som helst endre på innholdet i sin timeplan. 
+Users can simply create a timetable with a unique calendar name in the app, and this is then saved on the server. Thus, users can easily retrieve their timetable on other devices using the unique calendar name under which the timetable was generated. The user can change the content of his or her timetable at any given time.
 
-Timeplanen er i utgangspunktet ikke ment som en kalender med arrangementer som endres for hver uke i løpet av året. Bruksområdet er i større grad rettet mot faste planer som repeteres hver uke over en viss periode, for eksempel over en sommer, et semester eller et år.
+The timetable is not initially intended as a calendar with events that change for each week during the year. The area of ​​use is mainly aimed at fixed plans that are repeated every week over a certain period of time, for example over a summer, a semester or a year.
 
-**Eksempelbilder for å gjøre det lettere å se for seg funksjonaliteten til den ferdige applikasjonen**:
+
+**Sample images to make it easier to visualize the functionality of the finished application**:
 
 [<img src="images/eksempelbildeFerdigApplikasjon_1.png" width="250"/>](images/eksempelbildeFerdigApplikasjon_1.png)
 
 [<img src="images/eksempelbildeFerdigApplikasjon_2.png" width="500"/>](images/eksempelbildeFerdigApplikasjon_2.png)
 
 
-#### Brukerhistorier
+#### User stories 
 
-**Brukerhistorie for første release**: Jarl åpner KalenderAppen, skriver inn navnet på kalenderen sin og lagrer kalenderen (slik at den kan nås ved en senere anledning). Appen sjekker om kalendernavnet er unikt, og gir tilbakemelding om dette.
+**First release user story**: Jarl opens the Calendar App, enters the name of his calendar and saves the calendar (so that it can be accessed at a later time). The app checks whether the calendar name is unique and gives feedback about this.
 
 [<img src="images/brukerbilde1.png" width="250"/>](images/brukerbilde1.png)
 
@@ -23,4 +24,6 @@ Timeplanen er i utgangspunktet ikke ment som en kalender med arrangementer som e
 
 [<img src="images/brukerbilde3.png" width="250"/>](images/brukerbilde3.png)
 
-**Utfyllende brukerhistorie**: Jarl er en ny student på NTNU, som ønsker å bli mer strukturert. Selv om Jarl som student har variasjoner i timeplanen sin ønsker han først og fremst en oversikt over de faste aktivitetene sine. Han tar derfor i bruk MinKalender. Der kan han velge sine emner, samt legge til andre faste egne aktiviteter. For å finne igjen kalenderen sin, aksessere den fra flere enheter og gjøre forandringer gir Jarl kalenderen et uniktnavn.
+**Descriptive user story**: Jarl is a new student at NTNU, and he wants to become more structured in his daily scheduling. Although Jarl, as a student, has some variations in his timetable, he primarily wants an overview of his regular activities. He therefore uses MinKalender. There, he can choose his subjects, as well as add other fixed activities of his own. In order to retrieve his calendar at a later time, access it from several devices and make changes, Jarl gives the calendar a unique name.
+
+
