@@ -1,3 +1,17 @@
+### Old pom and process documentation
+Done:
+- Rename som titles
+- Other small framework fixes, pluginManagement, modules, package
+- Work on pom core, framework renaming and remove javafx dependency.
+- Work on pom fxui, copy from core, and add javafx dependency and plugin (from original root pom - see below)
+- renamed open javafx reference in fxui, and add core pom dependency reference.  
+- added dependencyManagemenet in parent and removed specifications in the respective dependencies in core and fxui.
+
+Essentially followed the video from todolist on expanding the project with more modules. 
+
+- copied over core pom to data with minor adaptations.
+
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,7 +21,10 @@
   <groupId>it1901.2230</groupId>
   <artifactId>parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+
+  <name>2230</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,31 +32,89 @@
     <maven.compiler.target>16</maven.compiler.target>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.2</version>
-            <scope>test</scope>
-      </dependency>
-      <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.2</version>
-            <scope>test</scope>
-      </dependency>
-      <dependency>
+  <dependencies>
+
+    <!-- javafx -->
+    <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17.0.2</version>
+    </dependency>
+    <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.2</version>
+    </dependency>
+
+    <!-- junit testing with jupiter -->
+    <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-api</artifactId>
+              <version>5.7.2</version>
+              <scope>test</scope>
+    </dependency>
+    <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-engine</artifactId>
+              <version>5.7.2</version>
+              <scope>test</scope>
+    </dependency>
+    <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <version>5.7.2</version>
             <scope>test</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+    </dependency>
+
+     <!-- junit testing with jupiter -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.7.2</version>
+            <scope>test</scope>
+        </dependency>
+
+    <!-- test javafx with TextFX -->
+		<dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+    </dependency>
+    <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+    </dependency>
+
+    <!-- json-->
+    <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+   </dependency>
+  </dependencies>
 
   <build>
-    <pluginManagement>
     <plugins>
       <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -106,12 +181,5 @@
                 </configuration>
       </plugin>
     </plugins>
-  </pluginManagement>
   </build>
-
-  <modules>
-    <module>core</module>
-    <module>fxui</module>
-    <module>data</module>
-  </modules>
 </project>
