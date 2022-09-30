@@ -1,4 +1,4 @@
-package CalendarApp.core;
+package calendarApp.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 public class CalendarSaveHandlerTest {
 
 
-    private final static String SAVE_FOLDER = "/workspace/gr2230/2230/src/main/java/CalendarApp/core/savedCalendars/";
+    private final static String SAVE_FOLDER = "/workspace/gr2230/2230/data/src/main/java/calendarApp/data/savedCalendars/";
     private static String testCalendarName = "testCalendar";
     private static String filePath = SAVE_FOLDER + testCalendarName + ".json";
     

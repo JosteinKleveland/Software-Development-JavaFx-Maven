@@ -1,4 +1,4 @@
-package CalendarApp.core;
+package calendarApp.json;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +14,7 @@ import org.json.simple.parser.JSONParser;
 public class CalendarSaveHandler {
     
     //Stores the string of the path to the directory where calendars are stored - in a CONSTANT.
-    public final static String SAVE_FOLDER = "/workspace/gr2230/2230/src/main/java/CalendarApp/core/savedCalendars/";
-
+    public final static String SAVE_FOLDER = "/workspace/gr2230/2230/data/src/main/java/calendarApp/data/savedCalendars/";
 
     /**
      * @param filename - filename of calendar to be retrieved.

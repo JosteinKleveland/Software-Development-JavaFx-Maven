@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CalendarApp.core.CalendarController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.calendarApp.ui.CalendarController">
    <children>
       <Button id="saveNameId_btn" fx:id="saveName_btn" layoutX="137.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#saveName" text="Save" />
       <TextField id="calendarNameId_txt" fx:id="calendarName_txt" layoutX="137.0" layoutY="175.0" prefHeight="25.0" prefWidth="210.0" />

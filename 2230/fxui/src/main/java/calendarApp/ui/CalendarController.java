@@ -1,4 +1,4 @@
-package CalendarApp.core;
+package calendarApp.ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
+import core.src.main.java.calendarApp.json.CalendarSaveHandler;
 
 public class CalendarController {
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
@@ -30,7 +32,7 @@ public class CalendarController {
 
         //Checks whether the calendar name exists from before.
         if(calendarSaveHandler.checkIfFileExists(calendarName)) {
-            outputField_txt.setText("Calendar name exists from before");
+            outputField_txt.setText("Calendar name already exists, choose another");
             throw new IllegalArgumentException("Calendar name exists from before");
         }
 

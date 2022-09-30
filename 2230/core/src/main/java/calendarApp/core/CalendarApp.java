@@ -1,4 +1,4 @@
-package CalendarApp.core;
+package calendarApp.core;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
