@@ -1,3 +1,5 @@
+package calendarApp.core;
+
 public class Appointment {
 
     private String appointmentName;
