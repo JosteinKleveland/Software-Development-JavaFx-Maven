@@ -1,5 +1,6 @@
-import java.util.ArrayList;
+package calendarApp.core;
 
+import java.util.ArrayList;
 
 public class Calendar {
 

@@ -1,3 +1,10 @@
-module name {
+module calendarApp.fxui {
     
+
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    requires calendarApp.core;
+
+    opens calendarApp.ui to javafx.graphics, javafx.fxml;
 }

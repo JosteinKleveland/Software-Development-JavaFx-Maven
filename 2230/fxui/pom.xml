@@ -25,6 +25,30 @@
             <artifactId>javafx-controls</artifactId>
             <version>17.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.2</version>
+        </dependency>
+        <!-- test javafx with TextFX -->
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- junit testing with jupiter -->
         <dependency>
@@ -103,7 +127,7 @@
         <!-- Usage: mvn javafx:run -->
                 <configuration>
                 <!--May be necessary to change the adress to mainClass later!-->
-                <mainClass>calendarApp.ui.CalendarController</mainClass>
+                <mainClass>calendarApp.ui/calendarApp.ui.CalendarApp</mainClass>
                 </configuration>
         </plugin>
         </plugins>
