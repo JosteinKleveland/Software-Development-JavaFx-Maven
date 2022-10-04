@@ -1,10 +1,10 @@
-module name {
+module calendarApp.core {
     //module CalendarApp.core {
 
-    requires javafx.controls;
-    requires javafx.fxml;
     requires json.simple;
+    
+    exports calendarApp.core;
+    exports calendarApp.json;
 
-    opens CalendarApp.core to javafx.graphics, javafx.fxml, json.simple;
-            
+    opens json.simple;
 }

@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-import core.src.main.java.calendarApp.json.CalendarSaveHandler;
+import calendarApp.json.CalendarSaveHandler;
 
 public class CalendarController {
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
