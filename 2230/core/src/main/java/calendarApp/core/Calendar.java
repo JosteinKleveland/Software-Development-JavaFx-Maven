@@ -12,16 +12,15 @@ public class Calendar {
         setCalendarName(calendarName);
     }
 
-    // For loading of existing calendars
-    public Calendar(String calendarName, Appointment[] appointment) {
-        setCalendarName(calendarName);
-    }
     
     public String getCalendarName() {
         return calendarName;
     }
 
-    public void setCalendarName(String calendarName) {
+    private void setCalendarName(String calendarName) {
+        if(!checkCalendarName(calendarName)){
+            throw IllegalArgumentException("Calendarname does not have a valid format");
+        }
         this.calendarName = calendarName;
     }
 
@@ -29,6 +28,26 @@ public class Calendar {
         return appointments;
     }
 
+    private boolean checkCalendarName(String calendarName){
+        if (calendarName.isBlank() || calendarName.length() < 2){
+            return false;
+        }
+
+        else if(!calendarName.matches("^[a-zA-Z0-9]*$")){
+            return false;
+        } 
+        
+        return true;
+    }
+
+
+    public void addAppointment(String appointmentName, DaysOfTheWeek day, int startHour,int stopHour,int startMinute,int stopMinute){
+        appointments.add(new Appointment(appointmentName, day, startHour, startMinute, stopHour, stopMinute));
+    }
+
+    public void removeAppointment(Appointment appointment){
+        appointments.remove(appointment);
+    }
 
 
 }
