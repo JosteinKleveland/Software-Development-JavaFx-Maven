@@ -17,7 +17,7 @@ public class Appointment {
 
     private void setAppointmentName(String appointmentName) {
         if (!checkAppointmentName(appointmentName)){
-            throw new IllegalArgumentException("Given appintment name is blanc or have an illegal format. Only A-Y, a-y and 0-9 is allowed. The name must be at least 2 characters");
+            throw new IllegalArgumentException("Given appintment name is not valid");
         }
         this.appointmentName = appointmentName;
     }
@@ -30,7 +30,7 @@ public class Appointment {
     }
 
     private void setTime(int startHour, int stopHour, int startMinute, int stopMinute){
-        if(!checkTimeFormat(startHour, startMinute, stopHour, stopMinute)){
+        if(!checkTimeFormat(startHour, stopHour, startMinute, stopMinute)){
             throw new IllegalArgumentException("Time does not have the correct format");
         }
         this.startHour = startHour;
@@ -80,18 +80,36 @@ public class Appointment {
     }
 
     private boolean checkAppointmentName(String appointmentName){
-        if (appointmentName.isBlank() || appointmentName.matches("^[a-zA-Z0-9]*$") || appointmentName.length() < 2){
+        if (appointmentName.isBlank() || appointmentName.length() < 2){
+            return false;
+        }
+        else if(!appointmentName.matches("^[a-zA-Z0-9]*$")){
             return false;
         }
             return true;
     }
 
-    private boolean checkDayOfTheWeek(DayOfWeek day){
+    private boolean checkDayOfTheWeek(DaysOfTheWeek day){
         if (!day.getClass().isEnum()){
             return false;
         }
-
+        
         return true;
+    }
+
+    @Override
+    public String toString() {
+        String startHour = String.valueOf(this.startHour);
+        String startMinute = String.valueOf(this.startMinute);
+        String stopHour = String.valueOf(this.stopHour);
+        String stopMinute = String.valueOf(this.stopMinute);
+
+        if (startHour.length()<2) {startHour = "0" + startHour;}  
+        if (startMinute.length()<2) {startMinute = "0" + startMinute;}
+        if (stopHour.length()<2) {stopHour = "0" + stopHour;}  
+        if (stopMinute.length()<2) {stopMinute = "0" + stopMinute;}
+
+        return appointmentName + ": " + dayOfTheWeek.nameOfDay +" "+ startHour +":"+ startMinute +" - "+ stopHour +":"+stopMinute;
     }
 
 
