@@ -18,8 +18,8 @@ public class Calendar {
     }
 
     private void setCalendarName(String calendarName) {
-        if(!checkCalendarName(calendarName)){
-            throw IllegalArgumentException("Calendarname does not have a valid format");
+        if(checkCalendarName(calendarName) == false){
+            throw new IllegalArgumentException("Calendarname does not have a valid format");
         }
         this.calendarName = calendarName;
     }
@@ -41,8 +41,8 @@ public class Calendar {
     }
 
 
-    public void addAppointment(String appointmentName, DaysOfTheWeek day, int startHour,int stopHour,int startMinute,int stopMinute){
-        appointments.add(new Appointment(appointmentName, day, startHour, startMinute, stopHour, stopMinute));
+    public void addAppointment(Appointment appointmentName){
+        appointments.add(appointmentName);
     }
 
     public void removeAppointment(Appointment appointment){
