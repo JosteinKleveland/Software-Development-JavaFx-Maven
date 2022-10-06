@@ -1,4 +1,4 @@
-module calendarApp.fxui {
+module calendarApp.ui {
     
 
     requires javafx.controls;
