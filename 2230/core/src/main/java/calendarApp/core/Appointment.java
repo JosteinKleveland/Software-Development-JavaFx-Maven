@@ -86,11 +86,10 @@ public class Appointment {
             return true;
     }
 
-    private boolean checkDayOfTheWeek(DayOfWeek day){
+    private boolean checkDayOfTheWeek(DaysOfTheWeek day){
         if (!day.getClass().isEnum()){
             return false;
         }
-
         return true;
     }
 
