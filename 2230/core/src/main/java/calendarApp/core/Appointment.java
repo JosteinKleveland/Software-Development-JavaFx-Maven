@@ -93,7 +93,6 @@ public class Appointment {
         if (!day.getClass().isEnum()){
             return false;
         }
-        
         return true;
     }
 

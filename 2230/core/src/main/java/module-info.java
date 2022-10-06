@@ -5,6 +5,4 @@ module calendarApp.core {
     
     exports calendarApp.core;
     exports calendarApp.json;
-
-    opens json.simple;
 }
