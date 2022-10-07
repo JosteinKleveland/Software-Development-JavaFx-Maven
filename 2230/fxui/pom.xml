@@ -89,8 +89,13 @@
     
         <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-        </plugin>
+        		<artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                    --add-opens calendarApp.ui/calendarApp.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+	    </plugin>
 
         <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
