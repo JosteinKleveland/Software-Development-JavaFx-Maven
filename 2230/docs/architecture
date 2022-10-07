@@ -1,0 +1,60 @@
+@startuml
+
+component core {
+	package CalendarApp.core
+	package CalendarApp.json
+}
+
+CalendarApp.core ..> CalendarApp.json
+component jackson {
+}
+
+CalendarApp.json ..> jackson
+
+component fxutil {
+}
+
+component fxui {
+	package CalendarApp.ui
+	/'package CalendarApp.ui.util'/
+}
+
+'CalendarApp.ui ..> CalendarApp.ui.util'
+CalendarApp.ui ..> CalendarApp.core
+CalendarApp.ui ..> CalendarApp.json
+
+component javafx {
+	component fxml {
+	}
+}
+
+fxui ..> javafx
+fxui ..> fxml
+fxui ..> fxutil
+
+component jaxrs {
+}
+
+component data {
+	package CalendarApp.restapi
+	package CalendarApp.restserver
+}
+
+rest ..> jaxrs
+
+CalendarApp.restapi ..> CalendarApp.core
+
+CalendarApp.restserver ..> CalendarApp.core
+CalendarApp.restserver ..> CalendarApp.json
+CalendarApp.restserver ..> CalendarApp.restapi
+
+component jersey {
+}
+
+component grizzly2 {
+}
+
+rest ..> jersey
+rest ..> grizzly2
+
+@enduml

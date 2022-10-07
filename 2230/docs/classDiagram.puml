@@ -1,0 +1,124 @@
+@@startuml
+/'
+note top of example: this is base class
+
+class example
+{
+    fields from 
+    this class 
+    ==
+    -fieldPrivate
+    #fieldProtected
+    +fieldPublic
+    --
+    +publicMethod()
+}
+class underExample
+car <|-- underExample : label 1
+'/
+
+'core
+
+'core/core
+class Appointment
+{
+    -String appointmentName
+    -DaysOfTheWeek dayOfTheWeek
+    -int startHour
+    -int startMinute
+    -int stopHour
+    -int stopMinute
+    --
+    -checkTimeFormat(int,int,int,int)
+    -checkAppointmentName(String)
+    -checkDayOfTheWeek(DaysOfTheWeek)
+    -setAppointmentName(String)
+    -setDayOfTheWeek(DaysOfTheWeek)
+    -setTime(int,int,int,int)
+    +getAppointmentName()
+    +getDayOfTheWeek()
+    +getStartHour()
+    +getStartMinute()
+    +getStopHour()
+    +getStopMinute()
+}
+
+class Calendar 
+{
+    -String calendarName
+    -Array<Appointment> appointments
+    --
+    -checkCalendarName(String)
+    +getAppointments()
+    +getCalendarName()
+    +setCalendarName(String)
+    +addAppointment(Appointment)
+    +removeAppointment(Appointment)
+}
+
+class CalendarLogic
+{
+    -checkCollision(Appointment, Appointment)
+    +addAppointmentToCalendar(Calendar, Appointment)
+}
+
+enum DaysOfTheWeek
+{
+    final String nameOfDay
+    --
+    MONDAY
+    TUESDAY
+    WEDNESDAY
+    THURSDAY
+    FRIDAY
+    SATURDAY
+    SANDAY
+    --
+    DaysOfTheWeek(String)
+}
+
+'core/json
+class CalendarSaveHandler
+{
+    +{static} final String saveFolder
+    --
+    +{static} getFilePath(String)
+    +{static} save(String)
+    +{static} load(String)
+    +checkIfFileExists(String)
+    +getAllFileNames()
+}
+
+'fxui
+
+'fxui/java
+/'class CalendarApp
+{
+    +start(Stage)
+}'/
+
+class CalendarController
+{
+    -CalendarSaveHandler CalendarSaveHandler
+    +saveName()
+}
+
+'fxui/resources
+'class Calendar (fxml)??
+class Calendar.fxml <<fxml>>
+{
+    This is the UI
+}
+
+Calendar "many" -- "many" Appointment : contains
+'note top of Calendar : main class (?)
+/'note "Keeps track of\nCalendar objects" as N1
+Calendar .. N1
+CalendarLogic .. N1'/
+Calendar <|-- CalendarLogic 
+Appointment <|-- CalendarLogic
+DaysOfTheWeek <|-- Appointment
+CalendarSaveHandler <|-- CalendarController
+CalendarController <|-- Calendar.fxml
+
+@@enduml
