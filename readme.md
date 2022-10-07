@@ -7,7 +7,13 @@
 
 This project uses maven for building and running.
 
-To run, cd into the *2230* folder, and use the appripriate compile and run commands (first "mvn compile", then "mvn javafx:run").
+To run, cd into the *2230* ⚠️ **Det skal vel være fxui nå?** ⚠️ folder, and use the appripriate compile and run commands (first "mvn compile", then "mvn javafx:run").
+
+##### User stories
+To se a list of relevant user stories for this project see [here](https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2230/gr2230/-/blob/readmeBranch/2230/userStories.md).
+
+##### Project description 
+To se a full description of the project and its functionality, look at [this](https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2230/gr2230/-/blob/readmeBranch/2230/README.md) readme file.
 
 
 ### Modularization
@@ -73,4 +79,13 @@ Within the *main* folder of *data*, you will find the *savedCalendars* folder. T
     - pom.xml
 
 > Every individual file is marked with the appropriate filename extension, everything else in the list is to be considered as folders
+
+
+### Architecture
+[Link to the classDiagram image and architecture image]
+
+##### Class diagram
+[Link to the classDiagram image and architecture image]
+
+Click here to see the code for the [class diagram]() or [architecture diagram]().
 
