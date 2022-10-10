@@ -66,6 +66,22 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Run the checkstyle code quality tool -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <!-- Run the spotbugs code quality tool 
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin> -->
+            <!-- spotbugs ser ut til å fungere bra også i data (mappa), men
+                den krasjer hvis vi ikke har noen .java filer her.
+                Jeg har kjørt den med en helt enkel Test.java fil med kun en variabel
+                og en getter, og da får vi success -->
         
         </plugins>
     </build>
