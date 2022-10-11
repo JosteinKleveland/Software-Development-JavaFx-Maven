@@ -2,10 +2,9 @@ package calendarApp.json;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.ResourceBundle;
 import java.io.BufferedWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -102,9 +101,15 @@ public class CalendarSaveHandler {
     public ArrayList<String> getAllFileNames() {
 		ArrayList<String> filenames = new ArrayList<String>();
 
-		File[] files = new File(SAVE_FOLDER).listFiles();
-        //File[] files = new File(SAVE_FOLDER).listFiles() != null? new File(SAVE_FOLDER).listFiles() : new File("").listFiles();
-		//If this pathname does not contain a directory, then listFiles() returns null. 
+        ResourceBundle bundle = ResourceBundle.getBundle(SAVE_FOLDER);
+        String saveFolderPath = bundle.getString(SAVE_FOLDER);
+
+		//File[] files = new File(SAVE_FOLDER).listFiles();
+        File[] files = new File(saveFolderPath).listFiles();
+        //If this pathname does not contain a directory, then listFiles() returns null. 
+        if (files == null) {
+            return new ArrayList<String>();
+        }
 		
 		for (File file : files) {
 		    if (file.isFile()) {
