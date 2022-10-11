@@ -12,7 +12,6 @@ public class Calendar {
         setCalendarName(calendarName);
     }
 
-    
     public String getCalendarName() {
         return calendarName;
     }

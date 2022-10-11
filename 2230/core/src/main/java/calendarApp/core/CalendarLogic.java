@@ -1,9 +1,16 @@
 package calendarApp.core;
 
+import java.util.ArrayList;
+
 public class CalendarLogic {
     
     //This is the class which will keep track of calendar-objects, and run the logic 
+    private ArrayList<Calendar> calendars = new ArrayList<Calendar>();
     
+    //Dummy-constructor to be able to test from CalendarLogicTest
+    public CalendarLogic() {
+    }
+
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment){
         
         // Check if new appointment collide with existing 
