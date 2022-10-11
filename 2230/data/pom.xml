@@ -78,10 +78,12 @@
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
             </plugin> -->
-            <!-- spotbugs ser ut til å fungere bra også i data (mappa), men
-                den krasjer hvis vi ikke har noen .java filer her.
-                Jeg har kjørt den med en helt enkel Test.java fil med kun en variabel
-                og en getter, og da får vi success -->
+            <!-- spotbugs seems to work well in data (folder) too, but
+            it crashes if we don't have any .java files here.
+            We have tried running it with a very simple Test.java file with only one variable
+            and a getter, and then we get success.
+            As the data folder is only a precursor to the server to be implemented at a later date, 
+            spotbugs is omitted at this time-->
         
         </plugins>
     </build>
