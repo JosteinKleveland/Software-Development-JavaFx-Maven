@@ -3,9 +3,16 @@ package calendarApp.json;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import java.io.BufferedWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.Reader;
+import java.io.InputStreamReader;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -49,11 +56,17 @@ public class CalendarSaveHandler {
         JSONObject calendarJSONObject = new JSONObject();
         calendarJSONObject.put("name", filename);
 
-        FileWriter file = new FileWriter(getFilePath(filename));
-        file.write(calendarJSONObject.toJSONString());
-        file.close();
-    }   
+        Charset charSet = Charset.forName("UTF-8");
+        File file = new File(getFilePath(filename));
+        BufferedWriter bufferedWriter = Files.newBufferedWriter(file.toPath(), charSet);
+        bufferedWriter.write(calendarJSONObject.toJSONString());
+        bufferedWriter.close();
 
+        //FileWriter file = new FileWriter(getFilePath(filename)));
+        //file.write(calendarJSONObject.toJSONString());
+        //file.close();
+    }   
+    
     /**
      * @param filename - the name of the calendar one wants to retrieve.
      * @throws FileNotFoundException - throws when the calendar name is not found.
@@ -63,7 +76,11 @@ public class CalendarSaveHandler {
     public static void load(String filename) throws FileNotFoundException {
         JSONParser jsonParser = new JSONParser();
          
-        try (FileReader reader = new FileReader(filename))
+        //try (FileReader reader = new FileReader(filename))
+        try (
+            InputStream inputStream = new FileInputStream(filename);
+            Reader reader = new InputStreamReader(inputStream, "UTF-8");
+        )
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);
@@ -85,8 +102,8 @@ public class CalendarSaveHandler {
     public ArrayList<String> getAllFileNames() {
 		ArrayList<String> filenames = new ArrayList<String>();
 
-
 		File[] files = new File(SAVE_FOLDER).listFiles();
+        //File[] files = new File(SAVE_FOLDER).listFiles() != null? new File(SAVE_FOLDER).listFiles() : new File("").listFiles();
 		//If this pathname does not contain a directory, then listFiles() returns null. 
 		
 		for (File file : files) {
