@@ -7,12 +7,10 @@ public class Calendar {
     private String calendarName;
     private ArrayList<Appointment> appointments = new ArrayList<Appointment>();
 
-
     public Calendar(String calendarName) {
         setCalendarName(calendarName);
     }
 
-    
     public String getCalendarName() {
         return calendarName;
     }
@@ -25,7 +23,8 @@ public class Calendar {
     }
 
     public ArrayList<Appointment> getAppointments() {
-        return appointments;
+        return new ArrayList<Appointment>(appointments);
+        //return appointments;
     }
 
     private boolean checkCalendarName(String calendarName){
@@ -40,7 +39,6 @@ public class Calendar {
         return true;
     }
 
-
     public void addAppointment(Appointment appointmentName){
         appointments.add(appointmentName);
     }
@@ -48,6 +46,4 @@ public class Calendar {
     public void removeAppointment(Appointment appointment){
         appointments.remove(appointment);
     }
-
-
 }

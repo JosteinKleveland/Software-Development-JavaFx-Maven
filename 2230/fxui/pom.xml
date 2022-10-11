@@ -109,6 +109,19 @@
                 <mainClass>calendarApp.ui/calendarApp.ui.CalendarApp</mainClass>
                 </configuration>
         </plugin>
+
+        <!-- Run the checkstyle code quality tool -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+        </plugin>
+
+        <!-- Run the spotbugs code quality tool -->
+        <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+        </plugin>
+        
         </plugins>
     </build>
 </project>

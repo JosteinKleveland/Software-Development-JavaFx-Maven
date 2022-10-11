@@ -66,6 +66,24 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Run the checkstyle code quality tool -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <!-- Run the spotbugs code quality tool 
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin> -->
+            <!-- spotbugs seems to work well in data (folder) too, but
+            it crashes if we don't have any .java files here.
+            We have tried running it with a very simple Test.java file with only one variable
+            and a getter, and then we get success.
+            As the data folder is only a precursor to the server to be implemented at a later date, 
+            spotbugs is omitted at this time-->
         
         </plugins>
     </build>
