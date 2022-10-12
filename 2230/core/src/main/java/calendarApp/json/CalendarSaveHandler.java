@@ -13,8 +13,6 @@ import java.io.FileInputStream;
 import java.io.Reader;
 import java.io.InputStreamReader;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 //Handles saving and loading of calendars.
 public class CalendarSaveHandler {
@@ -52,8 +50,9 @@ public class CalendarSaveHandler {
      * If it doens't exist from before, builds a .json file with the filename (calendar name) provided and stores the name inside.
      */
     public static void save(String filename) throws IOException {
-        JSONObject calendarJSONObject = new JSONObject();
-        calendarJSONObject.put("name", filename);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new CalendarAppModule());
+        
 
         Charset charSet = Charset.forName("UTF-8");
         File file = new File(getFilePath(filename));
