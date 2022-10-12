@@ -8,6 +8,9 @@
 This project uses maven for building and running.
 
 To run, cd into the *2230* ⚠️ **Det skal vel være fxui nå?** ⚠️ folder, and use the appripriate compile and run commands (first "mvn compile", then "mvn javafx:run").
+⚠️Forslag til ny tekst: ⚠️[To run, cd into the *2230* folder, and use the appripriate compile and run commands. First, prepare Maven through the command "mvn clean install", and thereafter, run the project with "mvn javafx:run -pl fxui". 
+
+If you want to quality check the project, this will be done through the command "mvn verify", still in the *2230* folder. This will make a report in the terminal, showcasing any CheckStyle and SpotBugs remarks.]
 
 ##### User stories
 To se a list of relevant user stories for this project see [here](https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2230/gr2230/-/blob/readmeBranch/2230/userStories.md).
@@ -25,11 +28,13 @@ The *data* folder will act as our server in this release, and will store the dat
 
 ### File overview
 
-In the *2230* folder you will find the *core*, *data* and *fxui* folders, *docs* folder for documentation, and the parent **pom** file for this project.
+In the *2230* folder you will find the *core*, *data* and *fxui* folders, *docs* folder for documentation and PUML source code, and the parent **pom** file for this project.
 
-Each of the *core*, *data* and *fxui* folders contains a *src* folder, a child **pom** file and a specific **README** file. The *main* and *test* folders lies within each of the *src* folders, and the **test** classes for the each of the modules will be kept within the *test* folders. The *main* folder contains the main classes and data for each of the modules, alongside the specific **module-info** file.
+Each of the *core*, *data* and *fxui* folders contains a *src* folder and a child **pom** file. The *main* and *test* folders lies within each of the *src* folders, and the **test** classes for each of the modules will be kept within the *test* folders. The *main* folder contains the main classes and data for each of the modules, alongside the specific **module-info** file.
 
-Within the *main* folder of *core*, you will find the *calendarApp* folder. This folder, in turn, holds the core folder with **CalendarApp** file and *images* folder for the user stories, and a *json* folder for the **CalendarSaveHandler** file. 
+Within the *main* folder of *fxui*, you will find the fxui- *calendarApp* folder. This folder, in turn, holds the ui folder with **CalendarApp** and **CalendarController files. You will also find a *resources* folder, in which the **Calendar** fxml file resides. 
+
+Within the *main* folder of *core*, you will find the core- *calendarApp* folder. This folder, in turn, holds the core folder with main logic files for the project, and a *json* folder for the **CalendarSaveHandler** file. 
 
 Within the *main* folder of *data*, you will find the *savedCalendars* folder. This folder will hold all the saved calendars for the project. 
 
