@@ -9,7 +9,7 @@ The timetable is not initially intended as a calendar with events that change fo
 
 **Sample images to make it easier to visualize the functionality of the finished application**:
 
-[<img src="images/eksempelbildeFerdigApplikasjon_1.png" width="250"/>](images/eksempelbildeFerdigApplikasjon_1.png)
+[<img src="docs/images/eksempelbildeFerdigApplikasjon_1.png" width="250"/>](docs/images/eksempelbildeFerdigApplikasjon_1.png)
 
-[<img src="images/eksempelbildeFerdigApplikasjon_2.png" width="500"/>](images/eksempelbildeFerdigApplikasjon_2.png)
+[<img src="docs/images/eksempelbildeFerdigApplikasjon_2.png" width="500"/>](docs/images/eksempelbildeFerdigApplikasjon_2.png)
 

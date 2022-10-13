@@ -2,11 +2,11 @@
 
 **First release user story**: Jarl opens the Calendar App, enters the name of his calendar and saves the calendar (so that it can be accessed at a later time). The app checks whether the calendar name is unique and gives feedback about this.
 
-[<img src="images/brukerbilde1.png" width="250"/>](images/brukerbilde1.png)
+[<img src="docs/images/brukerbilde1.png" width="250"/>](docs/images/brukerbilde1.png)
 
-[<img src="images/brukerbilde2.png" width="250"/>](images/brukerbilde2.png)
+[<img src="docs/images/brukerbilde2.png" width="250"/>](docs/images/brukerbilde2.png)
 
-[<img src="images/brukerbilde3.png" width="250"/>](images/brukerbilde3.png)
+[<img src="docs/images/brukerbilde3.png" width="250"/>](docs/images/brukerbilde3.png)
 
 **Second release user story**: Jarl opens the application and accesses the calendar he saved at a previous point. He adds a couple of appointments and deletes one of them - realizing he made a mistake. Jarl also tries -unknowingly - to add an appointment that crashes with another, which ends up in the new appointment not being registered, and Jarl recieving the respective feedback. 
 
