@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import calendarApp.core.Calendar;
+
 import java.io.BufferedWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -49,20 +55,12 @@ public class CalendarSaveHandler {
      * Saves the name of the filename provided in a .json file.
      * If it doens't exist from before, builds a .json file with the filename (calendar name) provided and stores the name inside.
      */
-    public static void save(String filename) throws IOException {
+    public static void save(Calendar calendar) throws IOException, JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
         
-
-        Charset charSet = Charset.forName("UTF-8");
-        File file = new File(getFilePath(filename));
-        BufferedWriter bufferedWriter = Files.newBufferedWriter(file.toPath(), charSet);
-        bufferedWriter.write(calendarJSONObject.toJSONString());
-        bufferedWriter.close();
-
-        //FileWriter file = new FileWriter(getFilePath(filename)));
-        //file.write(calendarJSONObject.toJSONString());
-        //file.close();
+        String json = mapper.writeValueAsString(calendar);
+        
     }   
     
     /**
@@ -72,25 +70,7 @@ public class CalendarSaveHandler {
      * For now, only reads the name of the calendar.
      */
     public static void load(String filename) throws FileNotFoundException {
-        JSONParser jsonParser = new JSONParser();
-         
-        //try (FileReader reader = new FileReader(filename))
-        try (
-            InputStream inputStream = new FileInputStream(filename);
-            Reader reader = new InputStreamReader(inputStream, "UTF-8");
-        )
-        {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            JSONObject jsonObject =  (JSONObject) obj;
-            String name = (String) jsonObject.get("name");
-            System.out.println(name);
-
-        } catch (org.json.simple.parser.ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
     } 
 
 

@@ -20,8 +20,12 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
     @Override
     public Appointment deserialize(JsonParser parser, DeserializationContext ctext) throws IOException, JsonProcessingException {
         TreeNode treeNode = parser.getCodec().readTree(parser);
-        if (treeNode instanceof ObjectNode) {
-            ObjectNode objectNode = (ObjectNode) treeNode;
+        return deserialize((JsonNode) treeNode);
+    } 
+
+    public Appointment deserialize(JsonNode jsonNode) throws IOException, JsonProcessingException {
+        if (jsonNode instanceof ObjectNode) {
+            ObjectNode objectNode = (ObjectNode) jsonNode;
             String appointmentName = "";
             DaysOfTheWeek day = null;
             int startHour = 0;
@@ -35,28 +39,12 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             JsonNode weekdayNode = objectNode.get("dayOfTheWeek");
             if (weekdayNode instanceof TextNode) {
                 String weekday = ((TextNode) weekdayNode).asText();
-                if (weekday == "Monday") {
-                    day = DaysOfTheWeek.MONDAY;
+                for (DaysOfTheWeek dayOfTheWeek : DaysOfTheWeek.values()) {
+                    if (weekday.equals(dayOfTheWeek.toString())) {
+                        day = dayOfTheWeek;
+                    }
                 }
-                else if (weekday == "Tuesday") {
-                    day = DaysOfTheWeek.TUESDAY;
-                }
-                else if (weekday == "Wedensday") {
-                    day = DaysOfTheWeek.WEDENSDAY;
-                }
-                else if (weekday == "Thursday") {
-                    day = DaysOfTheWeek.THURSDAY;
-                }
-                else if (weekday == "Friday") {
-                    day = DaysOfTheWeek.FRIDAY;
-                }
-                else if (weekday == "Saturday") {
-                    day = DaysOfTheWeek.SATURDAY;
-                }
-                else if (weekday == "Sunday") {
-                    day = DaysOfTheWeek.SUNDAY;
-                }
-            } 
+            }
             JsonNode startHourNode = objectNode.get("startHour");
             if (startHourNode instanceof NumericNode) {
                 startHour = ((NumericNode) startHourNode).asInt();
@@ -74,6 +62,8 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
                 stopMinute = ((NumericNode) stopMinuteNode).asInt();
             } 
 
+            Appointment appointment = new Appointment(appointmentName, day, startHour, stopHour, startMinute, stopMinute);
+            return appointment;
         }
         return null;
     } 
