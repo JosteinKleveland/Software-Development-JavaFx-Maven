@@ -2,14 +2,18 @@ package calendarApp.json;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
+import calendarApp.core.DaysOfTheWeek;
 
 import java.io.BufferedWriter;
 import java.nio.charset.Charset;
@@ -60,7 +64,16 @@ public class CalendarSaveHandler {
         mapper.registerModule(new CalendarAppModule());
         
         String json = mapper.writeValueAsString(calendar);
+        File calendarJson = new File(getFilePath(calendar.getCalendarName()));
+        if (calendarJson.createNewFile()) {
+            System.out.println("File created: " + calendarJson.getName());
+          } else {
+            System.out.println("File already exists.");
+          }
         
+        FileWriter writer = new FileWriter(calendarJson.getName());
+        writer.write(json);
+        writer.close();
     }   
     
     /**
@@ -69,10 +82,15 @@ public class CalendarSaveHandler {
      * 
      * For now, only reads the name of the calendar.
      */
-    public static void load(String filename) throws FileNotFoundException {
+    public static Calendar load(String filename) throws FileNotFoundException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new CalendarAppModule());
+
+        File calendar = new File(getFilePath(filename));
+        Scanner reader = new Scanner(calendar);
+        Calendar myCalendar = mapper.readValue(reader, Calendar.class);
         
     } 
-
 
     /**
      * @return an ArrayList of all filenames in the savedCalendars directory.
@@ -102,9 +120,13 @@ public class CalendarSaveHandler {
     //For practical testing.
     public static void main(String[] args) throws IOException {
         CalendarSaveHandler fileHandler = new CalendarSaveHandler();
-        CalendarSaveHandler.save("wamarlea");
-        System.out.println(fileHandler.checkIfFileExists("endremor"));
+        Calendar calendar = new Calendar("Steinar");
+        Appointment appointment = new Appointment("Musikk", DaysOfTheWeek.MONDAY, 8, 9, 0, 0);
+        calendar.addAppointment(appointment);
+        CalendarSaveHandler.save(calendar);
+        System.out.println(fileHandler.checkIfFileExists("Steinar"));
 
-        System.out.println(fileHandler.getAllFileNames());
+        //ERROR
+        // System.out.println(fileHandler.getAllFileNames());
     }
 }
