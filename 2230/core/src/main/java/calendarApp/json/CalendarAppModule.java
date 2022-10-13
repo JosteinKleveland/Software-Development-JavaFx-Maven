@@ -9,7 +9,7 @@ import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
 import calendarApp.core.DaysOfTheWeek;
 
-public class CalendarAppModule extends SimpleModule {
+class CalendarAppModule extends SimpleModule {
     private static final String NAME = "CalendarAppModule";
     private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
   
@@ -27,7 +27,6 @@ public class CalendarAppModule extends SimpleModule {
         Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDENSDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);
         Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
-        calendar.addAppointment(appointment1);
         try {
             System.out.println(mapper.writeValueAsString(calendar));
         } catch (JsonProcessingException e) {
