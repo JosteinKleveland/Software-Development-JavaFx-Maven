@@ -11,9 +11,6 @@ component jackson {
 
 CalendarApp.json ..> jackson
 
-component fxutil {
-}
-
 component fxui {
 	package CalendarApp.ui
 	/'package CalendarApp.ui.util'/
@@ -30,31 +27,22 @@ component javafx {
 
 fxui ..> javafx
 fxui ..> fxml
-fxui ..> fxutil
-
-component jaxrs {
-}
 
 component data {
-	package CalendarApp.restapi
-	package CalendarApp.restserver
+	package CalendarApp.data
 }
 
-rest ..> jaxrs
-
-CalendarApp.restapi ..> CalendarApp.core
-
-CalendarApp.restserver ..> CalendarApp.core
-CalendarApp.restserver ..> CalendarApp.json
-CalendarApp.restserver ..> CalendarApp.restapi
-
-component jersey {
+component Jacoco {
+}
+component CheckStyle {
+}
+component SpotPugs {
 }
 
-component grizzly2 {
-}
+codeQuality ..> Jacoco
+codeQuality ..> CheckStyle
+codeQuality ..> SpotPugs
 
-rest ..> jersey
-rest ..> grizzly2
+CalendarApp.data ..> CalendarApp.core
 
 @enduml
