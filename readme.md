@@ -7,21 +7,21 @@
 
 This project uses maven for building and running.
 
-To run, cd into the *2230* ⚠️ **Det skal vel være fxui nå?** ⚠️ folder, and use the appripriate compile and run commands (first "mvn compile", then "mvn javafx:run").
-⚠️Forslag til ny tekst: ⚠️[To run, cd into the *2230* folder, and use the appripriate compile and run commands. First, prepare Maven through the command "mvn clean install", and thereafter, run the project with "mvn javafx:run -pl fxui". 
+To run, cd into the *2230* folder, and use the appripriate compile and run commands. First, prepare Maven through the command "mvn clean install", and thereafter, run the project with "mvn javafx:run -pl fxui".
 
-If you want to quality check the project, this will be done through the command "mvn verify", still in the *2230* folder. This will make a report in the terminal, showcasing any CheckStyle and SpotBugs remarks.]
+If you want to quality check the project, this will be done through the command "mvn verify", still in the *2230* folder. This will make a report in the terminal, showcasing any CheckStyle and SpotBugs remarks.
 
 ##### User stories
-To se a list of relevant user stories for this project see [here](https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2230/gr2230/-/blob/readmeBranch/2230/userStories.md).
+To see a list of relevant user stories for this project see [here](2230/userStories.md).
 
 ##### Project description 
-To se a full description of the project and its functionality, look at [this](https://gitlab.stud.idi.ntnu.no/it1901/groups-2022/gr2230/gr2230/-/blob/readmeBranch/2230/README.md) readme file.
+To see a full description of the project and its functionality, look at [this](2230/README.md) readme file.
 
 
 ### Modularization
 
 This project consists of a full three layer modularization, divided into the folders *core*, *data* and *fxui*.
+
 The domain layer (main logic classes) for the project will be kept in the *core* folder, while the user interface layer (ui and controller classes) will be kept in the *fxui* folder. 
 The *data* folder will act as our server in this release, and will store the data for calendars and appointments.
 
@@ -50,8 +50,6 @@ Within the *main* folder of *data*, you will find the *savedCalendars* folder. T
                 - module-info.java
                 - calendarApp
                     - core
-                        - images
-                            - images for the user story (.png)
                         - CalendarApp.java
                         - README.md
                     - json
@@ -81,16 +79,24 @@ Within the *main* folder of *data*, you will find the *savedCalendars* folder. T
     - docs
         - release1.md
         - release2.md
+        - images 
+            - images for the root level README file (.png)
+        - architecture.puml
+        - classDiagram.puml
+    - images
+        - images for the user story (.png)
     - pom.xml
 
 > Every individual file is marked with the appropriate filename extension, everything else in the list is to be considered as folders
 
 
 ### Architecture
-[Link to the classDiagram image and architecture image]
+
+[<img src="2230/docs/images/architecture.png" width="650"/>](images/architecture.png)
 
 ##### Class diagram
-[Link to the classDiagram image and architecture image]
 
-Click here to see the code for the [class diagram]() or [architecture diagram]().
+[<img src="2230/docs/images/classDiagram.png" width="500"/>](images/classDiagram.png)
+
+> Click here to see the source code for the [class diagram](2230/docs/classDiagram.puml) or [architecture diagram](2230/docs/architecture).
 
