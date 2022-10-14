@@ -2,6 +2,8 @@ package calendarApp.core;
 
 public class CalendarLogic {
     
+    private Calendar currentCalendar;
+
     //Dummy-constructor to be able to test from CalendarLogicTest
     public CalendarLogic() {
     }
@@ -20,6 +22,14 @@ public class CalendarLogic {
         c1.addAppointment(newAppointment);
     }
 
+
+    public Calendar getCurrentCalendar() {
+        return currentCalendar;
+    }
+
+    public void setCurrentCalendar(Calendar currentCalendar) {
+        this.currentCalendar = currentCalendar;
+    }
 
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
 
