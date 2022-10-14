@@ -111,8 +111,8 @@ public class Appointment {
         return appointmentName + ": " + dayOfTheWeek.nameOfDay +" "+ startHour +":"+ startMinute +" - "+ stopHour +":"+stopMinute;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Appointment a1 = new Appointment("test",DaysOfTheWeek.FRIDAY , 0, 0, 0, 0);
-    }
+    }*/
 
 }
