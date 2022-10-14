@@ -49,7 +49,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             if (startHourNode instanceof NumericNode) {
                 startHour = ((NumericNode) startHourNode).asInt();
             } 
-            JsonNode startMinuteNode = objectNode.get("startMinute");
+            JsonNode startMinuteNode = objectNode.get("startMin");
             if (startMinuteNode instanceof NumericNode) {
                 startMinute = ((NumericNode) startMinuteNode).asInt();
             } 
@@ -57,7 +57,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             if (stopHourNode instanceof NumericNode) {
                 stopHour = ((NumericNode) stopHourNode).asInt();
             } 
-            JsonNode stopMinuteNode = objectNode.get("stopMinute");
+            JsonNode stopMinuteNode = objectNode.get("stopMin");
             if (stopMinuteNode instanceof NumericNode) {
                 stopMinute = ((NumericNode) stopMinuteNode).asInt();
             } 
