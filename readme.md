@@ -9,7 +9,7 @@ This project uses maven for building and running.
 
 To run, cd into the *2230* folder, and use the appripriate compile and run commands. First, prepare Maven through the command "mvn clean install", and thereafter, run the project with "mvn javafx:run -pl fxui".
 
-If you want to quality check the project, this will be done through the command "mvn verify", still in the *2230* folder. This will make a report in the terminal, showcasing any CheckStyle and SpotBugs remarks.
+If you want to quality check the project, this will be done through the command "mvn verify", still in the *2230* folder. This will make a report in the terminal, showcasing any CheckStyle and SpotBugs remarks. The Jacoco test coverage report can be found inside each of the specific module folders, in the *site* folder of the *target* folder. 
 
 ##### User stories
 To see a list of relevant user stories for this project see [here](2230/userStories.md).
@@ -34,7 +34,7 @@ Each of the *core*, *data* and *fxui* folders contains a *src* folder and a chil
 
 Within the *main* folder of *fxui*, you will find the fxui- *calendarApp* folder. This folder, in turn, holds the ui folder with **CalendarApp** and **CalendarController** files. You will also find a *resources* folder, in which the **Calendar**.fxml file resides. 
 
-Within the *main* folder of *core*, you will find the core- *calendarApp* folder. This folder, in turn, holds the core folder with main logic files for the project, and a *json* folder for the **CalendarSaveHandler** file, and the files for serialization and deserialization. 
+Within the *main* folder of *core*, you will find the core- *calendarApp* folder. This folder, in turn, holds the core folder with main logic files for the project, and a *json* folder for the **CalendarSaveHandler** file and the **serializer** and **deserializer** files.
 
 Within the *main* folder of *data*, you will find the *savedCalendars* folder. This folder will hold all the saved calendars for the project. 
 
@@ -103,7 +103,7 @@ Within the *main* folder of *data*, you will find the *savedCalendars* folder. T
 
 ##### Class diagram
 
-[<img src="2230/docs/images/classDiagram.png" width="500"/>](images/classDiagram.png)
+[<img src="2230/docs/images/classDiagram.png" width="650"/>](images/classDiagram.png)
 
 > Click here to see the source code for the [class diagram](2230/docs/classDiagram.puml) or [architecture diagram](2230/docs/architecture).
 
