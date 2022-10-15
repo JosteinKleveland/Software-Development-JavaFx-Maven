@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<xml version="1.0" encoding="UTF-8">
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
@@ -8,10 +8,41 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.CalendarController">
    <children>
+      <Button id="saveNewCalendar_btn" fx:id="saveNewCalendar_btn" layoutX="306.0" layoutY="101.0" mnemonicParsing="false" onAction="#saveCalendar" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="104.0" text="Save as new calendar">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
+      <Button fx:id="loadExistingCalendar_btn" layoutX="414.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadExistingCalendar" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="104.0" text="Load this calendar">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
+      <TextField id="calendarNameId_txt" fx:id="calendarName_txt" layoutX="308.0" layoutY="73.0" prefHeight="21.0" prefWidth="210.0" promptText="Calendar name">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <Text layoutX="334.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment" textAlignment="CENTER" wrappingWidth="156.6416015625">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Button id="deleteCalendarId_btn" fx:id="deleteCalendar_btn" layoutX="668.0" layoutY="667.0" mnemonicParsing="false" onAction="#deleteCalendar" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Delete this calendar">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
       <Text id="outputFieldId_txt" fx:id="outputField_txt" layoutX="248.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="354.6932983398438" />
+      <Text id="currentCalendarNameId_txt" fx:id="currentCalendarNameId_txt" layoutX="334.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calendar name" textAlignment="CENTER">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
       <GridPane fx:id="showWeek_gridpane" layoutX="62.0" layoutY="229.0" prefHeight="314.0" prefWidth="701.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -137,47 +168,22 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button id="addAppointmentId_btn" fx:id="addAppointment_btn" mnemonicParsing="false" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Add appointment" GridPane.rowIndex="2">
+            <Button id="addAppointmentId_btn" fx:id="addAppointment_btn" mnemonicParsing="false" onAction="#addAppointment" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Add appointment" GridPane.rowIndex="2">
                <font>
                   <Font size="9.0" />
                </font>
             </Button>
-            <Button id="changeTimeId_btn" fx:id="addAppointment_btn1" mnemonicParsing="false" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Change appointment" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button id="changeTimeId_btn" fx:id="changeAppointment_btn" mnemonicParsing="false" onAction="#changeAppointment" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Change appointment" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="9.0" />
                </font>
             </Button>
-            <Button id="deleteAppointmentId_btn" fx:id="deleteAppointment" mnemonicParsing="false" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Delete appointment" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Button id="deleteAppointmentId_btn" fx:id="deleteAppointment_btn" mnemonicParsing="false" onAction="#deleteAppointment" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Delete appointment" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font size="9.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <Button id="saveNewCalendar_btn" fx:id="saveNewCalendar_btn" layoutX="306.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="104.0" text="Save as new calendar">
-         <font>
-            <Font size="9.0" />
-         </font>
-      </Button>
-      <Button fx:id="loadExistingCalendar_btn" layoutX="414.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadExistingCalendar" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="104.0" text="Load this calendar">
-         <font>
-            <Font size="9.0" />
-         </font>
-      </Button>
-      <TextField id="calendarNameId_txt" fx:id="calendarName_txt" layoutX="308.0" layoutY="73.0" prefHeight="21.0" prefWidth="210.0" promptText="Calendar name">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </TextField>
-      <Text layoutX="334.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment" textAlignment="CENTER" wrappingWidth="156.6416015625">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Button id="deleteCalendarId_btn" fx:id="deleteCalendar_btn" layoutX="668.0" layoutY="667.0" mnemonicParsing="false" onMouseClicked="#saveName" prefHeight="19.0" prefWidth="168.0" text="Delete this calendar">
-         <font>
-            <Font size="9.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

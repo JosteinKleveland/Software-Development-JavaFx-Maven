@@ -1,5 +1,7 @@
 module calendarApp.ui {
     
+    requires com.fasterxml.jackson.databind;
+
 
     requires javafx.controls;
     requires javafx.fxml;
