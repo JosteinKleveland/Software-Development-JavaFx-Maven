@@ -4,16 +4,16 @@ public enum DaysOfTheWeek {
     //Defining the 7 days of the week.
     MONDAY("Monday"),
     TUESDAY("Tuesday"), 
-    WEDENSDAY("Wedensday"), 
+    WEDNESDAY("Wednesday"), 
     THURSDAY("Thursday"), 
     FRIDAY("Friday"), 
     SATURDAY("Saturday"), 
     SUNDAY("Sunday");
 
 
-    public final String nameOfDay;
+    protected final String nameOfDay;
 
-    DaysOfTheWeek (String nameOfDay){
+    private DaysOfTheWeek (String nameOfDay){
         this.nameOfDay = nameOfDay;
     }
 

@@ -2,8 +2,12 @@ package calendarApp.core;
 
 public class CalendarLogic {
     
-    //This is the class which will keep track of calendar-objects, and run the logic 
-    
+    private Calendar currentCalendar;
+
+    //Dummy-constructor to be able to test from CalendarLogicTest
+    public CalendarLogic() {
+    }
+
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment){
         
         // Check if new appointment collide with existing 
@@ -18,6 +22,31 @@ public class CalendarLogic {
         c1.addAppointment(newAppointment);
     }
 
+
+    public Calendar getCurrentCalendar() {
+        //to prevent direct access from outside, 
+        //only a copy of the calendar object will be returned
+        if (currentCalendar == null) {
+            return null;
+        }
+        Calendar calendar = new Calendar(currentCalendar.getCalendarName());
+        for ( Appointment appointment : currentCalendar.getAppointments() ) {
+            currentCalendar.addAppointment(appointment);
+        }
+        return calendar;
+    }
+
+    public void setCurrentCalendar(Calendar currentCalendar) {
+        //to prevent direct access from outside, 
+        //and to have better controll over what comes in,
+        //the calendar object will be set to a copy of the argument
+        this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
+        if (currentCalendar != null) {
+            for ( Appointment appointment : currentCalendar.getAppointments() ) {
+                this.currentCalendar.addAppointment(appointment);
+            }
+        }
+    }
 
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
 

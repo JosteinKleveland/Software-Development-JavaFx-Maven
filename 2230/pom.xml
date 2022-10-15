@@ -70,9 +70,9 @@
                   <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <argLine>
-                      --add-opens calendarApp.ui/calendarApp.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-                    </argLine>
+                    <!--<argLine>
+                      (bindestrekBindestrek)add-opens calendarApp.ui/calendarApp.ui=ALL-UNNAMED (bindestrekBindestrek)add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    </argLine>-->
                 </configuration>
         </plugin>
         <plugin>
@@ -138,30 +138,27 @@
           </executions>
         </plugin>
 
-        <!--maven plugin for running test-coverage with JaCoCo-->
+        <!-- Configure jacoco code coverage -->
         <plugin>
-                  <groupId>org.jacoco</groupId>
-                  <artifactId>jacoco-maven-plugin</artifactId>
-                  <version>0.8.7</version>
-                  <executions>
-                      <execution>
-                        <!-- del av todo jacoco video, goals er like
-                          <id>jacoco-prepare-agent</id>
-                          <phase>process-test-classes</phase>
-                        -->
-                          <goals>
-                              <goal>prepare-agent</goal>
-                          </goals>
-                      </execution>
-                      <!-- attached to Maven test phase -->
-                      <execution>
-                          <id>report</id>
-                          <phase>verify</phase>
-                          <goals>
-                              <goal>report</goal>
-                          </goals>
-                      </execution>
-                  </executions>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.7</version>
+          <executions>
+              <execution>
+                  <id>jacoco-prepare-agent</id>
+                  <phase>process-test-classes</phase>
+                  <goals>
+                      <goal>prepare-agent</goal>
+                  </goals>
+              </execution>
+              <execution>
+                  <id>jacoco-report</id>
+                  <phase>verify</phase>
+                  <goals>
+                      <goal>report</goal>
+                  </goals>
+              </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
