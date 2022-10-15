@@ -86,7 +86,7 @@ public class CalendarController {
         String calendarName = calendarName_txt.getText();
             
         try {
-            Calendar calendar = calendarSaveHandler.load(calendarName);
+            Calendar calendar = CalendarSaveHandler.load(calendarName);
             fillWeekGrid(calendar);
         } catch (JsonParseException e) {
             e.printStackTrace();
@@ -119,9 +119,15 @@ public class CalendarController {
         // Adding the appointments in the gridpain
 
         // Variables to place the appointments in the correct cell of the gridpane
-        int mo, tu, we, th, fr, sa, su = 1;
+        int mo = 1;
+        int tu = 1;
+        int we = 1;
+        int th = 1;
+        int fr = 1;
+        int sa = 1;
+        int su = 1;
 
-        for (Appointment a : calendarLogic.getCurrentCalendar().getAppointments){
+        for (Appointment a : calendarLogic.getCurrentCalendar().getAppointments()){
 
             // Adding the apointment to the correct day
 

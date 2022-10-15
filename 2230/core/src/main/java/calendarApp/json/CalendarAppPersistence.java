@@ -13,7 +13,7 @@ import calendarApp.core.Calendar;
 
 public class CalendarAppPersistence {
 
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
 
     public CalendarAppPersistence() {
         mapper.registerModule(new CalendarAppModule());

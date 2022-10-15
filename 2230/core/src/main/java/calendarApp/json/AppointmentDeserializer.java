@@ -62,8 +62,10 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
                 stopMinute = ((NumericNode) stopMinuteNode).asInt();
             } 
 
-            Appointment appointment = new Appointment(appointmentName, day, startHour, stopHour, startMinute, stopMinute);
-            return appointment;
+            if(day != null) {
+                Appointment appointment = new Appointment(appointmentName, day, startHour, stopHour, startMinute, stopMinute);
+                return appointment;
+            }
         }
         return null;
     } 

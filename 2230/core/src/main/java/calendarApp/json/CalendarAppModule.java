@@ -1,13 +1,16 @@
 package calendarApp.json;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.util.VersionUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import com.fasterxml.jackson.core.util.VersionUtil;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
+/* For running main-method
 import calendarApp.core.DaysOfTheWeek;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+*/
+
 
 class CalendarAppModule extends SimpleModule {
     private static final String NAME = "CalendarAppModule";
@@ -21,11 +24,12 @@ class CalendarAppModule extends SimpleModule {
       addDeserializer(Calendar.class, new CalendarDeserializer());
     }
 
+    /*
     public static void main(String[] args) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
         Calendar calendar = new Calendar("jsonTest");
-        Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDENSDAY, 7, 9, 0, 30);
+        Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
         Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         calendar.addAppointment(appointment2);
@@ -47,4 +51,5 @@ class CalendarAppModule extends SimpleModule {
             e.printStackTrace();
         }
     }
+    */
   }

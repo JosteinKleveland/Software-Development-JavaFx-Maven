@@ -1,10 +1,12 @@
 package calendarApp.json;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -13,11 +15,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import calendarApp.core.Appointment;
+
 import calendarApp.core.Calendar;
+/* For running main-method
 import calendarApp.core.DaysOfTheWeek;
-
-
+import calendarApp.core.Appointment;
+*/
 
 //Handles saving and loading of calendars.
 public class CalendarSaveHandler {
@@ -66,9 +69,19 @@ public class CalendarSaveHandler {
             System.out.println("File already exists.");
           }
         
-        FileWriter writer = new FileWriter(getFilePath(calendar.getCalendarName()));
-        writer.write(json);
-        writer.close();
+        FileOutputStream outputStream = new FileOutputStream(calendarJson);
+        OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+
+        try {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }   
     
     /**
@@ -119,7 +132,7 @@ public class CalendarSaveHandler {
 	}
 
     //For practical testing.
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         CalendarSaveHandler fileHandler = new CalendarSaveHandler();
         Calendar calendar = new Calendar("Steinar");
         Appointment appointment = new Appointment("Musikk", DaysOfTheWeek.MONDAY, 8, 9, 0, 0);
@@ -132,4 +145,5 @@ public class CalendarSaveHandler {
         //ERROR
         // System.out.println(fileHandler.getAllFileNames());
     }
+    */
 }

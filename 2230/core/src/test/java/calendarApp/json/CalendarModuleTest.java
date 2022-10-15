@@ -19,7 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 public class CalendarModuleTest {
 
     private static ObjectMapper mapper;
-    private final static String calendarWithTwoAppointments = "{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"dayOfTheWeek\":\"WEDENSDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":\"11,\"stopHour\":\"12,\"startMin\":\"30,\"stopMin\":\"0}]}";
+    private final static String calendarWithTwoAppointments = "{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":\"11,\"stopHour\":\"12,\"startMin\":\"30,\"stopMin\":\"0}]}";
 
     @BeforeAll
     public static void testSetup() {
@@ -31,12 +31,12 @@ public class CalendarModuleTest {
     @DisplayName("Check that serializers for Appointment and Calendar-objects work correctly")
     public void testSerializers() {
         Calendar calendar = new Calendar("jsonTest");
-        Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDENSDAY, 7, 9, 0, 30);
+        Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
         Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         calendar.addAppointment(appointment2);
         try {
-            assertEquals("{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"dayOfTheWeek\":\"WEDENSDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":11,\"stopHour\":12,\"startMin\":30,\"stopMin\":0}]}", 
+            assertEquals("{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":11,\"stopHour\":12,\"startMin\":30,\"stopMin\":0}]}", 
             mapper.writeValueAsString(calendar));
         } catch (JsonProcessingException e) {
             fail();
@@ -61,7 +61,7 @@ public class CalendarModuleTest {
             for (Appointment appointment : calendar2.getAppointments()) {
                 
                 if(appointment.getAppointmentName() == "Fotball") {
-                    checkAppointmentFormat(appointment, "Fotball", DaysOfTheWeek.WEDENSDAY, 7, 9, 0, 30);
+                    checkAppointmentFormat(appointment, "Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
                 }
                 else if(appointment.getAppointmentName() == "Math") {
                     checkAppointmentFormat(appointment, "Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
