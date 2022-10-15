@@ -28,8 +28,8 @@ public class AppointmentSerializer extends JsonSerializer<Appointment> {
       jGen.writeStringField("appointmentName", appointment.getAppointmentName());
       jGen.writeStringField("dayOfTheWeek", appointment.getDayOfTheWeek().toString());
       jGen.writeNumberField("startHour", appointment.getStartHour());
-      jGen.writeNumberField("startMin", appointment.getStartMinute());
       jGen.writeNumberField("stopHour", appointment.getStopHour());
+      jGen.writeNumberField("startMin", appointment.getStartMinute());
       jGen.writeNumberField("stopMin", appointment.getStopMinute());
       jGen.writeEndObject();
     }

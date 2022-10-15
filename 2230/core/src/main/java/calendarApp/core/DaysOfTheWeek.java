@@ -11,9 +11,13 @@ public enum DaysOfTheWeek {
     SUNDAY("Sunday");
 
 
-    final String nameOfDay;
+    public final String nameOfDay;
 
     DaysOfTheWeek (String nameOfDay){
         this.nameOfDay = nameOfDay;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(MONDAY.toString());
     }
 }
