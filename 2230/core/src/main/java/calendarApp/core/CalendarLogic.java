@@ -24,11 +24,28 @@ public class CalendarLogic {
 
 
     public Calendar getCurrentCalendar() {
-        return currentCalendar;
+        //to prevent direct access from outside, 
+        //only a copy of the calendar object will be returned
+        if (currentCalendar == null) {
+            return null;
+        }
+        Calendar calendar = new Calendar(currentCalendar.getCalendarName());
+        for ( Appointment appointment : currentCalendar.getAppointments() ) {
+            currentCalendar.addAppointment(appointment);
+        }
+        return calendar;
     }
 
     public void setCurrentCalendar(Calendar currentCalendar) {
-        this.currentCalendar = currentCalendar;
+        //to prevent direct access from outside, 
+        //and to have better controll over what comes in,
+        //the calendar object will be set to a copy of the argument
+        this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
+        if (currentCalendar != null) {
+            for ( Appointment appointment : currentCalendar.getAppointments() ) {
+                this.currentCalendar.addAppointment(appointment);
+            }
+        }
     }
 
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
