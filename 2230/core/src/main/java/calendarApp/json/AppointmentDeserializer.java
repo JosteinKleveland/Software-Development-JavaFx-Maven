@@ -29,8 +29,8 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             String appointmentName = "";
             DaysOfTheWeek day = null;
             int startHour = 0;
-            int startMinute = 0;
             int stopHour = 0;
+            int startMinute = 0;
             int stopMinute = 0;
             JsonNode nameNode = objectNode.get("appointmentName");
             if (nameNode instanceof TextNode) {
@@ -40,7 +40,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             if (weekdayNode instanceof TextNode) {
                 String weekday = ((TextNode) weekdayNode).asText();
                 for (DaysOfTheWeek dayOfTheWeek : DaysOfTheWeek.values()) {
-                    if (weekday.equals(dayOfTheWeek.toString())) {
+                    if (weekday.toUpperCase().equals(dayOfTheWeek.toString())) {
                         day = dayOfTheWeek;
                     }
                 }
@@ -49,13 +49,13 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             if (startHourNode instanceof NumericNode) {
                 startHour = ((NumericNode) startHourNode).asInt();
             } 
-            JsonNode startMinuteNode = objectNode.get("startMin");
-            if (startMinuteNode instanceof NumericNode) {
-                startMinute = ((NumericNode) startMinuteNode).asInt();
-            } 
             JsonNode stopHourNode = objectNode.get("stopHour");
             if (stopHourNode instanceof NumericNode) {
                 stopHour = ((NumericNode) stopHourNode).asInt();
+            } 
+            JsonNode startMinuteNode = objectNode.get("startMin");
+            if (startMinuteNode instanceof NumericNode) {
+                startMinute = ((NumericNode) startMinuteNode).asInt();
             } 
             JsonNode stopMinuteNode = objectNode.get("stopMin");
             if (stopMinuteNode instanceof NumericNode) {
