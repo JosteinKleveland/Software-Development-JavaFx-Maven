@@ -2,7 +2,7 @@
 
 ### Getting started with "the second sprint"
 
-In the first of our weekly meetings (Tuesday at 14:15-16:00), we reflected on the previous sprint, discussed the requirements and expectations for the second release, and began expanding our backlog of issues. Additionally, we discussed how far to evolve the application. We concluded to implement functionality for the user to be able to make "appointments" in his/her calendar, and remove unwanted appointments. Becoming wiser from the previous sprint, we were more efficient in dividing responsibility and starting the implementation. Our first and highest priority was to modularize the project and set up the framework properly with respect to our future implementations.
+In the first of our weekly meetings (Tuesday at 14:15-16:00), we reflected on the previous sprint, discussed the requirements and expectations for the second release, and began expanding our backlog of issues. Additionally, we discussed how far to evolve the application. We concluded to implement functionality for the user to be able to load previously store calendars, as well as make "appointments" in his/her calendar, and remove unwanted appointments. NOTE: The front-end part of the application does not yet support making/removing appointsments. Becoming wiser from the previous sprint, we were more efficient in dividing responsibility and starting the implementation. Our first and highest priority was to modularize the project and set up the framework properly with respect to our future implementations.
 
 ### Workflow
 
