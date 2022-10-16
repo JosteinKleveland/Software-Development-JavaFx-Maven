@@ -1,0 +1,48 @@
+@startuml
+
+component core {
+	package CalendarApp.core
+	package CalendarApp.json
+}
+
+CalendarApp.core ..> CalendarApp.json
+component jackson {
+}
+
+CalendarApp.json ..> jackson
+
+component fxui {
+	package CalendarApp.ui
+	/'package CalendarApp.ui.util'/
+}
+
+'CalendarApp.ui ..> CalendarApp.ui.util'
+CalendarApp.ui ..> CalendarApp.core
+CalendarApp.ui ..> CalendarApp.json
+
+component javafx {
+	component fxml {
+	}
+}
+
+fxui ..> javafx
+fxui ..> fxml
+
+component data {
+	package CalendarApp.data
+}
+
+component Jacoco {
+}
+component CheckStyle {
+}
+component SpotPugs {
+}
+
+codeQuality ..> Jacoco
+codeQuality ..> CheckStyle
+codeQuality ..> SpotPugs
+
+CalendarApp.data ..> CalendarApp.core
+
+@enduml
