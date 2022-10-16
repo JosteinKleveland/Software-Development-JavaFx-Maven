@@ -84,16 +84,25 @@ public class CalendarController {
     @FXML
     public void loadExistingCalendar(){
         String calendarName = calendarName_txt.getText();
-            
+
         try {
             Calendar calendar = CalendarSaveHandler.load(calendarName);
+
+            if (calendar.equals(null)) {
+                outputField_txt.setText("calendar is null ERROR");
+            }
+
             fillWeekGrid(calendar);
+            outputField_txt.setText("Calendar loaded");
         } catch (JsonParseException e) {
             e.printStackTrace();
+            outputField_txt.setText("An error occured");
         } catch (JsonMappingException e) {
             e.printStackTrace();
+            outputField_txt.setText("An error occured");
         } catch (IOException e) {
             e.printStackTrace();
+            outputField_txt.setText("An error occured");
         }
 
 
@@ -114,6 +123,7 @@ public class CalendarController {
         calendarLogic.setCurrentCalendar(calendar);
 
         // Changes preview name in GUI
+        currentCalendarName_txt.setText("");
         currentCalendarName_txt.setText(calendarLogic.getCurrentCalendar().getCalendarName());
 
         // Adding the appointments in the gridpain
@@ -178,7 +188,7 @@ public class CalendarController {
     public void addAppointment(){
         // Will be implemented in deliverable 3 
     }
-
+    
 
     //Method to delete appointment
     @FXML
@@ -186,7 +196,7 @@ public class CalendarController {
         // Will be implemented in deliverable 3 
     }
 
-   
+    
     //Method to change appointment
     @FXML
     public void changeAppointment(){
