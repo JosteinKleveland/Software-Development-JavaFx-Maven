@@ -3,6 +3,7 @@ package calendarApp.ui;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import javafx.fxml.FXML;
@@ -21,6 +22,8 @@ import calendarApp.json.CalendarSaveHandler;
 
 public class CalendarController {
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private CalendarLogic calendarLogic = new CalendarLogic();
+    private Calendar calendar = null;
 
     //Declare FXML elements from Calendar.fxml
 
@@ -39,8 +42,8 @@ public class CalendarController {
     //Appointment management
 
     @FXML private TextField appointmentName_txt;
-    @FXML private TextField TextFieldstartTime_txt;
-    @FXML private TextField TextFieldstopTime_txt;
+    @FXML private TextField startTime_txt;
+    @FXML private TextField stopTime_txt;
     @FXML private Button addAppointment_btn;
     @FXML private Button changeAppointment_btn;
     @FXML private Button deleteAppointment_btn;
@@ -68,8 +71,13 @@ public class CalendarController {
 
         try {
             //Text field is not empty, and the save handling is forwarded to CalendarSaveHandler
-            Calendar calendar = new Calendar(calendarName);
-            CalendarSaveHandler.save(calendar);
+            if (calendar == null) {
+                calendar = new Calendar(calendarName);
+                CalendarSaveHandler.save(calendar);
+            }
+            else {
+                CalendarSaveHandler.save(calendar);
+            }
             outputField_txt.setText("Calendar name is saved");
             calendarName_txt.setText("");
         }
@@ -84,16 +92,12 @@ public class CalendarController {
     @FXML
     public void loadExistingCalendar(){
         String calendarName = calendarName_txt.getText();
+        outputField_txt.setText("");
 
         try {
-            Calendar calendar = CalendarSaveHandler.load(calendarName);
-
-            if (calendar.equals(null)) {
-                outputField_txt.setText("calendar is null ERROR");
-            }
+            calendar = CalendarSaveHandler.load(calendarName);
 
             fillWeekGrid(calendar);
-            outputField_txt.setText("Calendar loaded");
         } catch (JsonParseException e) {
             e.printStackTrace();
             outputField_txt.setText("An error occured");
@@ -119,12 +123,11 @@ public class CalendarController {
     //Method to fill gridpane with calendar information
     @FXML
     private void fillWeekGrid(Calendar calendar){
-        CalendarLogic calendarLogic = new CalendarLogic();
+        
         calendarLogic.setCurrentCalendar(calendar);
 
         // Changes preview name in GUI
-        currentCalendarName_txt.setText("");
-        currentCalendarName_txt.setText(calendarLogic.getCurrentCalendar().getCalendarName());
+        currentCalendarName_txt.setText(calendar.getCalendarName());
 
         // Adding the appointments in the gridpain
 
@@ -137,7 +140,7 @@ public class CalendarController {
         int sa = 1;
         int su = 1;
 
-        for (Appointment a : calendarLogic.getCurrentCalendar().getAppointments()){
+        for (Appointment a : calendar.getAppointments()){
 
             // Adding the apointment to the correct day
 
@@ -185,10 +188,41 @@ public class CalendarController {
 
     //Method to add new appointment
     @FXML
-    public void addAppointment(){
-        // Will be implemented in deliverable 3 
+    public void addAppointment() throws JsonProcessingException, IOException{
+        String appointmentName = appointmentName_txt.getText();
+        int[] startTime = decodeClock(startTime_txt.getText());
+        int[] stopTime = decodeClock(stopTime_txt.getText());
+        int startHour = startTime[0];
+        int startMinute = startTime[1];
+        int stopHour = stopTime[0];
+        int stopMinute = stopTime[1];
+        
+        calendar.addAppointment(new Appointment(appointmentName, DaysOfTheWeek.MONDAY, startHour, stopHour, startMinute, stopMinute));
+
+        CalendarSaveHandler.save(calendar);
+        fillWeekGrid(calendar);
     }
     
+    //Method that decodes clock of the format 00:00
+    //returns an int array with 2 memory places [0] -> int hour, [1] -> int minute
+    public int[] decodeClock(String time) {
+        int[] timeIntArray = new int[2];
+        String[] timeStringArray = time.split(":",2);
+        String hourString = timeStringArray[0];
+        String minuteString = timeStringArray[1];
+
+        if (hourString.charAt(0) == '0') {
+            hourString = Character.toString(hourString.charAt(1));
+        }
+        if (minuteString.charAt(0) == '0') {
+            minuteString = Character.toString(minuteString.charAt(1));
+        }
+
+        timeIntArray[0] = Integer.parseInt(hourString);
+        timeIntArray[1] = Integer.parseInt(minuteString);
+
+        return timeIntArray;
+    }
 
     //Method to delete appointment
     @FXML
