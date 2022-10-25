@@ -40,8 +40,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             JsonNode descriptionNode = objectNode.get("appointmentDescription");
             if (descriptionNode instanceof TextNode) {
                 appointmentDescription = ((TextNode) descriptionNode).asText();
-            } 
-
+            }
             JsonNode weekdayNode = objectNode.get("dayOfTheWeek");
             if (weekdayNode instanceof TextNode) {
                 String weekday = ((TextNode) weekdayNode).asText();

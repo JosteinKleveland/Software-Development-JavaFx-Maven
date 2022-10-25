@@ -26,6 +26,7 @@ public class AppointmentSerializer extends JsonSerializer<Appointment> {
     public void serialize(Appointment appointment, JsonGenerator jGen, SerializerProvider serializerProvider) throws IOException {
       jGen.writeStartObject();
       jGen.writeStringField("appointmentName", appointment.getAppointmentName());
+      jGen.writeStringField("appointmentDescription", appointment.getAppointmentDescription());
       jGen.writeStringField("dayOfTheWeek", appointment.getDayOfTheWeek().toString());
       jGen.writeNumberField("startHour", appointment.getStartHour());
       jGen.writeNumberField("stopHour", appointment.getStopHour());

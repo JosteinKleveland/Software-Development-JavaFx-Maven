@@ -25,6 +25,9 @@ public class Appointment {
     }
 
     private void setAppointmentDescription(String appointmentDescription) {
+        if(appointmentDescription.length() > 250) {
+            throw new IllegalArgumentException("Given description exceeds the limit of 250 characters");
+        }
         this.appointmentDescription = appointmentDescription;
     }
     
