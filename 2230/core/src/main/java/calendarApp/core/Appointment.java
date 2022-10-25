@@ -63,7 +63,7 @@ public class Appointment {
         if (startHour < 0 || startHour > 23 || stopHour < 0 || stopHour > 23){
             return false;
         }
-
+    
         else if (startMinute > 59 || startMinute < 0 || stopMinute > 59 || stopMinute < 0){
             return false;
         }
@@ -73,6 +73,10 @@ public class Appointment {
         }
 
         else if (startHour == stopHour && startMinute >= stopMinute){
+            return false;
+        }
+
+        else if (startMinute % 15 != 0 || stopMinute % 15 !=0) {
             return false;
         }
 
