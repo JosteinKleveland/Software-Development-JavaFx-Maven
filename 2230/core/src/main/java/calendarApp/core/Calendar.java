@@ -27,6 +27,21 @@ public class Calendar {
         //return appointments;
     }
 
+    public Appointment getAppointement(String appointmentName, DaysOfTheWeek dayOfTheWeek, int startHour , int stopHour, int startMinute, int stopMinute) {
+        ArrayList<Appointment> appointments = getAppointments();
+        for (Appointment appointment : appointments) {
+            if (appointment.getAppointmentName() == appointmentName 
+                && appointment.getDayOfTheWeek() == dayOfTheWeek
+                && appointment.getStartHour() == startHour
+                && appointment.getStartMinute() == startMinute
+                && appointment.getStopHour() == stopHour
+                && appointment.getStopMinute() == stopMinute) {
+                    return appointment;
+                }
+        }    
+        return null;   
+    }
+
     private boolean checkCalendarName(String calendarName){
         if (calendarName.isBlank() || calendarName.length() < 2){
             return false;
