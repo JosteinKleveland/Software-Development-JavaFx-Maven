@@ -19,7 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 public class CalendarModuleTest {
 
     private static ObjectMapper mapper;
-    private final static String calendarWithTwoAppointments = "{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":\"11,\"stopHour\":\"12,\"startMin\":\"30,\"stopMin\":\"0}]}";
+    private final static String calendarWithTwoAppointments = "{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":\"11,\"stopHour\":\"12,\"startMin\":\"30,\"stopMin\":\"0}]}";
 
     @BeforeAll
     public static void testSetup() {
@@ -31,20 +31,21 @@ public class CalendarModuleTest {
     @DisplayName("Check that serializers for Appointment and Calendar-objects work correctly")
     public void testSerializers() {
         Calendar calendar = new Calendar("jsonTest");
-        Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
+        Appointment appointment1 = new Appointment("Fotball", "test description", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
-        Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
+        Appointment appointment2 = new Appointment("Math", "test description", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         calendar.addAppointment(appointment2);
         try {
-            assertEquals("{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":11,\"stopHour\":12,\"startMin\":30,\"stopMin\":0}]}", 
+            assertEquals("{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":11,\"stopHour\":12,\"startMin\":30,\"stopMin\":0}]}", 
             mapper.writeValueAsString(calendar));
         } catch (JsonProcessingException e) {
             fail();
         }
     }
 
-    public void checkAppointmentFormat(Appointment appointment, String appointmentName, DaysOfTheWeek day, int startHour, int stopHour, int startMin, int stopMin) {
+    public void checkAppointmentFormat(Appointment appointment, String appointmentName, String appointmentDescription, DaysOfTheWeek day, int startHour, int stopHour, int startMin, int stopMin) {
         assertEquals(appointmentName, appointment.getAppointmentName());
+        assertEquals(appointmentDescription, appointment.getAppointmentDescription());
         assertEquals(day, appointment.getDayOfTheWeek());
         assertEquals(startHour, appointment.getStartHour());
         assertEquals(stopHour, appointment.getStopHour());
@@ -61,10 +62,10 @@ public class CalendarModuleTest {
             for (Appointment appointment : calendar2.getAppointments()) {
                 
                 if(appointment.getAppointmentName() == "Fotball") {
-                    checkAppointmentFormat(appointment, "Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
+                    checkAppointmentFormat(appointment, "Fotball", "test description", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
                 }
                 else if(appointment.getAppointmentName() == "Math") {
-                    checkAppointmentFormat(appointment, "Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
+                    checkAppointmentFormat(appointment, "Math", "test description", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
                 }
                 else {
                     fail();

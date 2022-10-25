@@ -25,8 +25,8 @@ public class CalendarTest {
     @Test
     @DisplayName("Check that appointments are correctly added to, and removed from list")
     public void addAppointmentTest() {
-        Appointment a1 = new Appointment("Football", DaysOfTheWeek.TUESDAY, 20, 22, 0, 0);
-        Appointment a2 = new Appointment("Tennis", DaysOfTheWeek.FRIDAY, 14, 15, 0, 30);
+        Appointment a1 = new Appointment("Football", "test description", DaysOfTheWeek.TUESDAY, 20, 22, 0, 0);
+        Appointment a2 = new Appointment("Tennis", "test description", DaysOfTheWeek.FRIDAY, 14, 15, 0, 30);
         
         Calendar calendar = new Calendar("testCalendar");
         calendar.addAppointment(a1);

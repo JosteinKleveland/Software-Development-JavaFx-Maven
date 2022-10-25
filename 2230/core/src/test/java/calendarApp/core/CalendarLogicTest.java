@@ -12,10 +12,10 @@ public class CalendarLogicTest {
         CalendarLogic calendarlogic = new CalendarLogic();
         Calendar calendar = new Calendar("calendar");
         
-        Appointment a1 = new Appointment("Football", DaysOfTheWeek.WEDNESDAY, 10, 12, 30, 30);
-        Appointment a2 = new Appointment("Tennis", DaysOfTheWeek.WEDNESDAY, 12, 14, 31, 30);
-        Appointment a3 = new Appointment("Golf", DaysOfTheWeek.FRIDAY, 15, 17, 0, 0);
-        Appointment a4 = new Appointment("Formula1", DaysOfTheWeek.FRIDAY, 16, 18, 30, 0);
+        Appointment a1 = new Appointment("Football", "test description", DaysOfTheWeek.WEDNESDAY, 10, 12, 30, 30);
+        Appointment a2 = new Appointment("Tennis", "test description", DaysOfTheWeek.WEDNESDAY, 12, 14, 31, 30);
+        Appointment a3 = new Appointment("Golf", "test description", DaysOfTheWeek.FRIDAY, 15, 17, 0, 0);
+        Appointment a4 = new Appointment("Formula1", "test description", DaysOfTheWeek.FRIDAY, 16, 18, 30, 0);
 
         calendarlogic.addAppointmentToCalendar(calendar, a1);
         calendarlogic.addAppointmentToCalendar(calendar, a2);
