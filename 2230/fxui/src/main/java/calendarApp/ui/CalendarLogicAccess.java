@@ -4,7 +4,7 @@ import calendarApp.core.Calendar;
 import calendarApp.core.Appointment;
 
 /**
- * Class that centralizes access to a CalendarModel
+ * Class that centralizes access to a CalendarLogic
  * Makes it easier to support transparent use of a REST api
  */
 public interface CalendarLogicAccess {
