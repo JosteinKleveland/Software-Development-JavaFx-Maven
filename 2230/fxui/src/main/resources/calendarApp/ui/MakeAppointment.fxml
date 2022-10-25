@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="txtSetStopTime" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="txtAppointmentName" layoutX="65.0" layoutY="64.0" prefHeight="25.0" prefWidth="271.0" promptText="Appointment name" />
+      <TextField fx:id="txtSetStartTime" layoutX="128.0" layoutY="95.0" prefHeight="25.0" prefWidth="49.0" promptText="xx:xx" />
+      <TextField fx:id="txtSetStartTime1" layoutX="257.0" layoutY="95.0" prefHeight="25.0" prefWidth="49.0" promptText="xx:xx" />
+      <Text layoutX="65.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start time:" />
+      <Text layoutX="194.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop time:" />
+      <TextArea fx:id="txtSetAppointmentDescription" layoutX="65.0" layoutY="166.0" prefHeight="155.0" prefWidth="271.0" promptText="Appointment description" />
+      <ChoiceBox fx:id="drdSetAppointmentDay" layoutX="65.0" layoutY="130.0" prefHeight="25.0" prefWidth="271.0" />
+      <Button fx:id="btnSaveAppointment" layoutX="124.0" layoutY="381.0" mnemonicParsing="false" onAction="#saveAppointment" prefHeight="25.0" prefWidth="153.0" text="Save" />
+      <Button fx:id="btnCancelEdit" layoutX="125.0" layoutY="413.0" mnemonicParsing="false" onAction="#cancelEdit" prefHeight="25.0" prefWidth="153.0" text="Cancel" />
+      <Label fx:id="txtFeedbackEdit" layoutX="188.0" layoutY="342.0" onDragDetected="#exitEdit" />
+   </children>
+</AnchorPane>
