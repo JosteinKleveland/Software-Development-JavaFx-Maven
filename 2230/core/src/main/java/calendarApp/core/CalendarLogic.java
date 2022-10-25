@@ -2,7 +2,7 @@ package calendarApp.core;
 
 public class CalendarLogic {
     
-    private Calendar currentCalendar;
+    private Calendar currentCalendar = null;
 
     //Dummy-constructor to be able to test from CalendarLogicTest
     public CalendarLogic() {
@@ -36,16 +36,19 @@ public class CalendarLogic {
         return calendar;
     }
 
-    public void setCurrentCalendar(Calendar currentCalendar) {
+    public Calendar setCurrentCalendar(Calendar currentCalendar) {
         //to prevent direct access from outside, 
         //and to have better controll over what comes in,
         //the calendar object will be set to a copy of the argument
         this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
         if (currentCalendar != null) {
-            for ( Appointment appointment : currentCalendar.getAppointments() ) {
+            Calendar oldCalendar = this.currentCalendar;
+            for (Appointment appointment : currentCalendar.getAppointments() ) {
                 this.currentCalendar.addAppointment(appointment);
             }
+            return oldCalendar;
         }
+        else return null;
     }
 
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
