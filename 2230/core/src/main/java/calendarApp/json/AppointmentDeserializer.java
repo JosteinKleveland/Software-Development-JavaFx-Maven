@@ -27,6 +27,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
         if (jsonNode instanceof ObjectNode) {
             ObjectNode objectNode = (ObjectNode) jsonNode;
             String appointmentName = "";
+            String appointmentDescription = "";
             DaysOfTheWeek day = null;
             int startHour = 0;
             int stopHour = 0;
@@ -36,6 +37,11 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             if (nameNode instanceof TextNode) {
                 appointmentName = ((TextNode) nameNode).asText();
             } 
+            JsonNode descriptionNode = objectNode.get("appointmentDescription");
+            if (descriptionNode instanceof TextNode) {
+                appointmentDescription = ((TextNode) descriptionNode).asText();
+            } 
+
             JsonNode weekdayNode = objectNode.get("dayOfTheWeek");
             if (weekdayNode instanceof TextNode) {
                 String weekday = ((TextNode) weekdayNode).asText();
@@ -63,7 +69,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             } 
 
             if(day != null) {
-                Appointment appointment = new Appointment(appointmentName, day, startHour, stopHour, startMinute, stopMinute);
+                Appointment appointment = new Appointment(appointmentName, appointmentDescription, day, startHour, stopHour, startMinute, stopMinute);
                 return appointment;
             }
         }

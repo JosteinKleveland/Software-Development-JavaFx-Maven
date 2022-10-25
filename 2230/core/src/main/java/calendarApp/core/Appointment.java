@@ -3,14 +3,16 @@ package calendarApp.core;
 public class Appointment {
 
     private String appointmentName;
+    private String appointmentDescription;
     private DaysOfTheWeek dayOfTheWeek;
     private int startHour;
     private int startMinute;
     private int stopHour;
     private int stopMinute;
     
-    public Appointment(String appointmentName, DaysOfTheWeek dayOfTheWeek, int startHour , int stopHour, int startMinute, int stopMinute) {
+    public Appointment(String appointmentName, String appointmentDescription, DaysOfTheWeek dayOfTheWeek, int startHour , int stopHour, int startMinute, int stopMinute) {
         setAppointmentName(appointmentName);
+        setAppointmentDescription(appointmentDescription);
         setDayOfTheWeek(dayOfTheWeek);;
         setTime(startHour, stopHour, startMinute, stopMinute);
     }
@@ -21,6 +23,11 @@ public class Appointment {
         }
         this.appointmentName = appointmentName;
     }
+
+    private void setAppointmentDescription(String appointmentDescription) {
+        this.appointmentDescription = appointmentDescription;
+    }
+    
     private void setDayOfTheWeek(DaysOfTheWeek dayOfTheWeek) {
         if(!checkDayOfTheWeek(dayOfTheWeek)){
             throw new IllegalArgumentException("Input for day is not valid");
@@ -42,6 +49,11 @@ public class Appointment {
     public String getAppointmentName() {
         return appointmentName;
     }
+
+    public String getAppointmentDescription() {
+        return appointmentDescription;
+    }
+
     public DaysOfTheWeek getDayOfTheWeek() {
         return dayOfTheWeek;
     }
