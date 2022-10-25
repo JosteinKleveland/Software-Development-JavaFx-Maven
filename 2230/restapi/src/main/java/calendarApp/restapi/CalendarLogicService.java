@@ -17,10 +17,9 @@ public class CalendarLogicService {
     private CalendarLogic calendarLogic;
 
     @GET
-    public CalendarLogic getCalendarLogci() {
+    //@Produces(MediaType.APPLICATION_JSON)
+    public CalendarLogic getCalendarLogic() {
         //LOG.debug ...
         return calendarLogic;
     }
-
-
 }
