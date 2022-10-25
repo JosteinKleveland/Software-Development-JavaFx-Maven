@@ -31,7 +31,7 @@ class CalendarAppModule extends SimpleModule {
         Calendar calendar = new Calendar("jsonTest");
         Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
-        Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
+        Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 15);
         calendar.addAppointment(appointment2);
         try {
             System.out.println(mapper.writeValueAsString(calendar));
