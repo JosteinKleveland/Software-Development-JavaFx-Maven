@@ -22,12 +22,17 @@ public class CalendarLogic {
         c1.addAppointment(newAppointment);
     }
 
-
-    public Calendar getCurrentCalendar() {
+    /**
+     * 
+     * @param optional name
+     * @return Calendar equal to currentCalendar if name is null, else returns new Calendar with given name
+     */
+    public Calendar getCurrentCalendar(String... name) {
         //to prevent direct access from outside, 
         //only a copy of the calendar object will be returned
         if (currentCalendar == null) {
-            return null;
+            if (name.length == 0) return null;
+            return new Calendar(name[0]);
         }
         Calendar calendar = new Calendar(currentCalendar.getCalendarName());
         for ( Appointment appointment : currentCalendar.getAppointments() ) {
