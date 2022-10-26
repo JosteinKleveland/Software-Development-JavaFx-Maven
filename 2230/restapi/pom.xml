@@ -10,7 +10,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>core</artifactId>
+    <artifactId>restapi</artifactId>
 
     <properties>
         <slf4jVersion>2.0.0-alpha5</slf4jVersion>
