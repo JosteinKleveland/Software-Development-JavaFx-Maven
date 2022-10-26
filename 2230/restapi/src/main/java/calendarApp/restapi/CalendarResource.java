@@ -1,14 +1,28 @@
-import javax.annotation.processing.Generated;
+package calendarApp.restapi;
+
+//import javax.annotation.processing.Generated;
 import jakarta.ws.rs.core.MediaType;
 import calendarApp.core.CalendarLogic;
 import calendarApp.core.Calendar;
 import calendarApp.json.CalendarSaveHandler;
 
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+
 /**
  * Used for all requests referring to a Calendar by name
  */
 
-@Produces(MediaType.APPLICATION_JSON); //Husk å impoortere
+@Produces(MediaType.APPLICATION_JSON) //Husk å importere
 public class CalendarResource {
     
     //private Logger 
@@ -38,7 +52,7 @@ public class CalendarResource {
     //throw an exception in case of missing Calendar  
     private void checkCalendar() {
         if (this.calendar == null) {
-            throw new NotFoundException("No calendar \"" + name + "\"");
+            throw new NotFoundException("No calendar \"" + calendarName + "\"");
 
         }
     }
@@ -56,7 +70,7 @@ public class CalendarResource {
     private void autoSaveCalendarLogic() {
         if(calendarSaveHandler != null) {
             try {
-                calendarSaveHandler.save(this.calender);
+                calendarSaveHandler.save(this.calendar);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -69,7 +83,7 @@ public class CalendarResource {
      * @param return true if it was added, false if it was replaced
      */
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON);
+    @Consumes(MediaType.APPLICATION_JSON)
     public boolean putCalendar(Calendar calendar) {
         Calendar oldCalendar = this.calendarLogic.setCurrentCalendar(calendar);
         autoSaveCalendarLogic();
@@ -95,10 +109,10 @@ public class CalendarResource {
     @Path("/rename")
     public boolean renameCalendar(@QueryParam("newName") String newName) {
         checkCalendar();
-        if(this.calendarLogic.getCalendar() != null) {
+        if(this.calendarLogic.getCurrentCalendar() != null) {
             throw new IllegalArgumentException("A Calendar names \"" + newName + "\" already exist");
         }
-        this.calendar.setCalendarName(newName);
+        this.calendar.setCalendarName(newName); //setCalendarName er private, og kan ikke nås
         autoSaveCalendarLogic();
         return true;
     }
@@ -115,3 +129,4 @@ public class CalendarResource {
         return true;
     }*/
 }
+
