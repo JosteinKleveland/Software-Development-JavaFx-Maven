@@ -15,7 +15,7 @@ public class Calendar {
         return calendarName;
     }
 
-    private void setCalendarName(String calendarName) {
+    public void setCalendarName(String calendarName) {
         if(checkCalendarName(calendarName) == false){
             throw new IllegalArgumentException("Calendarname does not have a valid format");
         }
