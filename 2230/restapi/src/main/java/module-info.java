@@ -3,6 +3,8 @@ module calendarApp.restapi {
 
     exports calendarApp.restapi;
 
+    requires calendarApp.core;
+
     requires jakarta.ws.rs;
 
     requires jersey.common;
