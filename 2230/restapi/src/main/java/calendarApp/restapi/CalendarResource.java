@@ -97,7 +97,7 @@ public class CalendarResource {
      */
     @PUT
     public boolean putCalendar() {
-       return putCalendar(new Calendar("name"));
+       return putCalendar(new Calendar(calendarName));
     }
 
     /**
@@ -110,7 +110,7 @@ public class CalendarResource {
     public boolean renameCalendar(@QueryParam("newName") String newName) {
         checkCalendar();
         if(this.calendarLogic.getCurrentCalendar() != null) {
-            throw new IllegalArgumentException("A Calendar names \"" + newName + "\" already exist");
+            throw new IllegalArgumentException("A Calendar name \"" + newName + "\" already exist");
         }
         this.calendar.setCalendarName(newName); //setCalendarName er private, og kan ikke nås
         autoSaveCalendarLogic();
