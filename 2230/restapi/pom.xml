@@ -19,6 +19,13 @@
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>it1901.2230</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- Logging med slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
