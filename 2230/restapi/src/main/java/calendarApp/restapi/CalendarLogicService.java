@@ -1,5 +1,6 @@
 package calendarApp.restapi;
 
+import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarSaveHandler;
 
