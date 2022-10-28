@@ -1,13 +1,22 @@
 package calendarApp.core;
 
+/**
+ * Contains logic framework for the application
+ */
 public class CalendarLogic {
     
-    private Calendar currentCalendar;
+    private Calendar currentCalendar; // Current calendar object
 
     //Dummy-constructor to be able to test from CalendarLogicTest
     public CalendarLogic() {
     }
 
+    /**
+     * Adds a new appointment to the respective calendar
+     * @param c1
+     * @param newAppointment
+     * @throws IllegalArgumentException if the new appointment collides with an existing one in the calendar
+     */
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment){
         
         // Check if new appointment collide with existing 
@@ -22,10 +31,11 @@ public class CalendarLogic {
         c1.addAppointment(newAppointment);
     }
 
+    // Getter
 
     public Calendar getCurrentCalendar() {
-        //to prevent direct access from outside, 
-        //only a copy of the calendar object will be returned
+        // to prevent direct access from outside, 
+        // only a copy of the calendar object will be returned
         if (currentCalendar == null) {
             return null;
         }
@@ -36,10 +46,12 @@ public class CalendarLogic {
         return calendar;
     }
 
+    // Setter
+
     public void setCurrentCalendar(Calendar currentCalendar) {
-        //to prevent direct access from outside, 
-        //and to have better controll over what comes in,
-        //the calendar object will be set to a copy of the argument
+        // To prevent direct access from outside, 
+        // and to have better controll over what comes in,
+        // the calendar object will be set to a copy of the argument
         this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
         if (currentCalendar != null) {
             for ( Appointment appointment : currentCalendar.getAppointments() ) {
@@ -48,6 +60,14 @@ public class CalendarLogic {
         }
     }
 
+    /**
+     * Helper function
+     * Checks if the new appointment collides timewise with an existing one,
+     * i.e. if the new appointment exists in the same time frame as the exsisting one
+     * @param existingAppointment
+     * @param newAppointment
+     * @return true if it collides and false otherwise
+     */
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
 
         if (existingAppointment.getDayOfTheWeek() == newAppointment.getDayOfTheWeek()){
