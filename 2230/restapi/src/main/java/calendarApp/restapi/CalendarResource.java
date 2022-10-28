@@ -70,7 +70,7 @@ public class CalendarResource {
     private void autoSaveCalendarLogic() {
         if(calendarSaveHandler != null) {
             try {
-                calendarSaveHandler.save(this.calendar);
+                CalendarSaveHandler.save(this.calendar);
             } catch (Exception e) {
                 e.printStackTrace();
             }

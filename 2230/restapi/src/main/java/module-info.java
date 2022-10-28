@@ -3,7 +3,7 @@ module calendarApp.restapi {
 
     exports calendarApp.restapi;
 
-    requires calendarApp.core;
+    requires transitive calendarApp.core;
 
     requires jakarta.ws.rs;
 
