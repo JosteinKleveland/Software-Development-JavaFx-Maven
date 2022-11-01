@@ -20,8 +20,8 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
         calendarLogic.addAppointmentToCalendar(c1, newAppointment);
     }
 
-    public Calendar getCurrentCalendar() {
-        return calendarLogic.getCurrentCalendar();
+    public Calendar getCurrentCalendar(String calendarName) {
+        return calendarLogic.getCurrentCalendar(calendarName);
     }
 
     public void setCurrentCalendar(Calendar currentCalendar) {
