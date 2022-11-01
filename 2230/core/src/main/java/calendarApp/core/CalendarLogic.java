@@ -8,6 +8,21 @@ public class CalendarLogic {
     public CalendarLogic() {
     }
 
+    /** 
+     * Method to check calendarName. Creates a Calendar-object to be able to use checkCalendarName-method. 
+     * @param calendarName to check if valid or not. 
+     * @return true if name is valid, false otherwise. 
+     */
+    public boolean isValidCalendarName(String calendarName) {
+        Calendar calendar = new Calendar("testCalendar");
+        return calendar.checkCalendarName(calendarName);
+    }
+
+    /**
+     * 
+     * @param c1 is the Calendar that is getting Appointments added
+     * @param newAppointment is Appointment to be added
+     */
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment){
         
         // Check if new appointment collide with existing 
@@ -35,12 +50,17 @@ public class CalendarLogic {
             return new Calendar(name[0]);
         }
         Calendar calendar = new Calendar(currentCalendar.getCalendarName());
-        for ( Appointment appointment : currentCalendar.getAppointments() ) {
-            currentCalendar.addAppointment(appointment);
+        for (Appointment appointment : currentCalendar.getAppointments() ) {
+            calendar.addAppointment(appointment);
         }
         return calendar;
     }
 
+    /** 
+     * Method to put new Calendar 
+     * @param currentCalendar is new Calendar 
+     * @return oldCalendar that was replaced 
+     */
     public Calendar setCurrentCalendar(Calendar currentCalendar) {
         //to prevent direct access from outside, 
         //and to have better controll over what comes in,
@@ -56,6 +76,12 @@ public class CalendarLogic {
         else return null;
     }
 
+    /** Method to check if there are any collision between existing Appointment and Appointment to be added.
+     * 
+     * @param existingAppointment Appointment in Calendar
+     * @param newAppointment Appointment to be added
+     * @return true if there is collision, false otherwise
+     */
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
 
         if (existingAppointment.getDayOfTheWeek() == newAppointment.getDayOfTheWeek()){
