@@ -8,18 +8,25 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import calendarApp.core.Appointment;
 
+
+ // Serializer for appointment objects
 public class AppointmentSerializer extends JsonSerializer<Appointment> {
 
 
-    /*
+    /**
+     * Serializes an appointment on the format:
      * {
-     *     "AppointmentName"
-     *      "dayOfTheWeek"
-     *      "start hour"
-     *      "start min"
-     *      "end hour"
-     *      "end min"    
+     *     "appointmentName": "...",
+     *     "appointmentDescription": "...",
+     *     "dayOfTheWeek": "...",
+     *     "startHour": <int>,
+     *     "stopHour": <int>,
+     *     "startMin": <int>,
+     *     "stopMin": <int>
      * }
+     * @param appointment
+     * @param jGen 
+     * @param serializerProvider
      */
 
     @Override
