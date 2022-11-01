@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.WelcomeWindowController">
    <children>
       <Button fx:id="btnNewCalendar" layoutX="99.0" layoutY="138.0" mnemonicParsing="false" onAction="#saveCalendar" prefHeight="25.0" prefWidth="149.0" text="Create new calendar" />
       <TextField fx:id="txtCalendarNameInput" layoutX="101.0" layoutY="102.0" promptText="Calendar name" />
