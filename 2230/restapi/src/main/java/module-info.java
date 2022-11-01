@@ -3,7 +3,7 @@ module calendarApp.restapi {
 
     exports calendarApp.restapi;
 
-    requires transitive calendarApp.core;
+    //requires transitive calendarApp.core;
 
     requires jakarta.ws.rs;
 
@@ -14,4 +14,7 @@ module calendarApp.restapi {
     requires org.glassfish.hk2.api;
     requires org.slf4j;
 
+    requires calendarApp.core;
+
+    opens calendarApp.restapi to jersey.server;
 }
