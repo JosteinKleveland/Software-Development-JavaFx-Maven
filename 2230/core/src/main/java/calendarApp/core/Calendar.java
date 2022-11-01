@@ -56,7 +56,7 @@ public class Calendar {
     public Appointment getAppointement(String appointmentName, DaysOfTheWeek dayOfTheWeek, int startHour , int stopHour, int startMinute, int stopMinute) {
         ArrayList<Appointment> appointments = getAppointments();
         for (Appointment appointment : appointments) {
-            if (appointment.getAppointmentName() == appointmentName 
+            if (appointment.getAppointmentName().equals(appointmentName) 
                 && appointment.getDayOfTheWeek() == dayOfTheWeek
                 && appointment.getStartHour() == startHour
                 && appointment.getStartMinute() == startMinute
