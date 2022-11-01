@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 */
 
 
-class CalendarAppModule extends SimpleModule {
+public class CalendarAppModule extends SimpleModule {
     private static final String NAME = "CalendarAppModule";
     private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
   
