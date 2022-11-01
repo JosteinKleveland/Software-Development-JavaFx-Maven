@@ -27,7 +27,7 @@ public class Calendar {
         //return appointments;
     }
 
-    private boolean checkCalendarName(String calendarName){
+    public boolean checkCalendarName(String calendarName){
         if (calendarName.isBlank() || calendarName.length() < 2){
             return false;
         }
