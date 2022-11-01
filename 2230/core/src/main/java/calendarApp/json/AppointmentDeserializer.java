@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import calendarApp.core.Appointment;
 import calendarApp.core.DaysOfTheWeek;
 
+
+// Deserializer for the creation appointment objects
 public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
 
     @Override
@@ -23,6 +25,23 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
         return deserialize((JsonNode) treeNode);
     } 
 
+    /**
+     * Deserializes an appointment through a json tree node on the format:
+     * {
+     *     "appointmentName": "...",
+     *     "appointmentDescription": "...",
+     *     "dayOfTheWeek": "...",
+     *     "startHour": <int>,
+     *     "stopHour": <int>,
+     *     "startMin": <int>,
+     *     "stopMin": <int>
+     * }
+     * 
+     * @param jsonNode
+     * @return Appointment object
+     * @throws IOException
+     * @throws JsonProcessingException
+     */
     public Appointment deserialize(JsonNode jsonNode) throws IOException, JsonProcessingException {
         if (jsonNode instanceof ObjectNode) {
             ObjectNode objectNode = (ObjectNode) jsonNode;

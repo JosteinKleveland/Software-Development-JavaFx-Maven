@@ -15,15 +15,16 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
 
+// Deseralizer for the creation of calendar objects
 public class CalendarDeserializer extends JsonDeserializer<Calendar> {
 
     private AppointmentDeserializer appointmentDeserializer = new AppointmentDeserializer();
 
     /*
-     * format: 
+     * Deserializes a calendar through a json tree node on the format: 
      * { 
-     * "calendarName": ... 
-     * "appointments": [...]
+     *    "calendarName": "..."
+     *    "appointments": [...]
      * }
      */
 
@@ -40,6 +41,7 @@ public class CalendarDeserializer extends JsonDeserializer<Calendar> {
 
             Calendar calendar = new Calendar(calendarName);
 
+            //Utilizes the appointment deserializer and adds appointments returned to the calendar            
             JsonNode appointmentsNode = objectNode.get("appointments");
             if (appointmentsNode instanceof ArrayNode) {
                 for (JsonNode elementNode : ((ArrayNode) appointmentsNode)) {
