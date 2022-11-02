@@ -22,8 +22,18 @@ public class CalendarViewController {
     private Calendar currentCalendar;
 
 
-    public void viewCalendar(Calendar calendar) {
+    public void intialize(Calendar calendar) {
         this.calendarLogic = new CalendarLogic();
+        calendarLogic.setCurrentCalendar(calendar);
+        viewCalendar();
+    }
+
+    public Calendar getCurrentCalendar() {
+        return currentCalendar;
+    }
+
+    public void viewCalendar() {
+        
     }
 
     public void deleteCalendar() {
