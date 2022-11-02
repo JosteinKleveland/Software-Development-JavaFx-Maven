@@ -34,13 +34,11 @@ public class CalendarController {
     @FXML private TextField calendarName_txt;
     @FXML private Text outputField_txt;
    
-   
     //Showing calendar
     @FXML private Text currentCalendarName_txt;
     @FXML private GridPane showWeek_gridpane;
 
     //Appointment management
-
     @FXML private TextField appointmentName_txt;
     @FXML private TextField startTime_txt;
     @FXML private TextField stopTime_txt;
