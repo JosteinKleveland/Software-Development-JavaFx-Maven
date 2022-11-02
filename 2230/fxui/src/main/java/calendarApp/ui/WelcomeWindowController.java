@@ -13,15 +13,14 @@ public class WelcomeWindowController {
 
     @FXML private TextField txtCalendarNameInput; 
 
-    public Calendar newCalendar() {
+    // private CalendarViewController
+
+    public void newCalendar() {
         
-        
-        return null;     
     }
 
-    public Calendar loadCalendar() {
+    public void loadCalendar() {
 
-        return null;
     }
 
 }
