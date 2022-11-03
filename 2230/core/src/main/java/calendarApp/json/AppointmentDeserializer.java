@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import calendarApp.core.Appointment;
 import calendarApp.core.DaysOfTheWeek;
 
+
+// Deserializer for the creation appointment objects
 public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
 
     @Override
@@ -23,10 +25,28 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
         return deserialize((JsonNode) treeNode);
     } 
 
+    /**
+     * Deserializes an appointment through a json tree node on the format:
+     * {
+     *     "appointmentName": "...",
+     *     "appointmentDescription": "...",
+     *     "dayOfTheWeek": "...",
+     *     "startHour": <int>,
+     *     "stopHour": <int>,
+     *     "startMin": <int>,
+     *     "stopMin": <int>
+     * }
+     * 
+     * @param jsonNode
+     * @return Appointment object
+     * @throws IOException
+     * @throws JsonProcessingException
+     */
     public Appointment deserialize(JsonNode jsonNode) throws IOException, JsonProcessingException {
         if (jsonNode instanceof ObjectNode) {
             ObjectNode objectNode = (ObjectNode) jsonNode;
             String appointmentName = "";
+            String appointmentDescription = "";
             DaysOfTheWeek day = null;
             int startHour = 0;
             int stopHour = 0;
@@ -36,6 +56,10 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             if (nameNode instanceof TextNode) {
                 appointmentName = ((TextNode) nameNode).asText();
             } 
+            JsonNode descriptionNode = objectNode.get("appointmentDescription");
+            if (descriptionNode instanceof TextNode) {
+                appointmentDescription = ((TextNode) descriptionNode).asText();
+            }
             JsonNode weekdayNode = objectNode.get("dayOfTheWeek");
             if (weekdayNode instanceof TextNode) {
                 String weekday = ((TextNode) weekdayNode).asText();
@@ -63,7 +87,7 @@ public class AppointmentDeserializer extends JsonDeserializer<Appointment> {
             } 
 
             if(day != null) {
-                Appointment appointment = new Appointment(appointmentName, day, startHour, stopHour, startMinute, stopMinute);
+                Appointment appointment = new Appointment(appointmentName, appointmentDescription, day, startHour, stopHour, startMinute, stopMinute);
                 return appointment;
             }
         }

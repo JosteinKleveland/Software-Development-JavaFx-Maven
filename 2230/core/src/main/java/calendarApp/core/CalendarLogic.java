@@ -1,8 +1,11 @@
 package calendarApp.core;
 
+/**
+ * Contains logic framework for the application
+ */
 public class CalendarLogic {
     
-    private Calendar currentCalendar = null;
+    private Calendar currentCalendar; // Current calendar object
 
     //Dummy-constructor to be able to test from CalendarLogicTest
     public CalendarLogic() {
@@ -76,11 +79,13 @@ public class CalendarLogic {
         else return null;
     }
 
-    /** Method to check if there are any collision between existing Appointment and Appointment to be added.
-     * 
-     * @param existingAppointment Appointment in Calendar
-     * @param newAppointment Appointment to be added
-     * @return true if there is collision, false otherwise
+    /**
+     * Helper function
+     * Checks if the new appointment collides timewise with an existing one,
+     * i.e. if the new appointment exists in the same time frame as the exsisting one
+     * @param existingAppointment
+     * @param newAppointment
+     * @return true if it collides and false otherwise
      */
     private boolean checkCollision(Appointment existingAppointment, Appointment newAppointment){
 

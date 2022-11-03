@@ -50,17 +50,20 @@ public class CalendarSaveHandler {
     }
 
     /**
-     * @param filename - the name of the calendar to be saved / stored.
+     * Saves a calendar object in a json file with serialization
+     * @param calendar - calendar object
      * @throws IOException - throws IOException
-     * 
-     * Saves the name of the filename provided in a .json file.
-     * If it doens't exist from before, builds a .json file with the filename (calendar name) provided and stores the name inside.
      */
     public static void save(Calendar calendar) throws IOException, JsonProcessingException{
+        
+        // Serializes the calendar through CalendarAppModule
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
         
+        // Serializes to a string 
         String json = mapper.writeValueAsString(calendar);
+
+        // The name of the json file created / updated is equal to the calendar object's name + ".json"
         File calendarJson = new File(getFilePath(calendar.getCalendarName()));
         if (calendarJson.createNewFile()) {
             System.out.println("File created: " + calendarJson.getName());
@@ -70,7 +73,8 @@ public class CalendarSaveHandler {
         
         FileOutputStream outputStream = new FileOutputStream(calendarJson);
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
-
+        
+        // Writes the serialized string (json) to the file
         try {
             writer.write(json);
         } catch (IOException e) {
@@ -84,6 +88,7 @@ public class CalendarSaveHandler {
     }   
     
     /**
+     * Creates a calendar object with respective appointment objects from a json file.
      * @param calendarName - the name of the calendar one wants to retrieve.
      * @throws IOException
      * @throws JsonMappingException
@@ -92,16 +97,12 @@ public class CalendarSaveHandler {
     public static Calendar load(String calendarName) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
-        // CalendarAppPersistence persistence = new CalendarAppPersistence();
-
-        // Reader reader = new FileReader(getFilePath(calendarName));
 
         Path filePath = Path.of(getFilePath(calendarName));
         String calendarString = Files.readString(filePath);
-        // reader.read(calendarString);
-        // Calendar calendar = persistence.readCalendar(reader);
+
         Calendar calendar = mapper.readValue(calendarString, Calendar.class);
-        //reader.close();
+
         return calendar;
     } 
 
@@ -114,7 +115,6 @@ public class CalendarSaveHandler {
         ResourceBundle bundle = ResourceBundle.getBundle(SAVE_FOLDER);
         String saveFolderPath = bundle.getString(SAVE_FOLDER);
 
-		//File[] files = new File(SAVE_FOLDER).listFiles();
         File[] files = new File(saveFolderPath).listFiles();
         //If this pathname does not contain a directory, then listFiles() returns null. 
         if (files == null) {

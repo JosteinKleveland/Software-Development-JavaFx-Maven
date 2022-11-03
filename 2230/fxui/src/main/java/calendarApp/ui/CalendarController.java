@@ -34,13 +34,11 @@ public class CalendarController {
     @FXML private TextField calendarName_txt;
     @FXML private Text outputField_txt;
    
-   
     //Showing calendar
     @FXML private Text currentCalendarName_txt;
     @FXML private GridPane showWeek_gridpane;
 
     //Appointment management
-
     @FXML private TextField appointmentName_txt;
     @FXML private TextField startTime_txt;
     @FXML private TextField stopTime_txt;
@@ -190,6 +188,7 @@ public class CalendarController {
     @FXML
     public void addAppointment() throws JsonProcessingException, IOException{
         String appointmentName = appointmentName_txt.getText();
+        String appointmentDescription = "";
         int[] startTime = decodeClock(startTime_txt.getText());
         int[] stopTime = decodeClock(stopTime_txt.getText());
         int startHour = startTime[0];
@@ -197,7 +196,7 @@ public class CalendarController {
         int stopHour = stopTime[0];
         int stopMinute = stopTime[1];
         
-        calendar.addAppointment(new Appointment(appointmentName, DaysOfTheWeek.MONDAY, startHour, stopHour, startMinute, stopMinute));
+        calendar.addAppointment(new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.MONDAY, startHour, stopHour, startMinute, stopMinute));
 
         CalendarSaveHandler.save(calendar);
         fillWeekGrid(calendar);

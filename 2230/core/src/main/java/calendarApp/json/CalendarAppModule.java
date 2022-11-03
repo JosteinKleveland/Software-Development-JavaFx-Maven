@@ -11,11 +11,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 */
 
-
-public class CalendarAppModule extends SimpleModule {
+// Module to access appointment- and calendar- serializers and deserializers
+class CalendarAppModule extends SimpleModule {
     private static final String NAME = "CalendarAppModule";
     private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
-  
+    
+    // Connects the Appointment and Calendar classes with their respective serializers/deseralizers
     public CalendarAppModule() {
       super(NAME, VERSION_UTIL.version());
       addSerializer(Appointment.class, new AppointmentSerializer());
@@ -31,7 +32,7 @@ public class CalendarAppModule extends SimpleModule {
         Calendar calendar = new Calendar("jsonTest");
         Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
-        Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
+        Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 15);
         calendar.addAppointment(appointment2);
         try {
             System.out.println(mapper.writeValueAsString(calendar));
