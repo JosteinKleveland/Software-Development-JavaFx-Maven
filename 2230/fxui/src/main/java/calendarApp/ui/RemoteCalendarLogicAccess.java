@@ -19,6 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarAppModule;
+import calendarApp.core.Appointment;
 
 /**
  * Class that centralizes access to a CalendarLogicAccess. Makes it easier to support transparent use of a
@@ -54,6 +55,17 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
             throw new RuntimeException(e);
         }
         return calendarLogic;
+    }
+
+    /**
+     * 
+     * @param c1 is the Calendar that is getting Appointments added
+     * @param newAppointment is Appointment to be added
+     * @throws IllegalArgumentException if the new appointment collides with an existing one in the callendar
+     */
+    @Override
+    public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment) {
+        
     }
 
     //Possible methods to use for settings
@@ -110,14 +122,18 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         return endpointBaseUri.resolve("list/").resolve(uriParam(name));
     }*/
 
-
+    /**
+     * 
+     * @param optional name
+     * @return Calendar equal to currentCalendar if name is null, else returns new Calendar with given name
+     */
     @Override
-    public Calendar getCurrentCalendar(String calendarName) {
-        Calendar oldCalendar = this.calendarLogic.getCurrentCalendar(calendarName);
+    public Calendar getCurrentCalendar(String... calendarName) {
+        Calendar oldCalendar = this.calendarLogic.getCurrentCalendar();
         // if existing calendar has no appointments, try to (re)load
         if (oldCalendar == null || (! (oldCalendar instanceof Calendar))) {
             HttpRequest request = 
-                HttpRequest.newBuilder(calendarUri(calendarName))
+                HttpRequest.newBuilder(calendarUri(calendarName[0]))
                     .header("Accept", "application/json").GET().build();
         try {
             final HttpResponse<String> response = 
@@ -175,14 +191,14 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     // ----------------- Kommet ned hit -----------------------
 
     /**
-     * Removes the TodoList with the given name from the underlying TodoModel.
+     * Removes the Calendar with the given name from the underlying CalendarLogic.
      *
-     * @param name the name of the TodoList to remove
+     * @param name the name of the Calendar to remove
      */
-    @Override
-    public void removeTodoList(String name) {
+   /* @Override
+    public void removeCalendar(String name) {       //implementere egen metode for sletting?
         try {
-        HttpRequest request = HttpRequest.newBuilder(todoListUri(name))
+        HttpRequest request = HttpRequest.newBuilder(calendarUri(name))
             .header("Accept", "application/json")
             .DELETE()
             .build();
@@ -191,23 +207,23 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         String responseString = response.body();
         Boolean removed = objectMapper.readValue(responseString, Boolean.class);
         if (removed != null) {
-            todoModel.removeTodoList(todoModel.getTodoList(name));
+            calendarLogic.removeCalendar(calendarLogic.getCurrentCalendar(name));
         }
         } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);
         }
-    }
+    }*/
 
     /**
-     * Renames a TodoList to a new name.
+     * Renames a Calendar to a new name.
      *
-     * @param oldName the name of the TodoList to change
+     * @param oldName the name of the Calendar to change
      * @param newName the new name
      */
-    @Override
-    public void renameTodoList(String oldName, String newName) {
+   /* @Override
+    public void renameCalendar(String oldName, String newName) {
         try {
-        HttpRequest request = HttpRequest.newBuilder(todoListUri(oldName))
+        HttpRequest request = HttpRequest.newBuilder(calendarUri(oldName))
             .header("Accept", "application/json")
             .header("Content-Type", "application/x-www-form-urlencoded")
             .POST(BodyPublishers.ofString("newName=" + uriParam(newName)))
@@ -217,12 +233,13 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         String responseString = response.body();
         Boolean renamed = objectMapper.readValue(responseString, Boolean.class);
         if (renamed != null) {
-            todoModel.getTodoList(oldName).setName(newName);
+            calendarLogic.getCurrentCalendar(oldName).setCalendarName(newName);
+            //originalt en privat metode
         }
         } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);
         }
-    }
+    }*/
 
     /**
      * Notifies that the TodoList has changed, e.g. TodoItems
@@ -230,9 +247,9 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
      *
      * @param todoList the TodoList that has changed
      */
-    @Override
-    public void notifyTodoListChanged(AbstractTodoList todoList) {
-        putTodoList(todoList);
-    }
+   /* @Override
+    public void notifyCalendarChanged(Calendar calendar) {
+        putCurrentCalendar(calendar);
+    }*/
 }
 
