@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 */
 
 // Module to access appointment- and calendar- serializers and deserializers
-class CalendarAppModule extends SimpleModule {
+public class CalendarAppModule extends SimpleModule {
     private static final String NAME = "CalendarAppModule";
     private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
     
