@@ -25,6 +25,7 @@ public class CalendarLogic {
      * 
      * @param c1 is the Calendar that is getting Appointments added
      * @param newAppointment is Appointment to be added
+     * @throws IllegalArgumentException if the new appointment collides with an existing one in the callendar
      */
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment){
         
@@ -70,7 +71,7 @@ public class CalendarLogic {
         //the calendar object will be set to a copy of the argument
         this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
         if (currentCalendar != null) {
-            Calendar oldCalendar = this.currentCalendar;
+            Calendar oldCalendar = this.getCurrentCalendar();
             for (Appointment appointment : currentCalendar.getAppointments() ) {
                 this.currentCalendar.addAppointment(appointment);
             }
