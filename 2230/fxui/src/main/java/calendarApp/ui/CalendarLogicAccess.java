@@ -11,7 +11,7 @@ public interface CalendarLogicAccess {
     
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment);
 
-    public Calendar getCurrentCalendar(String calendarName);
+    public Calendar getCurrentCalendar(String... calendarName);
 
     public void setCurrentCalendar(Calendar currentCalendar);
 }
