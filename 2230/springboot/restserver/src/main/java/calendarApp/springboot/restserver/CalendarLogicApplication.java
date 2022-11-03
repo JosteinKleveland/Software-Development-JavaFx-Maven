@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import calendarApp.json.calendarSaveHandler;
+import calendarApp.json.CalendarSaveHandler;
 //import todolist.json.TodoPersistence.TodoModelParts;
 
 /**
