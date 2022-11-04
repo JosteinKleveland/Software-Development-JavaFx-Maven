@@ -35,7 +35,7 @@ public class CalendarViewController {
 
 
 
-    public void intialize(Calendar calendar) {
+    public void initialize(Calendar calendar) {
         this.calendarLogic = new CalendarLogic();
         calendarLogic.setCurrentCalendar(calendar);
         viewCalendar();
