@@ -31,7 +31,6 @@ public class CalendarViewController {
 
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
 
 
@@ -39,10 +38,6 @@ public class CalendarViewController {
         this.calendarLogic = new CalendarLogic();
         calendarLogic.setCurrentCalendar(calendar);
         viewCalendar();
-    }
-
-    public Calendar getCurrentCalendar() {
-        return currentCalendar;
     }
 
     public void viewCalendar() {

@@ -38,6 +38,7 @@ public class WelcomeWindowController {
 
         //Getting the text input from the text field
         String calendarName = txtCalendarNameInput.getText();
+        lblFeedback.setText("");
 
         //Checking whether the text field is empty or not
         if(calendarName.length() == 0){
@@ -80,6 +81,7 @@ public class WelcomeWindowController {
 
         //Getting the text input from the text field
         String calendarName = txtCalendarNameInput.getText();
+        lblFeedback.setText("");
 
         //Checks whether the calendar name exists from before.
         if(!CalendarSaveHandler.checkIfFileExists(calendarName)) {
@@ -94,7 +96,6 @@ public class WelcomeWindowController {
         try {
             // Loads the Calendar object with name calendarName
             Calendar calendar = CalendarSaveHandler.load(calendarName);
-
             // Changes window to CalenderView and sets up the respective controller with the calendar   
             calendarViewController.initialize(calendar);
             changeToCalendarViewWindow(event, loader.load());
@@ -123,8 +124,6 @@ public class WelcomeWindowController {
         stage.setScene(scene);
         stage.show();
     }
-
-
 
 
 }
