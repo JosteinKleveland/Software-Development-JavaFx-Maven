@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane fx:id="txtSetStopTime" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.MakeAppointmentController">
+<AnchorPane fx:id="paneCalenedarview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.MakeAppointmentController">
    <children>
       <TextField fx:id="txtAppointmentName" layoutX="65.0" layoutY="64.0" prefHeight="25.0" prefWidth="271.0" promptText="Appointment name" />
       <TextField fx:id="txtSetStartTime" layoutX="128.0" layoutY="95.0" prefHeight="25.0" prefWidth="49.0" promptText="xx:xx" />
