@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.io.Reader;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,10 +22,17 @@ import calendarApp.core.Calendar;
 import calendarApp.core.DaysOfTheWeek;
 import calendarApp.core.Appointment;
 */
+import calendarApp.core.CalendarLogic;
 
 //Handles saving and loading of calendars.
 public class CalendarSaveHandler {
     
+    private ObjectMapper fileMapper;
+    public CalendarSaveHandler() {
+        fileMapper = new ObjectMapper();
+        fileMapper.registerModule(new CalendarAppModule());
+    }
+
     //Stores the string of the path to the directory where calendars are stored - in a CONSTANT.
     public final static String SAVE_FOLDER = "/workspace/gr2230/2230/data/src/main/java/calendarApp/data/savedCalendars/";
 
@@ -129,6 +138,28 @@ public class CalendarSaveHandler {
 		
 		return filenames;
 	}
+
+    private Path saveFilePath = null;
+
+    /**
+     * 
+     * @param saveFile
+     */
+    public void setSaveFile(String saveFile) {
+        this.saveFilePath = Paths.get(System.getProperty("user.home"), saveFile);
+    }
+
+    /**
+     * 
+     * @return saveFilePath
+     */
+    public Path getSaveFilePath() {
+        return this.saveFilePath;
+    }
+
+    public CalendarLogic readCalendarLogic(Reader reader) throws IOException {
+        return fileMapper.readValue(reader, CalendarLogic.class);
+    }
 
     //For practical testing.
     /*public static void main(String[] args) throws IOException {
