@@ -18,16 +18,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
+// Controller to create a new calendar or load an existing one
+// Each of these functions opens the calendar view scene
 public class WelcomeWindowController {
     
     @FXML private Button btnNewCalendar;
     @FXML private Button btnLoadCalendar;
     @FXML private TextField txtCalendarNameInput;
     @FXML private Label lblFeedback;
+    
+    CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
 
     private Stage stage;
     private Scene scene;
+    private Parent root;
 
     /**
      * Creates a new calendar and activates the calendar view
@@ -47,23 +51,34 @@ public class WelcomeWindowController {
         }
 
         //Checks whether the calendar name exists from before.
-        if(CalendarSaveHandler.checkIfFileExists(calendarName)) {
+        if(calendarSaveHandler.checkIfFileExists(calendarName)) {
             lblFeedback.setText("Calendar name already exists, choose another");
             throw new IllegalArgumentException("This calendar name already exists");
         }
 
+        // Prepares the root for the method that switches scenes
+        // and to activate the respective fxml and controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarView.fxml"));
+        try {
+            this.root = loader.load();
+        } catch (IOException e1) {
+            lblFeedback.setText("An error occured loading calendar page");
+            e1.printStackTrace();
+        }
+        
+        // Gets the controller that is connected to the CalendarView.fxml
+        // Used to pass the Calendar object from this controller to CalendarViewController
+        // and to call on its initialize method
         CalendarViewController calendarViewController = loader.getController();
-
-        Calendar calendar = new Calendar(calendarName);
-         
+        
         try {
             // Creates and saves the new calendar and 
+            Calendar calendar = new Calendar(calendarName);
             CalendarSaveHandler.save(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
-            calendarViewController.initialize(null);
-            changeToCalendarViewWindow(event, loader.load());
+            calendarViewController.initialize(calendar);
+            changeToCalendarViewWindow(event, this.root);
             }
             catch (IOException e) {
                 lblFeedback.setText("An error occured. Could not create new calendar.");
@@ -83,22 +98,34 @@ public class WelcomeWindowController {
         String calendarName = txtCalendarNameInput.getText();
         lblFeedback.setText("");
 
-        //Checks whether the calendar name exists from before.
-        if(!CalendarSaveHandler.checkIfFileExists(calendarName)) {
+        //Checks whether the calendar name exists from before
+        if(!calendarSaveHandler.checkIfFileExists(calendarName)) {
             lblFeedback.setText("Calendar name does not exists");
             throw new IllegalArgumentException("Calendar name does not exist");
         }
         
+        // Prepares the root for the method that switches scenes
+        // and to activate the respective fxml and controller
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarView.fxml"));
-        CalendarViewController calendarViewController = loader.getController();
+        try {
+            this.root = loader.load();
+        } catch (IOException e1) {
+            lblFeedback.setText("An error occured. Could not create new calendar.");
+            e1.printStackTrace();
+        }
 
+        // Gets the controller that is connected to the CalendarView.fxml
+        // Used to pass the Calendar object from this controller to CalendarViewController
+        // and to call on its initialize method
+        CalendarViewController calendarViewController = loader.getController();
 
         try {
             // Loads the Calendar object with name calendarName
             Calendar calendar = CalendarSaveHandler.load(calendarName);
-            // Changes window to CalenderView and sets up the respective controller with the calendar   
-            calendarViewController.initialize(calendar);
-            changeToCalendarViewWindow(event, loader.load());
+            
+            // Changes window to CalenderView and sets up the respective controller with the calendar
+            calendarViewController.initialize(calendar);   
+            changeToCalendarViewWindow(event, this.root);
 
         } catch (JsonParseException e) {
             e.printStackTrace();

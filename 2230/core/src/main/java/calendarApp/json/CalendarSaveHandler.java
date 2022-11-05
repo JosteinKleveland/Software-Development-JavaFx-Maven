@@ -39,7 +39,7 @@ public class CalendarSaveHandler {
      * @param filename - name of calendar one wants to see if exists (name of calendar is same as its filename (w.out .filetype)).
      * @return - true if the calendar exists, false if it doesn't.
      */
-    public static boolean checkIfFileExists(String filename) {
+    public boolean checkIfFileExists(String filename) {
         File file = new File(getFilePath(filename));
             if(file.isFile()) { 
                 return true;
