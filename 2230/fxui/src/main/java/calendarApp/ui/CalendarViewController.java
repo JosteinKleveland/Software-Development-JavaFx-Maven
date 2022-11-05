@@ -31,18 +31,13 @@ public class CalendarViewController {
 
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
 
 
-    public void intialize(Calendar calendar) {
+    public void initialize(Calendar calendar) {
         this.calendarLogic = new CalendarLogic();
         calendarLogic.setCurrentCalendar(calendar);
         viewCalendar();
-    }
-
-    public Calendar getCurrentCalendar() {
-        return currentCalendar;
     }
 
     public void viewCalendar() {
