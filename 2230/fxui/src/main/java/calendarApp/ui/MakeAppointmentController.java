@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
+import calendarApp.core.CalendarLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,12 +41,15 @@ public class MakeAppointmentController {
 
 
     private CalendarViewController calendarViewController;
+    private CalendarLogic calendarLogic;
 
     private boolean inEditMode;
     private Appointment editAppointment;
 
 
-    public void intialize(CalendarViewController calendarViewController, boolean inEditMode, Appointment editAppointment) {
+    public void intialize(CalendarViewController calendarViewController, CalendarLogic calendarLogic, boolean inEditMode, Appointment editAppointment) {
+        this.calendarViewController = calendarViewController;
+        this.calendarLogic = calendarLogic;
         this.inEditMode = inEditMode;
         if (inEditMode)
             this.editAppointment = editAppointment;

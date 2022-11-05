@@ -3,6 +3,7 @@ package calendarApp.ui;
 import java.io.IOException;
 
 import calendarApp.core.Appointment;
+import calendarApp.core.CalendarLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ public class ViewAppointmentController {
 
     private CalendarViewController calendarViewController;
     private Appointment appointmentInView;
+    private CalendarLogic calendarLogic;
 
     
     private Stage stage;
@@ -32,8 +34,9 @@ public class ViewAppointmentController {
     private Parent root;
 
 
-    public void viewAppointment(CalendarViewController calendarViewController, Appointment appointmentInView) {
+    public void viewAppointment(CalendarViewController calendarViewController, CalendarLogic calendarLogic, Appointment appointmentInView) {
         this.calendarViewController = calendarViewController;
+        this.calendarLogic = calendarLogic;
         this.appointmentInView = appointmentInView;
     }
 

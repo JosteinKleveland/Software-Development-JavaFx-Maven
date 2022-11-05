@@ -34,6 +34,7 @@ public class CalendarViewController {
 
     private Stage stage;
     private Scene scene;
+    private Parent root; 
 
 
 
@@ -117,41 +118,61 @@ public class CalendarViewController {
     public void deleteCalendar(ActionEvent event) throws IOException {    
         //Not yet implemented in save handeler
         //CalendarSaveHandler.delete(getCurrentCalendar().getCalendarName());
-        changeScene(event, "welcomeWindow.fxml");
+        String nextScene = "WelcomeWindow.fxml";
+        this.root = FXMLLoader.load(getClass().getResource(nextScene));
+        changeScene(event, this.root, nextScene);
     }
 
     public void openAppointment(ActionEvent event) throws IOException {
+        
+        // ! ! ! ! Man skal egentlig trykke på en Appointment ! ! ! !
+        // Midlertidig ny tom appointment
+        Appointment appointment = new Appointment("Fotball", "Husk å ta med ball", DaysOfTheWeek.MONDAY, 18, 19, 30, 30);
+        // ! ! ! ! ! ! ! ! ! ! ! ! !  ! ! ! ! !  
+
         String nextScene = "ViewAppointment.fxml";
 
-        changeScene(event, nextScene); 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+        this.root = loader.load();
 
+        // Gets the controller that is connected to the ViewAppointment.fxml
+        // and intializes the setup to view the respective appointment
+        ViewAppointmentController viewAppointmentController = loader.getController();
+        viewAppointmentController.viewAppointment(this, this.calendarLogic, appointment);
+
+        changeScene(event,this.root, nextScene); 
     }
 
     // Exiting current calendar, and going back to welcome window
-    public void exitCalendar(ActionEvent event) throws IOException {
-
+    public void exitCalendar(ActionEvent event) throws IOException {      
         String nextScene = "WelcomeWindow.fxml";
-        changeScene(event, nextScene);
+        this.root = FXMLLoader.load(getClass().getResource(nextScene));
+        changeScene(event, this.root, nextScene);
     }
   
     
     
     public void createNewAppointment(ActionEvent event) throws IOException {
         String nextScene = "MakeAppointment.fxml";
-      changeScene(event, nextScene);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+        this.root = loader.load();
+
+        // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to the create a new appointment
+        // Since the same controller is used to edit appointments,
+        // the arguments "inEditMode" and "editAppointment" are set to false and null
+        MakeAppointmentController makeAppointmentController = loader.getController();
+        makeAppointmentController.intialize(this, this.calendarLogic, false, null);
+
+        changeScene(event, this.root, nextScene);
     }
 
 
     //Method for switching between scenes
-    private void changeScene(ActionEvent event, String sceneName) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource(sceneName));
+    private void changeScene(ActionEvent event, Parent root, String sceneName) throws IOException{
         stage = (Stage)(((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
 }
