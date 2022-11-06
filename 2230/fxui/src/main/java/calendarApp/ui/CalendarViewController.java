@@ -44,7 +44,6 @@ public class CalendarViewController {
     }
 
 
-
     @FXML
     public void viewCalendar(Calendar calendar) {
         
