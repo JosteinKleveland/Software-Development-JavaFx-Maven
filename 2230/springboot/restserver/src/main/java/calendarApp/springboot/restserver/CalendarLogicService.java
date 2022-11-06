@@ -10,14 +10,14 @@ import calendarApp.core.Calendar;
 import calendarApp.core.Appointment;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarSaveHandler;
+import calendarApp.core.DaysOfTheWeek;
 
 /**
  * Configures the calendar service,
  * including autowired objects.
  */
-
 @Service
-public class TodoModelService {
+public class CalendarLogicService {
 
   private CalendarLogic calendarLogic;
   private CalendarSaveHandler calendarSaveHandler;
@@ -30,9 +30,7 @@ public class TodoModelService {
   public CalendarLogicService(CalendarLogic calendarLogic) {
     this.calendarLogic = calendarLogic;
     this.calendarSaveHandler = new CalendarSaveHandler();
-    //Må opprette en metode for alternativ fillagringssti i CalendarSaveHandler
-    //Så vi faktisk får lagret kalenderne på server
-    //calendarSaveHandler.setSaveFile("springbootserver-todolist.json");
+    calendarSaveHandler.setSaveFile("springbootserver-todolist.json");
   }
 
   public CalendarLogicService() {
@@ -47,15 +45,12 @@ public class TodoModelService {
     this.calendarLogic = calendarLogic;
   }
 
-  /*
-  //Må også opprette en metode for "readCalendarLogic", det finnes en tilsvarende i
-  //TodoPersistence som heter "readTodoModel(reader)"
   private static CalendarLogic createDefaultCalendarLogic() {
     CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
     URL url = CalendarLogicService.class.getResource("default-calendarlogic.json");
     if (url != null) {
       try (Reader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
-        return calendarLogic.readTodoModel(reader);
+        return calendarSaveHandler.readCalendarLogic(reader);
       } catch (IOException e) {
         System.out.println("Couldn't read default-calendarlogic.json, so rigging CalendarLogic manually ("
             + e + ")");
@@ -63,17 +58,17 @@ public class TodoModelService {
     }
     CalendarLogic calendarLogic = new CalendarLogic();
     Calendar calendar1 = new Calendar("calendar1");
-    calendar1.addAppointment(new Appointment());
+    calendar1.addAppointment(new Appointment("Appointment 1", "First appointment", DaysOfTheWeek.MONDAY, 0, 0, 1, 0));
     calendarLogic.setCurrentCalendar(calendar1);
     //todoModel.addTodoList(new TodoList("todo2"));
     return calendarLogic;
-  } */
+  } 
 
   /**
    * Saves the CalendarLogic to disk.
    * Should be called after each update.
    */
-  /*public void autoSaveCalendarLogic() {
+  /* public void autoSaveCalendarLogic() {
     if (calendarSaveHandler != null) {
       try {
         calendarSaveHandler.autoSaveCalendarLogic(this.calendarLogic);
