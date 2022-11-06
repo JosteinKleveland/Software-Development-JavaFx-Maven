@@ -47,7 +47,6 @@ public class CalendarViewController {
     @FXML
     public void viewCalendar(Calendar calendar) {
         
-        this.calendarLogic.setCurrentCalendar(calendar);
 
         // Changes preview name in GUI
         lblCalendarNamePreview.setText(calendar.getCalendarName());
