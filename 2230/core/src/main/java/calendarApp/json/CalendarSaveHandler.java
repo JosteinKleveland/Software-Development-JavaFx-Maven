@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.io.Reader;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -95,6 +96,10 @@ public class CalendarSaveHandler {
             e.printStackTrace();
         }
     }   
+
+    public static SimpleModule createJacksonModule() {
+        return new CalendarAppModule();
+    }
     
     /**
      * Creates a calendar object with respective appointment objects from a json file.
