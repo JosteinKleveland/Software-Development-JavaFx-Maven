@@ -37,9 +37,6 @@ public class MakeAppointmentController {
     private Scene scene;
     private Parent root;
 
-
-
-
     private CalendarViewController calendarViewController;
     private CalendarLogic calendarLogic;
 
@@ -47,7 +44,7 @@ public class MakeAppointmentController {
     private Appointment editAppointment;
 
 
-    public void intialize(CalendarViewController calendarViewController, CalendarLogic calendarLogic, boolean inEditMode, Appointment editAppointment) {
+    protected void intialize(CalendarViewController calendarViewController, CalendarLogic calendarLogic, boolean inEditMode, Appointment editAppointment) {
         this.calendarViewController = calendarViewController;
         this.calendarLogic = calendarLogic;
         this.inEditMode = inEditMode;
@@ -56,7 +53,7 @@ public class MakeAppointmentController {
     }
     
     public void makeAppointment(ActionEvent event) throws IOException {
-
+        
         String nextScene = "CalendarView.fxml";
         changeScene(event, nextScene);
         
