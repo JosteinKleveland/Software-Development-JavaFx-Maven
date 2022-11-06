@@ -30,7 +30,6 @@ public class CalendarViewController {
     @FXML private GridPane gridShowCalendar;
 
     private CalendarLogic calendarLogic;
-    private Calendar currentCalendar;
 
     private Stage stage;
     private Scene scene;
@@ -38,8 +37,7 @@ public class CalendarViewController {
 
 
 
-    public void initialize(Calendar calendar) {
-        this.currentCalendar = calendar;
+    protected void initialize(Calendar calendar) {
         this.calendarLogic = new CalendarLogic();
         calendarLogic.setCurrentCalendar(calendar);
         viewCalendar(calendar);
@@ -50,7 +48,6 @@ public class CalendarViewController {
     @FXML
     public void viewCalendar(Calendar calendar) {
         
-        this.calendarLogic.setCurrentCalendar(calendar);
 
         // Changes preview name in GUI
         lblCalendarNamePreview.setText(calendar.getCalendarName());
