@@ -45,7 +45,7 @@ public class ViewAppointmentController {
      * @param calendarLogic the calendarLogic object that manages the user's calendar
      * @param appointmentInView the appointment the user clicked on
      */
-    public void viewAppointment(CalendarViewController calendarViewController, CalendarLogic calendarLogic, Appointment appointmentInView) {
+    protected void viewAppointment(CalendarViewController calendarViewController, CalendarLogic calendarLogic, Appointment appointmentInView) {
         // Sets the variables of the controller such that other methods can access them
         this.calendarViewController = calendarViewController;
         this.calendarLogic = calendarLogic;

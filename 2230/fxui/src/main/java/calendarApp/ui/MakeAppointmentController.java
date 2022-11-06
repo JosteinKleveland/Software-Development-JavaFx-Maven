@@ -42,11 +42,12 @@ public class MakeAppointmentController {
     private Scene scene;
     private Parent root;
 
-    private CalendarViewController calendarViewController;
-    private CalendarLogic calendarLogic;
+    private CalendarViewController calendarViewController; // the controller which belongs to the fxml
+    // that the app will change scene to when this scene is finish
+    private CalendarLogic calendarLogic; // the CalendarLogic object which contains the respective calendar of the user
 
-    private boolean inEditMode;
-    private Appointment editAppointment;
+    private boolean inEditMode; // true if the user is editing an appointment, and false otherwise
+    private Appointment editAppointment; // the appointment being edited, can be null
 
 
     /**
@@ -64,7 +65,7 @@ public class MakeAppointmentController {
             this.editAppointment = editAppointment;
     }
     
-
+    
     /**
      * Makes a new Appointment in the Calendar and if in edit mode - deletes the previous one
      * @param event

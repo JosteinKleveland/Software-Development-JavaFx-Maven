@@ -30,7 +30,6 @@ public class CalendarViewController {
     @FXML private GridPane gridShowCalendar;
 
     private CalendarLogic calendarLogic;
-    private Calendar currentCalendar;
 
     private Stage stage;
     private Scene scene;
@@ -38,13 +37,11 @@ public class CalendarViewController {
 
 
 
-    public void initialize(Calendar calendar) {
-        this.currentCalendar = calendar;
+    protected void initialize(Calendar calendar) {
         this.calendarLogic = new CalendarLogic();
         calendarLogic.setCurrentCalendar(calendar);
         viewCalendar(calendar);
     }
-
 
 
     @FXML
