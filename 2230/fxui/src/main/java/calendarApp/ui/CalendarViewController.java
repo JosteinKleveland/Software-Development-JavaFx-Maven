@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 
 // Manages the main view of the app. Showing the selected calender, selected appointments, navigation back to welcome window, delete appointment, delete calendar and create new appointment
-public class CalendarViewController implements Initializable {
+public class CalendarViewController {
     
     //FXML elements
     //Showing chosen appointment
@@ -73,17 +73,11 @@ public class CalendarViewController implements Initializable {
     } 
 
 
-    public void initialize(Calendar calendar) {
+    protected void initialize(Calendar calendar) {
         this.currentCalendar = calendar;
         this.calendarLogic = new CalendarLogic();
         calendarLogic.setCurrentCalendar(calendar);
-        viewCalendar(calendar);
-    }
-
-
-    @FXML
-    public void viewCalendar(Calendar calendar) {
-        //Not in use. Will be removed
+        viewCalendar();
     }
 
     private void setChosenAppointment(Appointment appointment){
@@ -145,35 +139,32 @@ public class CalendarViewController implements Initializable {
 
     }
 
+    /**
+     * Opens the edit window (MakeAppointmend.fxml) and readies the respective controller
+     * @param event
+     * @throws IOException
+     */
+    public void editAppointment(ActionEvent event) throws IOException {
 
-    //------------------------------------------------------
-    //Denne må tilpasses nå
-    public void openAppointment(ActionEvent event) throws IOException {
-        
-        // ! ! ! ! Man skal egentlig trykke på en Appointment ! ! ! !
-        // Midlertidig ny tom appointment
-        Appointment appointment = new Appointment("Fotball", "Husk å ta med ball", DaysOfTheWeek.MONDAY, 18, 19, 30, 30);
-        // ! ! ! ! ! ! ! ! ! ! ! ! !  ! ! ! ! !  
-
-        String nextScene = "ViewAppointment.fxml";
-
+        String nextScene = "MakeAppointment.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
         this.root = loader.load();
+        
+        // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to edit an appointment
+        // Since the same controller is also used to create new appointments from scratch,
+        // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
+        MakeAppointmentController makeAppointmentController = loader.getController();
+        makeAppointmentController.intialize(this, this.calendarLogic, true, this.chosenAppointment);
 
-        // Gets the controller that is connected to the ViewAppointment.fxml
-        // and intializes the setup to view the respective appointment
-        ViewAppointmentController viewAppointmentController = loader.getController();
-        viewAppointmentController.viewAppointment(this, this.calendarLogic, appointment);
-
-        changeScene(event,this.root, nextScene); 
+        changeScene(event, this.root, nextScene);
     }
 
-    //-------------------------------------------------------
 
    // Exiting current calendar, and going back to welcome window
    public void exitCalendar(ActionEvent event) throws IOException {
-
         String nextScene = "WelcomeWindow.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+        this.root = loader.load();
         changeScene(event,this.root, nextScene);
     }
   
@@ -234,8 +225,8 @@ public class CalendarViewController implements Initializable {
         return (hours*4+(minutes/15));
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void viewCalendar() {
+
         appointmentBlocks.addAll(getData());
         if(appointmentBlocks.size()>0){
             setChosenAppointment(appointmentBlocks.get(0));

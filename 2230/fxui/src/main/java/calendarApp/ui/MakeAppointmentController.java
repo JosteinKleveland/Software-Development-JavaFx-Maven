@@ -20,10 +20,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 // Handles the making of new appointments, as well as editing of existing ones
 public class MakeAppointmentController {
     
+    ObservableList list = FXCollections.observableArrayList();
+
     // FXML elements
     @FXML TextField txtAppointmentName;
     @FXML TextField txtSetStartTime;
@@ -82,7 +86,7 @@ public class MakeAppointmentController {
         int startMinute = startTime[1];
         int stopHour = stopTime[0];
         int stopMinute = stopTime[1];
-        
+
         Calendar currentCalendar = this.calendarLogic.getCurrentCalendar();
 
         // If we are in editing mode (in practice came from "ViewAppointment.fxml"), then remove the current appointment
@@ -90,7 +94,7 @@ public class MakeAppointmentController {
         if (inEditMode) {
             currentCalendar.removeAppointment(editAppointment);
         }
-        currentCalendar.addAppointment(new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay), startHour, stopHour, startMinute, stopMinute));
+        currentCalendar.addAppointment(new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay.toUpperCase()), startHour, stopHour, startMinute, stopMinute));
 
         // Saves the updated version of the calendar in the respective JSON file
         CalendarSaveHandler.save(currentCalendar);
@@ -99,8 +103,8 @@ public class MakeAppointmentController {
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
         this.root = loader.load();
-        this.calendarViewController.viewCalendar(currentCalendar);
         changeScene(event, this.root, nextScene);
+        
     }
 
     /**
@@ -112,6 +116,7 @@ public class MakeAppointmentController {
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
         this.root = loader.load();
+        this.calendarViewController.initialize(this.calendarLogic.getCurrentCalendar());
         changeScene(event, this.root, nextScene);
     }
 

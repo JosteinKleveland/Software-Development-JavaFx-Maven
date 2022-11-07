@@ -20,7 +20,7 @@ public class AppointmentController {
     private Appointment appointment;
     private CalendarListener calendarListener;
 
-    public void setData(Appointment appointment, CalendarListener calendarListener){
+    protected void setData(Appointment appointment, CalendarListener calendarListener){
         this.appointment = appointment;
         this.calendarListener = calendarListener;
         lblAppointmentName.setText(appointment.getAppointmentName());
