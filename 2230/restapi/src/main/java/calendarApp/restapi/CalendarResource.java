@@ -11,12 +11,14 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+
 
 /**
  * Used for all requests referring to a Calendar by name
@@ -121,12 +123,12 @@ public class CalendarResource {
      * Removes the Calendar 
      * @return true if Calendar was removed, else exception is thrown
      */
-    /*@DELETE
+    @DELETE
     public boolean removeCalendar() {
         checkCalendar();
-        this.calendarLogic.removeCalendar(this.calendar);
+        //this.calendarLogic.deleteCalendar(this.calendar); //Metode som skal implementeres i saveHandler antakeligvis
         autoSaveCalendarLogic();
         return true;
-    }*/
+    }
 }
 
