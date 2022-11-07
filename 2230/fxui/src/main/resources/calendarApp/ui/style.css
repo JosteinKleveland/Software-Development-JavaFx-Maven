@@ -1,0 +1,14 @@
+.rigth-bar{
+    -fx-background-color: #d3d3d3;
+}
+
+
+.chosen-appointment-card{
+    -fx-background-color: #f16c31;
+    -fx-background-radius: 30;
+}
+
+.appointment-block{
+    -fx-background-color: #e0bd5c;
+    -fx-background-radius: 10;
+}
