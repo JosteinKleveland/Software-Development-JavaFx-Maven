@@ -87,11 +87,22 @@ public class CalendarViewController implements Initializable {
     }
 
     private void setChosenAppointment(Appointment appointment){
+
+        if (appointment == null){
+            lblChosenAppointmentName.setText("");
+            lblChosenAppointmentDescription.setText("");
+            lbChosenAppointmentTime.setText("");
+        }
+
+        else {
         lblChosenAppointmentName.setText(appointment.getAppointmentName());
         lblChosenAppointmentDescription.setText(appointment.getAppointmentDescription());
         lbChosenAppointmentTime.setText(appointment.getStartHour()+":"+appointment.getStartMinute()+" - "+appointment.getStopHour()+":"+ appointment.getStopMinute());
         
         this.chosenAppointment = appointment;
+        }
+
+        
 
         //Will be repalced to allow appointments have dirfferent colors in their preview
         chossenAppointmentCard.setStyle("-fx-background-color: #"+"f16c31;\n"+"-fx-background-radius: 30;");
@@ -110,7 +121,7 @@ public class CalendarViewController implements Initializable {
 
         //Delete the calendar if the user agree
         if (alert.showAndWait().get() == ButtonType.OK){
-            //CalendarSaveHandler.delete(currentCalendar);
+            //CalendarSaveHandler.delete(currentCalendar.getCalendarName);
             changeScene(event,this.root, "welcomeWindow.fxml");
         }
     }
@@ -236,6 +247,10 @@ public class CalendarViewController implements Initializable {
                 }
             };
         }
+        else {
+            setChosenAppointment(null);
+            }
+       
 
         int numberOfBlocks;
         int firstBlock;
