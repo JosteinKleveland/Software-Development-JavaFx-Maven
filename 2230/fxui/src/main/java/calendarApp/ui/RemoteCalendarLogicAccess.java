@@ -131,7 +131,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     public Calendar getCurrentCalendar(String... calendarName) {
         Calendar oldCalendar = this.calendarLogic.getCurrentCalendar();
         // if existing calendar has no appointments, try to (re)load
-        if (oldCalendar == null || (! (oldCalendar instanceof Calendar))) {
+        if (oldCalendar == null) { // || (! (oldCalendar instanceof Calendar))) {
             HttpRequest request = 
                 HttpRequest.newBuilder(calendarUri(calendarName[0]))
                     .header("Accept", "application/json").GET().build();
@@ -140,7 +140,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
                 HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
             Calendar calendar = objectMapper.readValue(responseString, Calendar.class);
-            if (! (calendar instanceof Calendar)) {
+            if (! (calendar == null)) {
                 Calendar newCalendar = new Calendar(calendar.getCalendarName());
                 calendar = newCalendar;
             }
@@ -195,7 +195,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
      *
      * @param name the name of the Calendar to remove
      */
-   /* @Override
+   @Override
     public void removeCalendar(String name) {       //implementere egen metode for sletting?
         try {
         HttpRequest request = HttpRequest.newBuilder(calendarUri(name))
@@ -207,12 +207,12 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         String responseString = response.body();
         Boolean removed = objectMapper.readValue(responseString, Boolean.class);
         if (removed != null) {
-            calendarLogic.removeCalendar(calendarLogic.getCurrentCalendar(name));
+            //calendarLogic.removeCalendar(calendarLogic.getCurrentCalendar(name)); legges inn når metoden er implementert
         }
         } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);
         }
-    }*/
+    }
 
     /**
      * Renames a Calendar to a new name.
@@ -220,7 +220,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
      * @param oldName the name of the Calendar to change
      * @param newName the new name
      */
-   /* @Override
+   @Override
     public void renameCalendar(String oldName, String newName) {
         try {
         HttpRequest request = HttpRequest.newBuilder(calendarUri(oldName))
@@ -239,7 +239,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);
         }
-    }*/
+    }
 
     /**
      * Notifies that the TodoList has changed, e.g. TodoItems
