@@ -6,9 +6,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
-import java.util.EnumSet;
 import calendarApp.json.CalendarSaveHandler;
-//import calendarApp.json.CalendarSaveHandler.TodoModelParts;
 
 /**
  * Provides the Jackson module used for JSON serialization.
@@ -22,15 +20,12 @@ public class CalendarModuleObjectMapperProvider implements ContextResolver<Objec
   
   /**
    * Constructor
-   * use variant which only serializes list 
-   * properties as part of TodoModel objects, 
-   * and not the contents, nor settings.
-   * The contents or settings are serialized as 
-   * part of TodoList and TodoSettings objects
+   * creates an ObjectMapper with CalendarAppModule
+   * in the CalendarSaveHandler file
    */
-  /*public CalendarModuleObjectMapperProvider() {
-    objectMapper = CalendarSaveHandler.createObjectMapper(EnumSet.of(TodoModelParts.LISTS));
-  }*/
+  public CalendarModuleObjectMapperProvider() {
+    objectMapper = CalendarSaveHandler.createObjectMapper();
+  }
 
   @Override
   public ObjectMapper getContext(final Class<?> type) {

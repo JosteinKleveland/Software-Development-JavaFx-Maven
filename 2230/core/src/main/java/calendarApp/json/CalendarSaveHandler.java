@@ -97,6 +97,10 @@ public class CalendarSaveHandler {
         }
     }   
 
+    public static ObjectMapper createObjectMapper() {
+        return new ObjectMapper().registerModule(createJacksonModule());
+    }
+
     public static SimpleModule createJacksonModule() {
         return new CalendarAppModule();
     }
