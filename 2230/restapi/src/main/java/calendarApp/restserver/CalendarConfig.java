@@ -14,6 +14,7 @@ import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.restapi.CalendarLogicService;
+import calendarApp.core.DaysOfTheWeek;
 
 /**
  * Configures the rest service,
@@ -74,7 +75,7 @@ public class CalendarConfig extends ResourceConfig {
     }
     CalendarLogic calendarLogic = new CalendarLogic();
     Calendar calendar1 = new Calendar("calendar1");
-    calendar1.addAppointment(new Appointment());
+    calendar1.addAppointment(new Appointment("Appointment 1", "First appointment", DaysOfTheWeek.MONDAY, 0, 0, 1, 0));
     calendarLogic.setCurrentCalendar(calendar1);
     //todoModel.addTodoList(new TodoList("todo2"));
     return calendarLogic;

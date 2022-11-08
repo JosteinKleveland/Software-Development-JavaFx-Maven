@@ -14,4 +14,8 @@ public interface CalendarLogicAccess {
     public Calendar getCurrentCalendar(String... calendarName);
 
     public void setCurrentCalendar(Calendar currentCalendar);
+
+    public void removeCalendar(String name); // Skal vi ha med navnet på kalenderen?
+
+    public void renameCalendar(String oldName, String newName);
 }

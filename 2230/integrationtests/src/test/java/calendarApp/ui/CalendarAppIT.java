@@ -17,7 +17,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 
 //public class TodoAppIT extends ApplicationTest {
-public class CalendarAppIT {
+public class CalendarAppIT extends ApplicationTest {
 
   private CalendarLogicController controller;
   
@@ -34,7 +34,7 @@ public class CalendarAppIT {
   @BeforeEach
   public void setupItems() throws URISyntaxException {
     // same as in test-todolist.json (should perhaps read it instead)
-    try (Reader reader = new InputStreamReader(getClass().getResourceAsStream("it-todomodel.json"))) { //opprett egen json-fil
+    try (Reader reader = new InputStreamReader(getClass().getResourceAsStream("it-calendarlogic.json"))) { //create new json-file
       String port = System.getProperty("calendar.port");
       assertNotNull(port, "No calendar.port system property set");
       URI baseUri = new URI("http://localhost:" + port + "/calendar/"); // "/todo/"

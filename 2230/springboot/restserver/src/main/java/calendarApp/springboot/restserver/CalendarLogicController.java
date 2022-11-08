@@ -49,7 +49,7 @@ public class CalendarLogicController {
    */
   @GetMapping(path = "/{name}")
   public Calendar getCalendar(@PathVariable("name") String name) {
-    Calendar calendar = getCalendarLogic().getCalendar(name);
+    Calendar calendar = getCalendarLogic().getCurrentCalendar(name);
     checkCalendar(calendar, name);
     return calendar;
   }
@@ -93,12 +93,12 @@ public class CalendarLogicController {
    *
    * @param name the name of the Calendar
    */
-  /*@DeleteMapping(path = "/{name}")
+  @DeleteMapping(path = "/{name}")
   public boolean removeCalendar(@PathVariable("name") String name) {
-    Calendar calednar = getCalendarLogic().getCurrentCalendar();
+    Calendar calendar = getCalendarLogic().getCurrentCalendar();
     checkCalendar(calendar, name);
-    getCalendarLogic().removeCurrentCalendar();
+    //getCalendarLogic().deleteCalendar(); Dette er en metode som implementeres i saveHandler antakeligvis
     //autoSaveCalendarLogic();
     return true;
-  }*/
+  }
 }
