@@ -13,7 +13,8 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
     private final CalendarLogic calendarLogic;
 
     public DirectCalendarLogicAccess(CalendarLogic calendarLogic) {
-        this.calendarLogic = calendarLogic;
+        this.calendarLogic = new CalendarLogic();
+        this.calendarLogic.setCurrentCalendar(calendarLogic.getCurrentCalendar());
     }
 
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment) {
@@ -28,4 +29,18 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
         calendarLogic.setCurrentCalendar(currentCalendar);
     }
 
+    public void removeCalendar(String name) {
+        //calendarLogic.removeCalendar();
+    }
+
+    public void renameCalendar(String oldName, String newName) {
+        Calendar calendar = calendarLogic.getCurrentCalendar();
+        if (calendar == null) {
+        throw new IllegalArgumentException("No Calendar named \"" + oldName + "\" found");
+        }
+        if (calendarLogic.getCurrentCalendar(newName) != null) {
+        throw new IllegalArgumentException("A TodoList named \"" + newName + "\" already exists");
+        }
+        calendar.setCalendarName(newName);
+    }
 }
