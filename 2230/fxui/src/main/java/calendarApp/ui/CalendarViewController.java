@@ -74,8 +74,8 @@ public class CalendarViewController {
 
     protected void initialize(Calendar calendar) {
         this.currentCalendar = calendar;
-        this.calendarLogic = new CalendarLogic();
-        calendarLogic.setCurrentCalendar(calendar);
+        System.out.println(currentCalendar.getAppointments());
+        this.calendarLogic = new CalendarLogic(calendar);
         viewCalendar();
     }
 
@@ -156,7 +156,7 @@ public class CalendarViewController {
         // Since the same controller is also used to create new appointments from scratch,
         // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
         MakeAppointmentController makeAppointmentController = loader.getController();
-        makeAppointmentController.intialize(this.calendarLogic, true, this.chosenAppointment);
+        makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
 
         changeScene(event, root, nextScene);
     }
@@ -182,7 +182,7 @@ public class CalendarViewController {
         // Since the same controller is used to edit appointments,
         // the arguments "inEditMode" and "editAppointment" are set to false and null
         MakeAppointmentController makeAppointmentController = loader.getController();
-        makeAppointmentController.intialize(this.calendarLogic, false, null);
+        makeAppointmentController.intialize(currentCalendar, false, null);
 
         changeScene(event, root, nextScene);
     }
