@@ -62,9 +62,8 @@ public class CalendarViewController {
 
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
-    private List<Appointment> appointmentBlocks = new ArrayList<>();
+    private List<Appointment> appointmentList = new ArrayList<>();
     private CalendarListener calendarListener;
 
     private List<Appointment> getData(){
@@ -116,7 +115,10 @@ public class CalendarViewController {
         //Delete the calendar if the user agree
         if (alert.showAndWait().get() == ButtonType.OK){
             //CalendarSaveHandler.delete(currentCalendar.getCalendarName);
-            changeScene(event,this.root, "welcomeWindow.fxml");
+            String nextScene = "WelcomeWindow.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+            Parent root = loader.load();
+            changeScene(event, root, "WelcomeWindow.fxml");
         }
     }
 
@@ -134,7 +136,7 @@ public class CalendarViewController {
         if (alert.showAndWait().get() == ButtonType.OK){
             currentCalendar.removeAppointment(chosenAppointment);
             //Set preview of selected appointment to first appointment in list
-            setChosenAppointment(appointmentBlocks.get(0));
+            setChosenAppointment(appointmentList.get(0));
         }
 
     }
@@ -148,15 +150,15 @@ public class CalendarViewController {
 
         String nextScene = "MakeAppointment.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
+        Parent root = loader.load();
         
         // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to edit an appointment
         // Since the same controller is also used to create new appointments from scratch,
         // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
         MakeAppointmentController makeAppointmentController = loader.getController();
-        makeAppointmentController.intialize(this, this.calendarLogic, true, this.chosenAppointment);
+        makeAppointmentController.intialize(this.calendarLogic, true, this.chosenAppointment);
 
-        changeScene(event, this.root, nextScene);
+        changeScene(event, root, nextScene);
     }
 
 
@@ -164,8 +166,8 @@ public class CalendarViewController {
    public void exitCalendar(ActionEvent event) throws IOException {
         String nextScene = "WelcomeWindow.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
-        changeScene(event,this.root, nextScene);
+        Parent root = loader.load();
+        changeScene(event, root, nextScene);
     }
   
     
@@ -174,15 +176,15 @@ public class CalendarViewController {
         String nextScene = "MakeAppointment.fxml";
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
+        Parent root = loader.load();
 
         // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to the create a new appointment
         // Since the same controller is used to edit appointments,
         // the arguments "inEditMode" and "editAppointment" are set to false and null
         MakeAppointmentController makeAppointmentController = loader.getController();
-        makeAppointmentController.intialize(this, this.calendarLogic, false, null);
+        makeAppointmentController.intialize(this.calendarLogic, false, null);
 
-        changeScene(event, this.root, nextScene);
+        changeScene(event, root, nextScene);
     }
 
 
@@ -227,9 +229,9 @@ public class CalendarViewController {
 
     public void viewCalendar() {
 
-        appointmentBlocks.addAll(getData());
-        if(appointmentBlocks.size()>0){
-            setChosenAppointment(appointmentBlocks.get(0));
+        appointmentList.addAll(getData());
+        if(appointmentList.size()>0){
+            setChosenAppointment(appointmentList.get(0));
             calendarListener = new CalendarListener() {
                 //Set default appointment in view at start
                 @Override
@@ -240,41 +242,40 @@ public class CalendarViewController {
         }
         else {
             setChosenAppointment(null);
-            }
-       
+        }
 
         int numberOfBlocks;
         int firstBlock;
         int row;
 
         try {
-        for (int i=0; i<appointmentBlocks.size(); i++){
+        for (int i=0; i<appointmentList.size()-1; i++){
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/resources/calendearApp/ui/Appointment.fxml"));
-            AnchorPane anchorPane = fxmlLoader.load();
+            fxmlLoader.setLocation(getClass().getResource("Appointment.fxml"));
+            AnchorPane anchorPane =  fxmlLoader.load();
             
             AppointmentController appointmentController = fxmlLoader.getController();
-            appointmentController.setData(appointmentBlocks.get(i), calendarListener);
+            appointmentController.setData(appointmentList.get(i), calendarListener);
 
             //Check appointment length in 15min blocks,
-            numberOfBlocks = calculateNumberOfBlocks(appointmentBlocks.get(i));
+            numberOfBlocks = calculateNumberOfBlocks(appointmentList.get(i));
             
             //Check day for appointment
-            row = checkDay(appointmentBlocks.get(i));
+            row = checkDay(appointmentList.get(i));
 
-            //Find first block
-            firstBlock = findFirstBlock(appointmentBlocks.get(i));
+            //Find first 15min time block
+            firstBlock = findFirstBlock(appointmentList.get(i));
 
             //Adding appointment to calendar view block by block
             for (int j = 0; j> numberOfBlocks; j++){
                 gridCalendar.add(anchorPane, firstBlock, row);
                 firstBlock++;
                 j++;
-            
+            }
+
             //Margin for calendarblocks
             GridPane.setMargin(anchorPane,new Insets(0,2,0,2));
-            }
-            
+        
             //Grid width
             gridCalendar.setMinWidth(Region.USE_COMPUTED_SIZE);
             gridCalendar.setPrefWidth(Region.USE_COMPUTED_SIZE);

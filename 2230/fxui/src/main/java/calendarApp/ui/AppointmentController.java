@@ -4,6 +4,7 @@ import calendarApp.core.Appointment;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 //Manages Appointments shown in grid
 public class AppointmentController {
@@ -21,6 +22,7 @@ public class AppointmentController {
     private CalendarListener calendarListener;
 
     protected void setData(Appointment appointment, CalendarListener calendarListener){
+
         this.appointment = appointment;
         this.calendarListener = calendarListener;
         lblAppointmentName.setText(appointment.getAppointmentName());

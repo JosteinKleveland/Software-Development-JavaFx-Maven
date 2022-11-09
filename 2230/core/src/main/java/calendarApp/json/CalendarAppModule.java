@@ -30,9 +30,9 @@ class CalendarAppModule extends SimpleModule {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
         Calendar calendar = new Calendar("jsonTest");
-        Appointment appointment1 = new Appointment("Fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
+        Appointment appointment1 = new Appointment("Fotball", "husk fotball", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
-        Appointment appointment2 = new Appointment("Math", DaysOfTheWeek.THURSDAY, 11, 12, 30, 15);
+        Appointment appointment2 = new Appointment("Math", "husk mattebok", DaysOfTheWeek.THURSDAY, 11, 12, 30, 15);
         calendar.addAppointment(appointment2);
         try {
             System.out.println(mapper.writeValueAsString(calendar));

@@ -65,11 +65,6 @@ public class CalendarSaveHandler {
 
         // The name of the json file created / updated is equal to the calendar object's name + ".json"
         File calendarJson = new File(getFilePath(calendar.getCalendarName()));
-        if (calendarJson.createNewFile()) {
-            System.out.println("File created: " + calendarJson.getName());
-          } else {
-            System.out.println("File already exists.");
-          }
         
         FileOutputStream outputStream = new FileOutputStream(calendarJson);
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");

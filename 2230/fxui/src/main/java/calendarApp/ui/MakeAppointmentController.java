@@ -44,7 +44,6 @@ public class MakeAppointmentController {
     // State variables
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
     private CalendarViewController calendarViewController; // the controller which belongs to the fxml
     // that the app will change scene to when this scene is finish
@@ -61,8 +60,8 @@ public class MakeAppointmentController {
      * @param inEditMode flags if the user is in edit mode, or simply creates a new appointment
      * @param editAppointment the potential Appointment in edit mode
      */
-    protected void intialize(CalendarViewController calendarViewController, CalendarLogic calendarLogic, boolean inEditMode, Appointment editAppointment) {
-        this.calendarViewController = calendarViewController;
+    protected void intialize(CalendarLogic calendarLogic, boolean inEditMode, Appointment editAppointment) {
+
         this.calendarLogic = calendarLogic;
         this.inEditMode = inEditMode;
         if (inEditMode)
@@ -78,7 +77,7 @@ public class MakeAppointmentController {
     public void makeAppointment(ActionEvent event) throws IOException {
     
         String appointmentName = txtAppointmentName.getText();
-        String appointmentDescription = "";
+        String appointmentDescription = txtSetAppointmentDescription.getText();
         String weekDay = (String) drdSetAppointmentDay.getValue();
         int[] startTime = decodeClock(txtSetStartTime.getText());
         int[] stopTime = decodeClock(txtSetStopTime.getText());
@@ -102,8 +101,10 @@ public class MakeAppointmentController {
         // Changes back to the calendar view with the updated view
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
-        changeScene(event, this.root, nextScene);
+        Parent root = loader.load();
+        CalendarViewController calendarViewController = loader.getController();
+        calendarViewController.initialize(currentCalendar);
+        changeScene(event, root, nextScene);
         
     }
 
@@ -115,9 +116,10 @@ public class MakeAppointmentController {
     public void exitView(ActionEvent event) throws IOException{
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
-        this.calendarViewController.initialize(this.calendarLogic.getCurrentCalendar());
-        changeScene(event, this.root, nextScene);
+        Parent root = loader.load();
+        CalendarViewController calendarViewController = loader.getController();
+        calendarViewController.initialize(this.calendarLogic.getCurrentCalendar());
+        changeScene(event, root, nextScene);
     }
 
     //Helper method that decodes clock of the format 00:00
