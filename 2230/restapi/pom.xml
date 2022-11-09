@@ -13,7 +13,7 @@
     <artifactId>restapi</artifactId>
 
     <properties>
-        <slf4jVersion>2.0.0-alpha5</slf4jVersion>
+        <slf4jVersion>2.0.3</slf4jVersion>
         <jerseyVersion>3.0.3</jerseyVersion>
     </properties>
 
@@ -112,14 +112,11 @@
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
+            <artifactId>javax.activation-api</artifactId>
+            <version>1.2.0</version>
             <scope>runtime</scope>
         </dependency>
         
-
-
-
         <!-- junit testing with jupiter -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -144,7 +141,10 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -157,6 +157,11 @@
             <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>	                    
+                    <argLine>
+                    @{jaCoCoArgLine} --add-opens calendarApp.restapi/calendarApp.restapi=ALL-UNNAMED
+                    </argLine>
+                </configuration>
             </plugin>
             
             <plugin>
@@ -171,6 +176,9 @@
             <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
+                    <configuration>
+                    <propertyName>jaCoCoArgLine</propertyName>
+                </configuration>
             </plugin>
 
             <!-- Run the checkstyle code quality tool -->
