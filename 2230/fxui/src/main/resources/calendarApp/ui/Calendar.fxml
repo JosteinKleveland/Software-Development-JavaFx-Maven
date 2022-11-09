@@ -11,6 +11,9 @@
 <?import javafx.scene.control.Label?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.CalendarController">
+   <fx:define> <!--Definerer referansen til serveren-->
+        <String fx:id="endpointUri" fx:value="http://localhost:8080/calendar/"/> 
+    </fx:define>
    <children>
       <Button id="saveNewCalendar_btn" fx:id="saveNewCalendar_btn" layoutX="306.0" layoutY="101.0" mnemonicParsing="false" onAction="#saveCalendar" prefHeight="19.0" prefWidth="104.0" text="Save as new calendar">
          <font>
