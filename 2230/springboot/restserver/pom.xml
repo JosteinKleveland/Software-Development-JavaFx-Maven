@@ -16,7 +16,7 @@
     <dependencies>
          <dependency>
             <groupId>it1901.2230</groupId>
-            <artifactId>parent</artifactId>
+            <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -105,10 +105,7 @@
             </plugin>
             
             <!-- Run the spotbugs code quality tool -->
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-            </plugin>
+        
             
             <!-- Configure jacoco code coverage -->
             <plugin>
