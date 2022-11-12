@@ -116,7 +116,8 @@ public class CalendarViewController {
 
         //Delete the calendar if the user agree
         if (alert.showAndWait().get() == ButtonType.OK){
-            //CalendarSaveHandler.delete(currentCalendar.getCalendarName());
+
+            CalendarSaveHandler.delete(currentCalendar.getCalendarName());
             String nextScene = "WelcomeWindow.fxml";
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
             Parent root = loader.load();
