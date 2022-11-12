@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import calendarApp.core.Appointment;
@@ -12,6 +13,8 @@ import calendarApp.core.CalendarLogic;
 import calendarApp.core.DaysOfTheWeek;
 import calendarApp.json.CalendarSaveHandler;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,8 +27,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -56,28 +61,29 @@ public class CalendarViewController {
     @FXML private Button btnExitCalendar;
 
     //State variables
-    private CalendarLogic calendarLogic;
+   // private CalendarLogic calendarLogic;
     private Calendar currentCalendar;
     private Appointment chosenAppointment;
 
     private Stage stage;
     private Scene scene;
-
+    
     private List<Appointment> appointmentList = new ArrayList<>();
+
+    private final String[] appointmentcolors = {"f16c31;\n","FFC285;\n","EE7FF7;\n","6F7DF7;\n","FC38B2;\n","A2FF88;\n","FF3939;\n","FFEC39;\n","C2D632;\n","74E2B0;\n","74B6E2;\n","2CFF95;\n","FCC0E9;\n","B4E29F;\n","EF7D30;\n"};
     private CalendarListener calendarListener;
+
+    protected void initialize(Calendar calendar) throws IOException {
+        this.currentCalendar = calendar;
+        viewCalendar();
+    }
 
     private List<Appointment> getData(){
         List<Appointment> appointments = this.currentCalendar.getAppointments();
+        this.appointmentList = appointments;
         return appointments;
     } 
 
-
-    protected void initialize(Calendar calendar) {
-        this.currentCalendar = calendar;
-        System.out.println(currentCalendar.getAppointments());
-        this.calendarLogic = new CalendarLogic(calendar);
-        viewCalendar();
-    }
 
     private void setChosenAppointment(Appointment appointment){
 
@@ -85,20 +91,16 @@ public class CalendarViewController {
             lblChosenAppointmentName.setText("");
             lblChosenAppointmentDescription.setText("");
             lbChosenAppointmentTime.setText("");
+            chossenAppointmentCard.setVisible(false);
         }
 
         else {
         lblChosenAppointmentName.setText(appointment.getAppointmentName());
         lblChosenAppointmentDescription.setText(appointment.getAppointmentDescription());
-        lbChosenAppointmentTime.setText(appointment.getStartHour()+":"+appointment.getStartMinute()+" - "+appointment.getStopHour()+":"+ appointment.getStopMinute());
+        lbChosenAppointmentTime.setText(convertToTwoDidgets(appointment.getStartHour())+":"+convertToTwoDidgets(appointment.getStartMinute())+" - "+convertToTwoDidgets(appointment.getStopHour())+":"+ convertToTwoDidgets(appointment.getStopMinute()));
         
         this.chosenAppointment = appointment;
         }
-
-        
-
-        //Will be repalced to allow appointments have dirfferent colors in their preview
-        chossenAppointmentCard.setStyle("-fx-background-color: #"+"f16c31;\n"+"-fx-background-radius: 30;");
 
     }
 
@@ -114,7 +116,7 @@ public class CalendarViewController {
 
         //Delete the calendar if the user agree
         if (alert.showAndWait().get() == ButtonType.OK){
-            //CalendarSaveHandler.delete(currentCalendar.getCalendarName);
+            //CalendarSaveHandler.delete(currentCalendar.getCalendarName());
             String nextScene = "WelcomeWindow.fxml";
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
             Parent root = loader.load();
@@ -136,7 +138,8 @@ public class CalendarViewController {
         if (alert.showAndWait().get() == ButtonType.OK){
             currentCalendar.removeAppointment(chosenAppointment);
             //Set preview of selected appointment to first appointment in list
-            setChosenAppointment(appointmentList.get(0));
+            chossenAppointmentCard.setVisible(false);
+            viewCalendar();
         }
 
     }
@@ -148,17 +151,22 @@ public class CalendarViewController {
      */
     public void editAppointment(ActionEvent event) throws IOException {
 
-        String nextScene = "MakeAppointment.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        Parent root = loader.load();
-        
-        // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to edit an appointment
-        // Since the same controller is also used to create new appointments from scratch,
-        // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
-        MakeAppointmentController makeAppointmentController = loader.getController();
-        makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
+        if (!(chosenAppointment == null)){
+            String nextScene = "MakeAppointment.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+            Parent root = loader.load();
+            
+            // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to edit an appointment
+            // Since the same controller is also used to create new appointments from scratch,
+            // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
+            MakeAppointmentController makeAppointmentController = loader.getController();
+            makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
 
-        changeScene(event, root, nextScene);
+            changeScene(event, root, nextScene);
+        }
+
+      
+       
     }
 
 
@@ -215,8 +223,7 @@ public class CalendarViewController {
     //Help method to fint the first block of the event
     private int findFirstBlock(Appointment appointment){
         int firstBlock = (appointment.getStartHour()*4)+(appointment.getStartMinute()/15);
-
-        return firstBlock;
+        return firstBlock+1;
     }
 
     
@@ -227,8 +234,9 @@ public class CalendarViewController {
         return (hours*4+(minutes/15));
     }
 
-    public void viewCalendar() {
+    //Help method to set preview card
 
+    private void setPreviewCard(){
         appointmentList.addAll(getData());
         if(appointmentList.size()>0){
             setChosenAppointment(appointmentList.get(0));
@@ -244,55 +252,109 @@ public class CalendarViewController {
             setChosenAppointment(null);
         }
 
-        int numberOfBlocks;
-        int firstBlock;
-        int row;
-
-        try {
-        for (int i=0; i<appointmentList.size()-1; i++){
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("Appointment.fxml"));
-            AnchorPane anchorPane =  fxmlLoader.load();
-            
-            AppointmentController appointmentController = fxmlLoader.getController();
-            appointmentController.setData(appointmentList.get(i), calendarListener);
-
-            //Check appointment length in 15min blocks,
-            numberOfBlocks = calculateNumberOfBlocks(appointmentList.get(i));
-            
-            //Check day for appointment
-            row = checkDay(appointmentList.get(i));
-
-            //Find first 15min time block
-            firstBlock = findFirstBlock(appointmentList.get(i));
-
-            //Adding appointment to calendar view block by block
-            for (int j = 0; j> numberOfBlocks; j++){
-                gridCalendar.add(anchorPane, firstBlock, row);
-                firstBlock++;
-                j++;
-            }
-
-            //Margin for calendarblocks
-            GridPane.setMargin(anchorPane,new Insets(0,2,0,2));
-        
-            //Grid width
-            gridCalendar.setMinWidth(Region.USE_COMPUTED_SIZE);
-            gridCalendar.setPrefWidth(Region.USE_COMPUTED_SIZE);
-            gridCalendar.setMaxWidth(Region.USE_PREF_SIZE);
-
-
-            //Grid height
-            gridCalendar.setMinHeight(Region.USE_COMPUTED_SIZE);
-            gridCalendar.setPrefHeight(Region.USE_COMPUTED_SIZE);
-            gridCalendar.setMaxHeight(Region.USE_PREF_SIZE);
-        }
-        
-        } catch (IOException e) {
-
-                e.printStackTrace();
-            }
     }
 
 
+    private void addTimeLabels(){
+
+        int hour = 0;
+        int minute = 0;
+        Label timeLabel;
+        int numberOfBlocks = 0;
+
+        for (int i = 0; i < 24; i++){
+            for(int j = 0; j < 4; j++)
+            {
+                timeLabel = new Label();
+                timeLabel.setText(convertToTwoDidgets(hour) + ":" + convertToTwoDidgets(minute));
+                gridCalendar.add(timeLabel, 0,numberOfBlocks+1);
+                minute += 15;
+                numberOfBlocks ++;
+            }
+            minute = 0;
+            hour++;
+        }
+
+        Label mo = new Label("Monday");
+        Label tu = new Label("Tuesday");
+        Label we = new Label("Wednesday");
+        Label th = new Label("Thursday");
+        Label fr = new Label("Friday");
+        Label sa = new Label("Saturday");
+        Label su = new Label("Sunday");
+        gridCalendar.add(mo,1,0);
+        gridCalendar.add(tu,2,0);
+        gridCalendar.add(we,3,0);
+        gridCalendar.add(th,4,0);
+        gridCalendar.add(fr,5,0);
+        gridCalendar.add(sa,6,0);
+        gridCalendar.add(su,7,0);
+
+
+
+    }
+
+    private String convertToTwoDidgets(int numberToCheck ){
+        String result;
+        if (Integer.toString(numberToCheck).length() < 2){
+            result = "0" + Integer.toString(numberToCheck);
+            return result;
+        }
+        return Integer.toString(numberToCheck);
+    }
+
+    
+    private void clickAppointment(MouseEvent event, Appointment a) {
+        chossenAppointmentCard.setVisible(true);
+        setChosenAppointment(a);
+
+    }
+
+    public void viewCalendar() throws IOException {
+        getData();
+        gridCalendar.getChildren().clear();
+
+        lblCalendarNamePreview.setText(currentCalendar.getCalendarName());
+        setPreviewCard();
+        addTimeLabels();
+
+        String color;
+
+        int numberOfBlocks;
+        int firstBlock;
+       
+        Label appointmentLabel;
+        Pane background;
+
+        for (Appointment a : appointmentList){
+        
+            // Variables for appointment placement
+
+            numberOfBlocks = calculateNumberOfBlocks(a);
+            firstBlock = findFirstBlock(a);
+
+            //Create pane for backgroud color
+            background = new Pane();
+            color = selectAppointmentColor();
+            background.setStyle("-fx-background-color: #"+color+"-fx-background-radius: 5;");
+
+            // Dette gir feil hvis avtalen er bare 15min!
+            appointmentLabel = new Label();
+            appointmentLabel.setText(a.getAppointmentName());
+            background.setOnMouseClicked(event -> clickAppointment(event,a));
+
+            gridCalendar.add(background, checkDay(a),firstBlock, 1,numberOfBlocks);
+            gridCalendar.add(appointmentLabel, checkDay(a),firstBlock);
+  
+        }
+}
+
+    // Method to randomly generate a color for the appointmentblocks
+    private String selectAppointmentColor() {
+        Random color = new Random();
+        int number;
+
+        number = color.nextInt(appointmentcolors.length);
+        return appointmentcolors[number];
+    }
 }

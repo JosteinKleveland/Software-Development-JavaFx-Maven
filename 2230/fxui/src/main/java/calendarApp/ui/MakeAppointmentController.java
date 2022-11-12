@@ -34,7 +34,7 @@ public class MakeAppointmentController {
     @FXML TextField txtSetStopTime;
     @FXML TextArea txtSetAppointmentDescription;
 
-    @FXML ChoiceBox drdSetAppointmentDay;
+    @FXML ChoiceBox<String> drdSetAppointmentDay;
 
     @FXML Button btnSaveAppointment;
     @FXML Button btnCancelEdit;
@@ -51,6 +51,7 @@ public class MakeAppointmentController {
     private boolean inEditMode; // true if the user is editing an appointment, and false otherwise
     private Appointment editAppointment; // the appointment being edited, can be null
 
+    private String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
 
     /**
      * Sets up the state of the class
@@ -59,12 +60,24 @@ public class MakeAppointmentController {
      * @param editAppointment the potential Appointment in edit mode
      */
     protected void intialize(Calendar currentCalendar, boolean inEditMode, Appointment editAppointment) {
-        System.out.println(currentCalendar.getAppointments());
+        drdSetAppointmentDay.getItems().addAll(days);
         this.currentCalendar = currentCalendar;
         this.calendarLogic = new CalendarLogic(currentCalendar);
         this.inEditMode = inEditMode;
-        if (inEditMode)
+
+        if (inEditMode){
+
             this.editAppointment = editAppointment;
+            txtAppointmentName.setText(editAppointment.getAppointmentName());
+
+            txtAppointmentName.setText(editAppointment.getAppointmentName());
+            txtSetStartTime.setText(convertToTwoDidgets(editAppointment.getStartHour())+":"+convertToTwoDidgets(editAppointment.getStartMinute()));
+            txtSetStopTime.setText(convertToTwoDidgets(editAppointment.getStopHour())+":"+convertToTwoDidgets(editAppointment.getStopMinute()));
+            txtSetAppointmentDescription.setText(editAppointment.getAppointmentDescription());
+            drdSetAppointmentDay.setValue(editAppointment.getDayOfTheWeek().name().toLowerCase());
+        }
+
+            
     }
     
     
@@ -74,7 +87,8 @@ public class MakeAppointmentController {
      * @throws IOException
      */
     public void makeAppointment(ActionEvent event) throws IOException {
-    
+        Appointment copyAppointment = editAppointment;
+
         String appointmentName = txtAppointmentName.getText();
         String appointmentDescription = txtSetAppointmentDescription.getText();
         String weekDay = (String) drdSetAppointmentDay.getValue();
@@ -85,14 +99,18 @@ public class MakeAppointmentController {
         int stopHour = stopTime[0];
         int stopMinute = stopTime[1];
 
-        // If we are in editing mode (in practice came from "ViewAppointment.fxml"), then remove the current appointment
-        // before creating a new one with the desired attributes
+        try {
         if (inEditMode) {
+           
             currentCalendar.removeAppointment(editAppointment);
         }
+
+        // If we are in editing mode (in practice came from "ViewAppointment.fxml"), then remove the current appointment
+        // before creating a new one with the desired attributes
+       
         Appointment newAppointment = new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay.toUpperCase()), startHour, stopHour, startMinute, stopMinute);
         calendarLogic.addAppointmentToCalendar(currentCalendar, newAppointment);
-        System.out.println(currentCalendar.getAppointments());
+       
 
         // Saves the updated version of the calendar in the respective JSON file
         CalendarSaveHandler.save(currentCalendar);
@@ -104,6 +122,14 @@ public class MakeAppointmentController {
         CalendarViewController calendarViewController = loader.getController();
         calendarViewController.initialize(currentCalendar);
         changeScene(event, root, nextScene);
+
+        } 
+        
+        catch (Exception e) {
+            txtFeedbackEdit.setText(e.getMessage());
+            //currentCalendar.removeAppointment(editAppointment);
+            //currentCalendar.addAppointment(copyAppointment);
+        }
         
     }
 
@@ -117,7 +143,7 @@ public class MakeAppointmentController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
         Parent root = loader.load();
         CalendarViewController calendarViewController = loader.getController();
-        calendarViewController.initialize(this.calendarLogic.getCurrentCalendar());
+        calendarViewController.initialize(currentCalendar);
         changeScene(event, root, nextScene);
     }
 
@@ -140,6 +166,15 @@ public class MakeAppointmentController {
         timeIntArray[1] = Integer.parseInt(minuteString);
 
         return timeIntArray;
+    }
+
+    private String convertToTwoDidgets(int numberToCheck ){
+        String result;
+        if (Integer.toString(numberToCheck).length() < 2){
+            result = "0" + Integer.toString(numberToCheck);
+            return result;
+        }
+        return Integer.toString(numberToCheck);
     }
 
 
