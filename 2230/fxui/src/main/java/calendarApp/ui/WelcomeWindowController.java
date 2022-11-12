@@ -77,8 +77,8 @@ public class WelcomeWindowController {
             CalendarSaveHandler.save(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
-            calendarViewController.initialize(calendar);
             changeToCalendarViewWindow(event, this.root);
+            calendarViewController.initialize(calendar);
             }
             catch (IOException e) {
                 lblFeedback.setText("An error occured. Could not create new calendar.");
@@ -124,8 +124,8 @@ public class WelcomeWindowController {
             Calendar calendar = CalendarSaveHandler.load(calendarName);
             
             // Changes window to CalenderView and sets up the respective controller with the calendar
-            calendarViewController.initialize(calendar);   
             changeToCalendarViewWindow(event, this.root);
+            calendarViewController.initialize(calendar);   
 
         } catch (JsonParseException e) {
             e.printStackTrace();

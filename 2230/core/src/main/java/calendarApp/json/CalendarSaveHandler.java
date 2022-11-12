@@ -62,14 +62,8 @@ public class CalendarSaveHandler {
         
         // Serializes to a string 
         String json = mapper.writeValueAsString(calendar);
-
         // The name of the json file created / updated is equal to the calendar object's name + ".json"
         File calendarJson = new File(getFilePath(calendar.getCalendarName()));
-        if (calendarJson.createNewFile()) {
-            System.out.println("File created: " + calendarJson.getName());
-          } else {
-            System.out.println("File already exists.");
-          }
         
         FileOutputStream outputStream = new FileOutputStream(calendarJson);
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
@@ -130,17 +124,19 @@ public class CalendarSaveHandler {
 		return filenames;
 	}
 
-    //For practical testing.
-    /*public static void main(String[] args) throws IOException {
+    /* For practical testing
+    public static void main(String[] args) throws IOException {
         CalendarSaveHandler fileHandler = new CalendarSaveHandler();
         Calendar calendar = new Calendar("Steinar");
-        Appointment appointment = new Appointment("Musikk", DaysOfTheWeek.MONDAY, 8, 9, 0, 0);
+        Appointment appointment = new Appointment("Musikk", "husk floyte", DaysOfTheWeek.MONDAY, 8, 9, 0, 0);
         calendar.addAppointment(appointment);
+        calendar.addAppointment(new Appointment("Fotball", "husk ballen", DaysOfTheWeek.TUESDAY, 18, 20, 0, 30));
         CalendarSaveHandler.save(calendar);
         System.out.println(fileHandler.checkIfFileExists("Steinar"));
 
 
-        CalendarSaveHandler.load("Steinar");
+        Calendar calendarLoad = CalendarSaveHandler.load("Steinar");
+        System.out.println(calendarLoad.getAppointments());;
         //ERROR
         // System.out.println(fileHandler.getAllFileNames());
     }

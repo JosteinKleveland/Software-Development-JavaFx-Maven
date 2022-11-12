@@ -1,0 +1,15 @@
+.rigth-bar{
+    -fx-background-color: #d3d3d3;
+}
+
+
+.chosen-appointment-card{
+    -fx-background-color: #2a2a2a;
+    -fx-background-radius: 15;
+}
+
+.calendar-grid{
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c4c4c3;
+    -fx-border-width: 2;
+}

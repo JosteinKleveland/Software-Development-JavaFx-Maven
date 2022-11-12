@@ -8,7 +8,8 @@ public class CalendarLogic {
     private Calendar currentCalendar; // Current calendar object
 
     //Dummy-constructor to be able to test from CalendarLogicTest
-    public CalendarLogic() {
+    public CalendarLogic(Calendar calendar) {
+        setCurrentCalendar(calendar);
     }
 
     /**
@@ -48,16 +49,8 @@ public class CalendarLogic {
 
     // Setter
 
-    public void setCurrentCalendar(Calendar currentCalendar) {
-        // To prevent direct access from outside, 
-        // and to have better controll over what comes in,
-        // the calendar object will be set to a copy of the argument
-        this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
-        if (currentCalendar != null) {
-            for ( Appointment appointment : currentCalendar.getAppointments() ) {
-                this.currentCalendar.addAppointment(appointment);
-            }
-        }
+    private void setCurrentCalendar(Calendar currentCalendar) {
+        this.currentCalendar = currentCalendar;
     }
 
     /**

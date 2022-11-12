@@ -1,1 +1,1 @@
-{"calendarName":"simeid","appointments":[]}
+{"calendarName":"simeid","appointments":[{"appointmentName":"anotherone","appointmentDescription":"prj","dayOfTheWeek":"MONDAY","startHour":18,"stopHour":19,"startMin":30,"stopMin":0},{"appointmentName":"anotherone","appointmentDescription":"prj","dayOfTheWeek":"MONDAY","startHour":18,"stopHour":19,"startMin":30,"stopMin":0},{"appointmentName":"fotball","appointmentDescription":"erg","dayOfTheWeek":"MONDAY","startHour":12,"stopHour":14,"startMin":0,"stopMin":30}]}

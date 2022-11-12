@@ -20,17 +20,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 // Handles the making of new appointments, as well as editing of existing ones
 public class MakeAppointmentController {
     
+    ObservableList list = FXCollections.observableArrayList();
+
     // FXML elements
     @FXML TextField txtAppointmentName;
     @FXML TextField txtSetStartTime;
     @FXML TextField txtSetStopTime;
     @FXML TextArea txtSetAppointmentDescription;
 
-    @FXML ChoiceBox drdSetAppointmentDay;
+    @FXML ChoiceBox<String> drdSetAppointmentDay;
 
     @FXML Button btnSaveAppointment;
     @FXML Button btnCancelEdit;
@@ -40,29 +44,40 @@ public class MakeAppointmentController {
     // State variables
     private Stage stage;
     private Scene scene;
-    private Parent root;
 
-    private CalendarViewController calendarViewController; // the controller which belongs to the fxml
-    // that the app will change scene to when this scene is finish
-    private CalendarLogic calendarLogic; // the CalendarLogic object which contains the respective calendar of the user
+    private Calendar currentCalendar; // the current calendar of the user
+    private CalendarLogic calendarLogic;
 
     private boolean inEditMode; // true if the user is editing an appointment, and false otherwise
     private Appointment editAppointment; // the appointment being edited, can be null
 
+    private String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
 
     /**
      * Sets up the state of the class
-     * @param calendarViewController a reference to the CalendarViewController used in the application
-     * @param calendarLogic the CalendarLogic used in the application
+     * @param currentCalendar the users current calendar
      * @param inEditMode flags if the user is in edit mode, or simply creates a new appointment
      * @param editAppointment the potential Appointment in edit mode
      */
-    protected void intialize(CalendarViewController calendarViewController, CalendarLogic calendarLogic, boolean inEditMode, Appointment editAppointment) {
-        this.calendarViewController = calendarViewController;
-        this.calendarLogic = calendarLogic;
+    protected void intialize(Calendar currentCalendar, boolean inEditMode, Appointment editAppointment) {
+        drdSetAppointmentDay.getItems().addAll(days);
+        this.currentCalendar = currentCalendar;
+        this.calendarLogic = new CalendarLogic(currentCalendar);
         this.inEditMode = inEditMode;
-        if (inEditMode)
+
+        if (inEditMode){
+
             this.editAppointment = editAppointment;
+            txtAppointmentName.setText(editAppointment.getAppointmentName());
+
+            txtAppointmentName.setText(editAppointment.getAppointmentName());
+            txtSetStartTime.setText(convertToTwoDidgets(editAppointment.getStartHour())+":"+convertToTwoDidgets(editAppointment.getStartMinute()));
+            txtSetStopTime.setText(convertToTwoDidgets(editAppointment.getStopHour())+":"+convertToTwoDidgets(editAppointment.getStopMinute()));
+            txtSetAppointmentDescription.setText(editAppointment.getAppointmentDescription());
+            drdSetAppointmentDay.setValue(editAppointment.getDayOfTheWeek().name().toLowerCase());
+        }
+
+            
     }
     
     
@@ -72,9 +87,10 @@ public class MakeAppointmentController {
      * @throws IOException
      */
     public void makeAppointment(ActionEvent event) throws IOException {
-    
+        Appointment copyAppointment = editAppointment;
+
         String appointmentName = txtAppointmentName.getText();
-        String appointmentDescription = "";
+        String appointmentDescription = txtSetAppointmentDescription.getText();
         String weekDay = (String) drdSetAppointmentDay.getValue();
         int[] startTime = decodeClock(txtSetStartTime.getText());
         int[] stopTime = decodeClock(txtSetStopTime.getText());
@@ -82,15 +98,19 @@ public class MakeAppointmentController {
         int startMinute = startTime[1];
         int stopHour = stopTime[0];
         int stopMinute = stopTime[1];
-        
-        Calendar currentCalendar = this.calendarLogic.getCurrentCalendar();
+
+        try {
+        if (inEditMode) {
+           
+            currentCalendar.removeAppointment(editAppointment);
+        }
 
         // If we are in editing mode (in practice came from "ViewAppointment.fxml"), then remove the current appointment
         // before creating a new one with the desired attributes
-        if (inEditMode) {
-            currentCalendar.removeAppointment(editAppointment);
-        }
-        currentCalendar.addAppointment(new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay), startHour, stopHour, startMinute, stopMinute));
+       
+        Appointment newAppointment = new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay.toUpperCase()), startHour, stopHour, startMinute, stopMinute);
+        calendarLogic.addAppointmentToCalendar(currentCalendar, newAppointment);
+       
 
         // Saves the updated version of the calendar in the respective JSON file
         CalendarSaveHandler.save(currentCalendar);
@@ -98,9 +118,19 @@ public class MakeAppointmentController {
         // Changes back to the calendar view with the updated view
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
-        this.calendarViewController.viewCalendar(currentCalendar);
-        changeScene(event, this.root, nextScene);
+        Parent root = loader.load();
+        CalendarViewController calendarViewController = loader.getController();
+        calendarViewController.initialize(currentCalendar);
+        changeScene(event, root, nextScene);
+
+        } 
+        
+        catch (Exception e) {
+            txtFeedbackEdit.setText(e.getMessage());
+            //currentCalendar.removeAppointment(editAppointment);
+            //currentCalendar.addAppointment(copyAppointment);
+        }
+        
     }
 
     /**
@@ -111,8 +141,10 @@ public class MakeAppointmentController {
     public void exitView(ActionEvent event) throws IOException{
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        this.root = loader.load();
-        changeScene(event, this.root, nextScene);
+        Parent root = loader.load();
+        CalendarViewController calendarViewController = loader.getController();
+        calendarViewController.initialize(currentCalendar);
+        changeScene(event, root, nextScene);
     }
 
     //Helper method that decodes clock of the format 00:00
@@ -134,6 +166,15 @@ public class MakeAppointmentController {
         timeIntArray[1] = Integer.parseInt(minuteString);
 
         return timeIntArray;
+    }
+
+    private String convertToTwoDidgets(int numberToCheck ){
+        String result;
+        if (Integer.toString(numberToCheck).length() < 2){
+            result = "0" + Integer.toString(numberToCheck);
+            return result;
+        }
+        return Integer.toString(numberToCheck);
     }
 
 
