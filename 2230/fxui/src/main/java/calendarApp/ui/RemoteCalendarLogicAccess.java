@@ -19,6 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarAppModule;
+import calendarApp.json.CalendarSaveHandler;
 import calendarApp.core.Appointment;
 
 /**
@@ -35,7 +36,8 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
 
     public RemoteCalendarLogicAccess(URI endpointBaseUri) {
         this.endpointBaseUri = endpointBaseUri;
-        objectMapper.registerModule(new CalendarAppModule());
+        //objectMapper.registerModule(new CalendarAppModule());
+        objectMapper = CalendarSaveHandler.createObjectMapper();
     }
 
     private CalendarLogic getCalendarLogic() {
