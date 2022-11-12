@@ -142,4 +142,19 @@ public class CalendarLogicController {
       e.getCause().printStackTrace();
     }
   }*/
+
+  @FXML
+  void exitCalendar() {
+    return;
+  }
+
+  @FXML
+  void createNewAppointment() {
+    return;
+  }
+
+  @FXML
+  void deleteCalendar() {
+    return;
+  }
 }
