@@ -4,11 +4,12 @@
 
 
 .chosen-appointment-card{
-    -fx-background-color: #f16c31;
-    -fx-background-radius: 30;
+    -fx-background-color: #2a2a2a;
+    -fx-background-radius: 15;
 }
 
-.appointment-block{
-    -fx-background-color: #e0bd5c;
-    -fx-background-radius: 10;
+.calendar-grid{
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c4c4c3;
+    -fx-border-width: 2;
 }
