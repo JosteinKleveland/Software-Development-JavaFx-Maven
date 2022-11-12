@@ -48,4 +48,51 @@ public class CalendarViewControllerTest extends ApplicationTest {
 
         controller.initialize(calendar);
     }
+
+        /**
+     *  Tests if the Calendar actually contains the appointments in the setup
+     */
+    @Test
+    public void testController_appointmentsSetup() {
+        // Checks if the setup works with the controller and calendar
+        assertNotNull(this.controller);
+        assertNotNull(this.calendar);
+
+
+    }
+    
+    @Test
+    public void testSetChosenAppointment() {
+
+
+    }
+
+    
+    private void checkCalendarAppointment(Appointment appointment, String appointmentName, String appointmentDescription, DaysOfTheWeek dayOfTheWeek, int startHour , int stopHour, int startMinute, int stopMinute) {
+        if (appointmentName != null) {
+            assertEquals(appointmentName, appointment.getAppointmentName());
+        }
+        if (appointmentDescription != null) {
+            assertEquals(appointmentDescription, appointment.getAppointmentDescription());
+        }
+        if (dayOfTheWeek != null) {
+            assertEquals(dayOfTheWeek, appointment.getDayOfTheWeek());
+        }
+
+        assertEquals(startHour, appointment.getStartHour());
+        assertEquals(stopHour, appointment.getStopHour());
+        assertEquals(startMinute, appointment.getStartMinute());
+        assertEquals(stopMinute, appointment.getStopMinute());
+
+    }
+
+    private void checkCalendarAppointments(Iterable<Appointment> list, Appointment... appointments) {
+        int i = 0;
+        for (Appointment appointment : appointments) {
+            assertTrue(i < appointments.length);
+            checkCalendarAppointment(appointment, appointments[i].getAppointmentName(), appointments[i].getAppointmentDescription(), appointments[i].getDayOfTheWeek(), appointments[i].getStartHour(), appointments[i].getStopHour(), appointments[i].getStartMinute(), appointments[i].getStopMinute());
+            i++;
+        }
+        assertTrue(i == appointments.length);
+    }
 }
