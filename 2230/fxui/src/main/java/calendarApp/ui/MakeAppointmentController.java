@@ -65,7 +65,7 @@ public class MakeAppointmentController {
         this.calendarLogic = new CalendarLogic(currentCalendar);
         this.inEditMode = inEditMode;
 
-        if (inEditMode)
+        if (inEditMode){
 
             this.editAppointment = editAppointment;
             txtAppointmentName.setText(editAppointment.getAppointmentName());
@@ -75,6 +75,9 @@ public class MakeAppointmentController {
             txtSetStopTime.setText(convertToTwoDidgets(editAppointment.getStopHour())+":"+convertToTwoDidgets(editAppointment.getStopMinute()));
             txtSetAppointmentDescription.setText(editAppointment.getAppointmentDescription());
             drdSetAppointmentDay.setValue(editAppointment.getDayOfTheWeek().name().toLowerCase());
+        }
+
+            
     }
     
     
