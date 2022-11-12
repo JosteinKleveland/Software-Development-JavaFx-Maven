@@ -100,6 +100,11 @@ public class CalendarSaveHandler {
         return calendar;
     } 
 
+    public static boolean delete(String calendarName) {
+        File file = new File(getFilePath(calendarName));
+        return file.delete();
+    }
+
     /**
      * @return an ArrayList of all filenames in the savedCalendars directory.
      */
