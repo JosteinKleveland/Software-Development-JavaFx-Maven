@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
 import java.util.ArrayList;
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
@@ -150,11 +151,12 @@ public class CalendarViewController {
                 //Set preview of selected appointment to first appointment in list
                 chossenAppointmentCard.setVisible(false);
                 try {
+                    CalendarSaveHandler.save(currentCalendar);
                     viewCalendar();
                 } catch (IOException e) {
                     lblFeedbackText.setText("Something went wrong, please contact support"); 
                     e.printStackTrace();
-                } 
+                }
             }
     }
 

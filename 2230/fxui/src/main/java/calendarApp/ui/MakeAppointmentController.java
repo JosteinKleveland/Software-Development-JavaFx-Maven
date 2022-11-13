@@ -87,15 +87,13 @@ public class MakeAppointmentController {
      * @throws IOException
      */
     public void makeAppointment(ActionEvent event) {
-        Appointment copyAppointment = editAppointment;
 
         String appointmentName = txtAppointmentName.getText();
         String appointmentDescription = txtSetAppointmentDescription.getText();
         String weekDay = (String) drdSetAppointmentDay.getValue();
 
         try {
-        if (inEditMode) {
-           
+        if (inEditMode) {     
             currentCalendar.removeAppointment(editAppointment);
         }
 
@@ -125,11 +123,13 @@ public class MakeAppointmentController {
         changeScene(event, root, nextScene);
 
         } 
-        
+        catch (IOException e) {
+            txtFeedbackEdit.setText("Something went wrong, please contact support");
+            e.printStackTrace();
+        } 
         catch (Exception e) {
             txtFeedbackEdit.setText(e.getMessage());
-            //currentCalendar.removeAppointment(editAppointment);
-            //currentCalendar.addAppointment(copyAppointment);
+            e.printStackTrace();
         }
         
     }
