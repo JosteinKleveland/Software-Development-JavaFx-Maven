@@ -156,7 +156,7 @@ public class MakeAppointmentController {
 
     //Helper method that decodes clock of the format 00:00
     //@returns an int array with 2 memory places [0] -> int hour, [1] -> int minute
-    public int[] decodeClock(String time) throws IllegalArgumentException {
+    private int[] decodeClock(String time) throws IllegalArgumentException {
         try {
             int[] timeIntArray = new int[2];
             String[] timeStringArray = time.split(":",2);
