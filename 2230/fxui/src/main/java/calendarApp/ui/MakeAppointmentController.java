@@ -86,24 +86,23 @@ public class MakeAppointmentController {
      * @param event
      * @throws IOException
      */
-    public void makeAppointment(ActionEvent event) throws IOException {
-        Appointment copyAppointment = editAppointment;
+    public void makeAppointment(ActionEvent event) {
 
         String appointmentName = txtAppointmentName.getText();
         String appointmentDescription = txtSetAppointmentDescription.getText();
         String weekDay = (String) drdSetAppointmentDay.getValue();
+
+        try {
+        if (inEditMode) {     
+            currentCalendar.removeAppointment(editAppointment);
+        }
+
         int[] startTime = decodeClock(txtSetStartTime.getText());
         int[] stopTime = decodeClock(txtSetStopTime.getText());
         int startHour = startTime[0];
         int startMinute = startTime[1];
         int stopHour = stopTime[0];
         int stopMinute = stopTime[1];
-
-        try {
-        if (inEditMode) {
-           
-            currentCalendar.removeAppointment(editAppointment);
-        }
 
         // If we are in editing mode (in practice came from "ViewAppointment.fxml"), then remove the current appointment
         // before creating a new one with the desired attributes
@@ -124,11 +123,13 @@ public class MakeAppointmentController {
         changeScene(event, root, nextScene);
 
         } 
-        
+        catch (IOException e) {
+            txtFeedbackEdit.setText("Something went wrong, please contact support");
+            e.printStackTrace();
+        } 
         catch (Exception e) {
             txtFeedbackEdit.setText(e.getMessage());
-            //currentCalendar.removeAppointment(editAppointment);
-            //currentCalendar.addAppointment(copyAppointment);
+            e.printStackTrace();
         }
         
     }
@@ -138,34 +139,45 @@ public class MakeAppointmentController {
      * @param event
      * @throws IOException
      */
-    public void exitView(ActionEvent event) throws IOException{
+    public void exitView(ActionEvent event) {
         String nextScene = "CalendarView.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        Parent root = loader.load();
-        CalendarViewController calendarViewController = loader.getController();
-        calendarViewController.initialize(currentCalendar);
-        changeScene(event, root, nextScene);
+        Parent root;
+        try {
+            root = loader.load();
+            CalendarViewController calendarViewController = loader.getController();
+            calendarViewController.initialize(currentCalendar);
+            changeScene(event, root, nextScene);
+        } catch (IOException e) {
+            txtFeedbackEdit.setText("An error occured, could not close window");
+        }
+
     }
 
     //Helper method that decodes clock of the format 00:00
     //@returns an int array with 2 memory places [0] -> int hour, [1] -> int minute
-    public int[] decodeClock(String time) {
-        int[] timeIntArray = new int[2];
-        String[] timeStringArray = time.split(":",2);
-        String hourString = timeStringArray[0];
-        String minuteString = timeStringArray[1];
-
-        if (hourString.charAt(0) == '0') {
-            hourString = Character.toString(hourString.charAt(1));
+    private int[] decodeClock(String time) throws IllegalArgumentException {
+        try {
+            int[] timeIntArray = new int[2];
+            String[] timeStringArray = time.split(":",2);
+            String hourString = timeStringArray[0];
+            String minuteString = timeStringArray[1];
+    
+            if (hourString.charAt(0) == '0') {
+                hourString = Character.toString(hourString.charAt(1));
+            }
+            if (minuteString.charAt(0) == '0') {
+                minuteString = Character.toString(minuteString.charAt(1));
+            }
+    
+            timeIntArray[0] = Integer.parseInt(hourString);
+            timeIntArray[1] = Integer.parseInt(minuteString);
+    
+            return timeIntArray;
         }
-        if (minuteString.charAt(0) == '0') {
-            minuteString = Character.toString(minuteString.charAt(1));
+        catch (Exception e) {
+            throw new IllegalArgumentException("Time needs to be on the format xx:xx");
         }
-
-        timeIntArray[0] = Integer.parseInt(hourString);
-        timeIntArray[1] = Integer.parseInt(minuteString);
-
-        return timeIntArray;
     }
 
     private String convertToTwoDidgets(int numberToCheck ){

@@ -69,16 +69,8 @@ public class CalendarSaveHandler {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
         
         // Writes the serialized string (json) to the file
-        try {
-            writer.write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writer.write(json);
+        writer.close();
     }   
     
     /**

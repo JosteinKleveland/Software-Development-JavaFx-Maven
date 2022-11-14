@@ -45,9 +45,9 @@ public class WelcomeWindowController {
         lblFeedback.setText("");
 
         //Checking whether the text field is empty or not
-        if(calendarName.length() == 0){
-            lblFeedback.setText("Calendar name cannot be empty");
-            throw new IllegalArgumentException("Calendar name cannot be empty");
+        if(calendarName.length() == 0 || calendarName.length() < 2){
+            lblFeedback.setText("Calendar name cannot be empty or less than two characters");
+            throw new IllegalArgumentException("Calendar name cannot be empty or less than two characters");
         }
 
         //Checks whether the calendar name exists from before.

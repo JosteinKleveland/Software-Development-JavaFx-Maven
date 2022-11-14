@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
 import java.util.ArrayList;
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
@@ -45,6 +46,7 @@ public class CalendarViewController {
     @FXML private Label lbChosenAppointmentTime;
     @FXML private Label lblChosenAppointmentDescription;
     @FXML private Label lblChosenAppointmentName;
+    @FXML private Label lblFeedbackText;
 
     //Appointment management
     @FXML private Button btnNewAppointment;
@@ -73,9 +75,14 @@ public class CalendarViewController {
     private final String[] appointmentcolors = {"f16c31;\n","FFC285;\n","EE7FF7;\n","6F7DF7;\n","FC38B2;\n","A2FF88;\n","FF3939;\n","FFEC39;\n","C2D632;\n","74E2B0;\n","74B6E2;\n","2CFF95;\n","FCC0E9;\n","B4E29F;\n","EF7D30;\n"};
     private CalendarListener calendarListener;
 
-    protected void initialize(Calendar calendar) throws IOException {
-        this.currentCalendar = calendar;
-        viewCalendar();
+    protected void initialize(Calendar calendar) {
+        try {
+            this.currentCalendar = calendar;
+            viewCalendar();
+        } catch (IOException e) {
+            lblFeedbackText.setText("Failed to load calendar, please contact support"); 
+            e.printStackTrace();
+        } 
     }
 
     private List<Appointment> getData(){
@@ -105,7 +112,7 @@ public class CalendarViewController {
     }
 
     // Method to delete current calendar
-    public void deleteCalendar(ActionEvent event) throws IOException {
+    public void deleteCalendar(ActionEvent event) {
         
         //Allert the user that the delete action is permanent
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -116,33 +123,41 @@ public class CalendarViewController {
 
         //Delete the calendar if the user agree
         if (alert.showAndWait().get() == ButtonType.OK){
-
-            CalendarSaveHandler.delete(currentCalendar.getCalendarName());
-            String nextScene = "WelcomeWindow.fxml";
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-            Parent root = loader.load();
-            changeScene(event, root, "WelcomeWindow.fxml");
+            try {
+                CalendarSaveHandler.delete(currentCalendar.getCalendarName());
+                String nextScene = "WelcomeWindow.fxml";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+                Parent root = loader.load();
+                changeScene(event, root, "WelcomeWindow.fxml");
+            } catch (IOException e) {
+                lblFeedbackText.setText("Something went wrong, please contact support"); 
+                e.printStackTrace();
+            }
         }
     }
 
      // Method to delete selected appointment
-     public void deleteAppointment(ActionEvent event) throws IOException {
-        
-        //Allert the user that the delete action is permanent
-        Alert alert = new Alert(AlertType.CONFIRMATION);
+     public void deleteAppointment(ActionEvent event) {
+            //Allert the user that the delete action is permanent
+            Alert alert = new Alert(AlertType.CONFIRMATION);
 
-        alert.setTitle("Delete Appointment");
-        alert.setHeaderText("Are you sure you want to delete this appointment?");
-        alert.setContentText("The action can not be undone");
+            alert.setTitle("Delete Appointment");
+            alert.setHeaderText("Are you sure you want to delete this appointment?");
+            alert.setContentText("The action can not be undone");
 
-        //Delete the calendar if the user agree
-        if (alert.showAndWait().get() == ButtonType.OK){
-            currentCalendar.removeAppointment(chosenAppointment);
-            //Set preview of selected appointment to first appointment in list
-            chossenAppointmentCard.setVisible(false);
-            viewCalendar();
-        }
-
+            //Delete the calendar if the user agree
+            if (alert.showAndWait().get() == ButtonType.OK){
+                currentCalendar.removeAppointment(chosenAppointment);
+                //Set preview of selected appointment to first appointment in list
+                chossenAppointmentCard.setVisible(false);
+                try {
+                    CalendarSaveHandler.save(currentCalendar);
+                    viewCalendar();
+                } catch (IOException e) {
+                    lblFeedbackText.setText("Something went wrong, please contact support"); 
+                    e.printStackTrace();
+                }
+            }
     }
 
     /**
@@ -150,50 +165,60 @@ public class CalendarViewController {
      * @param event
      * @throws IOException
      */
-    public void editAppointment(ActionEvent event) throws IOException {
+    public void editAppointment(ActionEvent event) {
+        try {
 
-        if (!(chosenAppointment == null)){
-            String nextScene = "MakeAppointment.fxml";
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-            Parent root = loader.load();
-            
-            // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to edit an appointment
-            // Since the same controller is also used to create new appointments from scratch,
-            // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
-            MakeAppointmentController makeAppointmentController = loader.getController();
-            makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
+            if (!(chosenAppointment == null)){
+                String nextScene = "MakeAppointment.fxml";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+                Parent root = loader.load();
+                
+                // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to edit an appointment
+                // Since the same controller is also used to create new appointments from scratch,
+                // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
+                MakeAppointmentController makeAppointmentController = loader.getController();
+                makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
 
-            changeScene(event, root, nextScene);
-        }
-
-      
-       
+                changeScene(event, root, nextScene);
+            }
+        } catch (IOException e) {
+            lblFeedbackText.setText("Something went wrong, please contact support"); 
+            e.printStackTrace();
+        } 
     }
 
 
    // Exiting current calendar, and going back to welcome window
-   public void exitCalendar(ActionEvent event) throws IOException {
-        String nextScene = "WelcomeWindow.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        Parent root = loader.load();
-        changeScene(event, root, nextScene);
+   public void exitCalendar(ActionEvent event) {
+        try {
+            String nextScene = "WelcomeWindow.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+            Parent root = loader.load();
+            changeScene(event, root, nextScene);
+        } catch (IOException e) {
+            lblFeedbackText.setText("Something went wrong, please contact support");
+            e.printStackTrace();
+        }
     }
   
     
     
-    public void createNewAppointment(ActionEvent event) throws IOException {
-        String nextScene = "MakeAppointment.fxml";
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
-        Parent root = loader.load();
-
-        // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to the create a new appointment
-        // Since the same controller is used to edit appointments,
-        // the arguments "inEditMode" and "editAppointment" are set to false and null
-        MakeAppointmentController makeAppointmentController = loader.getController();
-        makeAppointmentController.intialize(currentCalendar, false, null);
-
-        changeScene(event, root, nextScene);
+    public void createNewAppointment(ActionEvent event) {
+        try {
+            String nextScene = "MakeAppointment.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
+            Parent root;
+            root = loader.load();
+            // Gets the controller that is connected to the MakeAppointment.fxml and intializes the setup to the create a new appointment
+            // Since the same controller is used to edit appointments,
+            // the arguments "inEditMode" and "editAppointment" are set to false and null
+            MakeAppointmentController makeAppointmentController = loader.getController();
+            makeAppointmentController.intialize(currentCalendar, false, null);
+            changeScene(event, root, nextScene);
+        } catch (IOException e) {
+            lblFeedbackText.setText("Something went wrong, please contact support");
+            e.printStackTrace();
+        }
     }
 
 
@@ -208,7 +233,7 @@ public class CalendarViewController {
 
     // Calendar prevew
      //Help method to check and return the correct place for the appointment
-    private int checkDay(Appointment appointment){
+    private int checkDay(Appointment appointment) {
         if (appointment.getDayOfTheWeek() == DaysOfTheWeek.MONDAY){return 1;}
         else if (appointment.getDayOfTheWeek() == DaysOfTheWeek.TUESDAY){return 2;}
         else if (appointment.getDayOfTheWeek() == DaysOfTheWeek.WEDNESDAY){return 3;}
@@ -311,7 +336,7 @@ public class CalendarViewController {
 
     }
 
-    public void viewCalendar() throws IOException {
+    private void viewCalendar() throws IOException {
         getData();
         gridCalendar.getChildren().clear();
 
