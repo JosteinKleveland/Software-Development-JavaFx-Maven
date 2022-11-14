@@ -56,8 +56,8 @@ public class CalendarLogicService {
             + e + ")");
       }
     }
-    CalendarLogic calendarLogic = new CalendarLogic();
     Calendar calendar1 = new Calendar("calendar1");
+    CalendarLogic calendarLogic = new CalendarLogic(calendar1);
     calendar1.addAppointment(new Appointment("Appointment 1", "First appointment", DaysOfTheWeek.MONDAY, 0, 0, 1, 0));
     calendarLogic.setCurrentCalendar(calendar1);
     //todoModel.addTodoList(new TodoList("todo2"));
