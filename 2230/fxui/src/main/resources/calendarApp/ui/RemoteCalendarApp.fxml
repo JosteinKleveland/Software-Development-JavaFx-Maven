@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.WelcomeWindowController">
+    <fx:define>
+        <String fx:id="endpointUri" fx:value="http://localhost:8080/calendar/"/>
+    </fx:define>
+    <fx:include fx:id="calendarLogicView" source="WelcomeWindow.fxml"/>
+</VBox>
