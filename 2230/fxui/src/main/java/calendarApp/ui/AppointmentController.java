@@ -29,9 +29,4 @@ public class AppointmentController {
         lblAppointmentTime.setText(appointment.getStartHour()+":"+appointment.getStartMinute()+" - "+appointment.getStopHour()+":"+ appointment.getStopMinute());   
 
     }
-
-    public Appointment getAppointment() {
-        return this.appointment;
-    }
-
 }
