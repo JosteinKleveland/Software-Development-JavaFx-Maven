@@ -30,6 +30,8 @@ public class AppointmentController {
 
     }
 
-
+    public Appointment getAppointment() {
+        return this.appointment;
+    }
 
 }

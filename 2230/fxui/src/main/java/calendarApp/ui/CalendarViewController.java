@@ -41,8 +41,8 @@ public class CalendarViewController {
     
     //FXML elements
     //Showing chosen appointment
-    @FXML private VBox chossenAppointmentCard;
-    @FXML private Label lbChosenAppointmentTime;
+    @FXML private VBox chosenAppointmentCard;
+    @FXML private Label lblChosenAppointmentTime;
     @FXML private Label lblChosenAppointmentDescription;
     @FXML private Label lblChosenAppointmentName;
 
@@ -90,14 +90,14 @@ public class CalendarViewController {
         if (appointment == null){
             lblChosenAppointmentName.setText("");
             lblChosenAppointmentDescription.setText("");
-            lbChosenAppointmentTime.setText("");
-            chossenAppointmentCard.setVisible(false);
+            lblChosenAppointmentTime.setText("");
+            chosenAppointmentCard.setVisible(false);
         }
 
         else {
         lblChosenAppointmentName.setText(appointment.getAppointmentName());
         lblChosenAppointmentDescription.setText(appointment.getAppointmentDescription());
-        lbChosenAppointmentTime.setText(convertToTwoDidgets(appointment.getStartHour())+":"+convertToTwoDidgets(appointment.getStartMinute())+" - "+convertToTwoDidgets(appointment.getStopHour())+":"+ convertToTwoDidgets(appointment.getStopMinute()));
+        lblChosenAppointmentTime.setText(convertToTwoDidgets(appointment.getStartHour())+":"+convertToTwoDidgets(appointment.getStartMinute())+" - "+convertToTwoDidgets(appointment.getStopHour())+":"+ convertToTwoDidgets(appointment.getStopMinute()));
         
         this.chosenAppointment = appointment;
         }
@@ -139,7 +139,7 @@ public class CalendarViewController {
         if (alert.showAndWait().get() == ButtonType.OK){
             currentCalendar.removeAppointment(chosenAppointment);
             //Set preview of selected appointment to first appointment in list
-            chossenAppointmentCard.setVisible(false);
+            chosenAppointmentCard.setVisible(false);
             viewCalendar();
         }
 
@@ -306,7 +306,7 @@ public class CalendarViewController {
 
     
     private void clickAppointment(MouseEvent event, Appointment a) {
-        chossenAppointmentCard.setVisible(true);
+        chosenAppointmentCard.setVisible(true);
         setChosenAppointment(a);
 
     }
@@ -328,7 +328,10 @@ public class CalendarViewController {
         Pane background;
 
         for (Appointment a : appointmentList){
-        
+            
+            // For testing - fxid counter for appointment panes
+            Integer fxid = 0;
+
             // Variables for appointment placement
 
             numberOfBlocks = calculateNumberOfBlocks(a);
@@ -338,6 +341,7 @@ public class CalendarViewController {
             background = new Pane();
             color = selectAppointmentColor();
             background.setStyle("-fx-background-color: #"+color+"-fx-background-radius: 5;");
+            background.setId(fxid.toString());
 
             // Dette gir feil hvis avtalen er bare 15min!
             appointmentLabel = new Label();
@@ -346,6 +350,8 @@ public class CalendarViewController {
 
             gridCalendar.add(background, checkDay(a),firstBlock, 1,numberOfBlocks);
             gridCalendar.add(appointmentLabel, checkDay(a),firstBlock);
+
+            fxid++;
   
         }
 }
