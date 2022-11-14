@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.MediaType;
  * Used for all requests referring to a Calendar by name
  */
 
-@Produces(MediaType.APPLICATION_JSON) //Husk å importere
+@Produces(MediaType.APPLICATION_JSON)
 public class CalendarResource {
     
     //private Logger 

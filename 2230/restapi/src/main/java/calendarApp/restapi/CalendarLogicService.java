@@ -45,12 +45,6 @@ public class CalendarLogicService {
      * 
      * @return the CalendarLogic
      */
-    /*@Path("/settings")
-    public TodoSettingsResource getTodoSettings() {
-        LOG.debug("Sub-resource for TodoSettings");
-        return new TodoSettingsResource(todoModel);
-    }*/ 
-    //Tror denne ikke er nødvndig for vår del? Henter ut settings elns.
 
     /**
    * Returns the CalendarResource containing the
