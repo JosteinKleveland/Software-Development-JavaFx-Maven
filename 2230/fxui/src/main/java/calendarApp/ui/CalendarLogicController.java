@@ -35,7 +35,7 @@ public class CalendarLogicController {
   ComboBox<String> todoListsView;
 
   @FXML
-  CalendarController calendarViewController;
+  CalendarViewController calendarViewController;
 
   /**
    * Sets the CalendarLogicAccess for this controller,
@@ -87,7 +87,7 @@ public class CalendarLogicController {
         AbstractTodoList todoList = getSelectedTodoList();
         if (! (todoList instanceof TodoList)) {
           // retrieve actual list
-          todoList = todoModelAccess.getTodoList(todoList.getName());
+          todoList = .getTodoModelAccessTodoList(todoList.getName());
         }
         todoListViewController.setTodoList(todoList instanceof TodoList tl ? tl : null);
       }
@@ -111,50 +111,4 @@ public class CalendarLogicController {
     }
   }*/
 /*
-  private Scene settingsScene = null;
 
-  private Scene getSettingsScene() throws RuntimeException {
-    if (this.settingsScene == null) {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TodoSettings.fxml"));
-      try {
-        Object root = fxmlLoader.load();
-        TodoSettingsController settingsController = fxmlLoader.getController();
-        settingsController.setTodoSettings(todoModelAccess.getTodoSettings());
-        settingsController.setBackButtonTarget(new SceneTarget(todoListsView.getScene()));
-        if (root instanceof Parent) {
-          this.settingsScene = new Scene((Parent) root);
-        } else if (root instanceof Scene) {
-          this.settingsScene = (Scene) root;
-        }
-      } catch (IOException ioe) {
-        throw new RuntimeException(ioe);
-      }
-    }
-    return this.settingsScene;
-  }*/
-  /*
-  @FXML
-  void handleSettingsAction() {
-    try {
-      ((Stage) todoListsView.getScene().getWindow()).setScene(getSettingsScene());
-    } catch (Exception e) {
-      System.err.println("Couldn't load settings scene");
-      e.getCause().printStackTrace();
-    }
-  }*/
-
-  @FXML
-  void exitCalendar() {
-    return;
-  }
-
-  @FXML
-  void createNewAppointment() {
-    return;
-  }
-
-  @FXML
-  void deleteCalendar() {
-    return;
-  }
-}

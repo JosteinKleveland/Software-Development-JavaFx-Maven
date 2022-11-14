@@ -13,7 +13,7 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
     private final CalendarLogic calendarLogic;
 
     public DirectCalendarLogicAccess(CalendarLogic calendarLogic) {
-        this.calendarLogic = new CalendarLogic();
+        this.calendarLogic = calendarLogic;
         this.calendarLogic.setCurrentCalendar(calendarLogic.getCurrentCalendar());
     }
 

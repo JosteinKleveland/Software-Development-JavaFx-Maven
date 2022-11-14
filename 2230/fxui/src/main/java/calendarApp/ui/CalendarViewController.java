@@ -62,6 +62,8 @@ public class CalendarViewController {
     //Navigation
     @FXML private Button btnExitCalendar;
 
+    private CalendarLogicAccess calendarLogicAccess;
+
     //State variables
    // private CalendarLogic calendarLogic;
     private Calendar currentCalendar;
@@ -83,6 +85,16 @@ public class CalendarViewController {
             lblFeedbackText.setText("Failed to load calendar, please contact support"); 
             e.printStackTrace();
         } 
+    }
+
+    /**
+   * Sets the CalendarLogicAccess for this controller,
+   * so data can come from different sources.
+   *
+   * @param calendarLogicAccess the new CalendarLogicAccess to use
+   */
+    public void setCalendarLogicAccess(CalendarLogicAccess calendarLogicAccess) {
+        this.calendarLogicAccess = calendarLogicAccess;
     }
 
     private List<Appointment> getData(){
@@ -177,7 +189,7 @@ public class CalendarViewController {
                 // Since the same controller is also used to create new appointments from scratch,
                 // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
                 MakeAppointmentController makeAppointmentController = loader.getController();
-                makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
+                makeAppointmentController.intialize(this.currentCalendar, calendarLogicAccess, true, this.chosenAppointment);
 
                 changeScene(event, root, nextScene);
             }
@@ -213,7 +225,7 @@ public class CalendarViewController {
             // Since the same controller is used to edit appointments,
             // the arguments "inEditMode" and "editAppointment" are set to false and null
             MakeAppointmentController makeAppointmentController = loader.getController();
-            makeAppointmentController.intialize(currentCalendar, false, null);
+            makeAppointmentController.intialize(currentCalendar, calendarLogicAccess, false, null);
             changeScene(event, root, nextScene);
         } catch (IOException e) {
             lblFeedbackText.setText("Something went wrong, please contact support");
