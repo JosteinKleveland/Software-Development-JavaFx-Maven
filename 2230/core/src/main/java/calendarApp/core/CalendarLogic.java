@@ -8,7 +8,8 @@ public class CalendarLogic {
     private Calendar currentCalendar; // Current calendar object
 
     //Dummy-constructor to be able to test from CalendarLogicTest
-    public CalendarLogic() {
+    public CalendarLogic(Calendar calendar) {
+        setCurrentCalendar(calendar);
     }
 
     /** 

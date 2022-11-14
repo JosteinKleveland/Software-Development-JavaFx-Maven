@@ -9,8 +9,8 @@ public class CalendarLogicTest {
     @Test
     @DisplayName("Check that appointment that collide with existing appointment cannot be added to calendar")
     public void checkCollisionTest() {
-        CalendarLogic calendarlogic = new CalendarLogic();
         Calendar calendar = new Calendar("calendar");
+        CalendarLogic calendarlogic = new CalendarLogic(calendar);
         
         Appointment a1 = new Appointment("Football", "test description", DaysOfTheWeek.WEDNESDAY, 10, 12, 30, 30);
         Appointment a2 = new Appointment("Tennis", "test description", DaysOfTheWeek.WEDNESDAY, 12, 14, 30, 30);

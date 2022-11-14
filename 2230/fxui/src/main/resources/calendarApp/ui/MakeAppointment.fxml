@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:id="txtSetStopTime" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.MakeAppointmentController">
+<AnchorPane fx:id="paneCalenedarview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.MakeAppointmentController">
    <children>
       <TextField fx:id="txtAppointmentName" layoutX="65.0" layoutY="64.0" prefHeight="25.0" prefWidth="271.0" promptText="Appointment name" />
       <TextField fx:id="txtSetStartTime" layoutX="128.0" layoutY="95.0" prefHeight="25.0" prefWidth="49.0" promptText="xx:xx" />
@@ -17,9 +16,9 @@
       <Text layoutX="65.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start time:" />
       <Text layoutX="194.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop time:" />
       <TextArea fx:id="txtSetAppointmentDescription" layoutX="65.0" layoutY="166.0" prefHeight="155.0" prefWidth="271.0" promptText="Appointment description" />
-      <ChoiceBox fx:id="drdSetAppointmentDay" layoutX="65.0" layoutY="130.0" prefHeight="25.0" prefWidth="271.0" />
+      <ChoiceBox fx:id="drdSetAppointmentDay" layoutX="65.0" layoutY="130.0" prefHeight="25.0" prefWidth="271.0" value="Monday" />
       <Button fx:id="btnSaveAppointment" layoutX="124.0" layoutY="381.0" mnemonicParsing="false" onAction="#makeAppointment" prefHeight="25.0" prefWidth="153.0" text="Save" />
       <Button fx:id="btnCancelEdit" layoutX="125.0" layoutY="413.0" mnemonicParsing="false" onAction="#exitView" prefHeight="25.0" prefWidth="153.0" text="Cancel" />
-      <Label fx:id="txtFeedbackEdit" layoutX="188.0" layoutY="342.0"/>
+      <Label fx:id="txtFeedbackEdit" contentDisplay="CENTER" layoutX="63.0" layoutY="334.0" prefHeight="39.0" prefWidth="278.0" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
