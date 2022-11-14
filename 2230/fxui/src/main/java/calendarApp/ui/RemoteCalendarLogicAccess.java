@@ -36,7 +36,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
 
     public RemoteCalendarLogicAccess(URI endpointBaseUri) {
         this.endpointBaseUri = endpointBaseUri;
-        //objectMapper.registerModule(new CalendarAppModule());
         objectMapper = CalendarSaveHandler.createObjectMapper();
     }
 
@@ -51,8 +50,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
             final HttpResponse<String> response =
                 HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
             this.calendarLogic = objectMapper.readValue(response.body(), CalendarLogic.class);
-            //Can also get a settings-class if we choose to use one.
-            //getCalendarSettings();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -70,35 +67,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         
     }
 
-    //Possible methods to use for settings
-    /*
-
-    private boolean isDefaultSettings(TodoSettings todoSettings) {
-       return todoSettings == null;
-    }
-
-    @Override
-    public TodoSettings getTodoSettings() {
-        TodoModel todoModel = getTodoModel();
-        TodoSettings settings = todoModel.getSettings();
-        if (isDefaultSettings(settings)) {
-        HttpRequest request = HttpRequest.newBuilder(endpointBaseUri.resolve("settings"))
-            .header("Accept", "application/json")
-            .GET()
-            .build();
-        try {
-            final HttpResponse<String> response =
-                HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
-            final String responseString = response.body();
-            settings = objectMapper.readValue(responseString, TodoSettings.class);
-            todoModel.setSettings(settings);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        }
-        return settings;
-    }                                    */
-
     /**
      * Checks that name is valid for a (new) Calendar.
      *
@@ -110,8 +78,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         return getCalendarLogic().isValidCalendarName(calendarName);
     }
     
-    //Her hadde de en metode som var public boolean hasTodoList(String name).. Vet ikke om vi trenger noe sånt
-
     //Her hadde de en metode som returne en liste over alle todolistene sine. 
 
     private String uriParam(String s) {
@@ -119,10 +85,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     }
     private URI calendarUri(String calendarName) {
         return endpointBaseUri.resolve("/").resolve(uriParam(calendarName));
-    }/*
-    private URI todoListUri(String name) {
-        return endpointBaseUri.resolve("list/").resolve(uriParam(name));
-    }*/
 
     /**
      * 
