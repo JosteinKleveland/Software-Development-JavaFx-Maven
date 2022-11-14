@@ -12,11 +12,21 @@ public class CalendarLogic {
         setCurrentCalendar(calendar);
     }
 
+    /** 
+     * Method to check calendarName. Creates a Calendar-object to be able to use checkCalendarName-method. 
+     * @param calendarName to check if valid or not. 
+     * @return true if name is valid, false otherwise. 
+     */
+    public boolean isValidCalendarName(String calendarName) {
+        Calendar calendar = new Calendar("testCalendar");
+        return calendar.checkCalendarName(calendarName);
+    }
+
     /**
-     * Adds a new appointment to the respective calendar
-     * @param c1
-     * @param newAppointment
-     * @throws IllegalArgumentException if the new appointment collides with an existing one in the calendar
+     * 
+     * @param c1 is the Calendar that is getting Appointments added
+     * @param newAppointment is Appointment to be added
+     * @throws IllegalArgumentException if the new appointment collides with an existing one in the callendar
      */
     public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment){
         
@@ -32,25 +42,43 @@ public class CalendarLogic {
         c1.addAppointment(newAppointment);
     }
 
-    // Getter
-
-    public Calendar getCurrentCalendar() {
-        // to prevent direct access from outside, 
-        // only a copy of the calendar object will be returned
+    /**
+     * 
+     * @param optional name
+     * @return Calendar equal to currentCalendar if name is null, else returns new Calendar with given name
+     */
+    public Calendar getCurrentCalendar(String... name) {
+        //to prevent direct access from outside, 
+        //only a copy of the calendar object will be returned
         if (currentCalendar == null) {
-            return null;
+            if (name.length == 0) return null;
+            return new Calendar(name[0]);
         }
         Calendar calendar = new Calendar(currentCalendar.getCalendarName());
-        for ( Appointment appointment : currentCalendar.getAppointments() ) {
-            currentCalendar.addAppointment(appointment);
+        for (Appointment appointment : currentCalendar.getAppointments() ) {
+            calendar.addAppointment(appointment);
         }
         return calendar;
     }
 
-    // Setter
-
-    private void setCurrentCalendar(Calendar currentCalendar) {
-        this.currentCalendar = currentCalendar;
+    /** 
+     * Method to put new Calendar 
+     * @param currentCalendar is new Calendar 
+     * @return oldCalendar that was replaced 
+     */
+    public Calendar setCurrentCalendar(Calendar currentCalendar) {
+        //to prevent direct access from outside, 
+        //and to have better controll over what comes in,
+        //the calendar object will be set to a copy of the argument
+        this.currentCalendar = currentCalendar != null ? new Calendar(currentCalendar.getCalendarName()) : null;
+        if (currentCalendar != null) {
+            Calendar oldCalendar = this.getCurrentCalendar();
+            for (Appointment appointment : currentCalendar.getAppointments() ) {
+                this.currentCalendar.addAppointment(appointment);
+            }
+            return oldCalendar;
+        }
+        else return null;
     }
 
     /**

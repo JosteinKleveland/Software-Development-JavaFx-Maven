@@ -34,7 +34,7 @@ public class Calendar {
      * @param calendarName
      * @throws IllegalArgumentException if the argument was not in a valid format
      */
-    private void setCalendarName(String calendarName) {
+    public void setCalendarName(String calendarName) {
         if(checkCalendarName(calendarName) == false){
             throw new IllegalArgumentException("Calendarname does not have a valid format");
         }
@@ -74,7 +74,7 @@ public class Calendar {
     * @param calendarName
     * @return true if the format is correct and false otherwise
     */
-    private boolean checkCalendarName(String calendarName){
+    public boolean checkCalendarName(String calendarName){
         //If the calendar name is empty or has a length less than 2, return false
         if (calendarName.isBlank() || calendarName.length() < 2){
             return false;
