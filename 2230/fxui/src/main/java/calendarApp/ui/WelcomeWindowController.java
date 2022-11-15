@@ -27,7 +27,8 @@ public class WelcomeWindowController {
     @FXML private TextField txtCalendarNameInput;
     @FXML private Label lblFeedback;
     
-    CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private Calendar calendar;
 
     private Stage stage;
     private Scene scene;
@@ -73,12 +74,15 @@ public class WelcomeWindowController {
         
         try {
             // Creates and saves the new calendar and 
-            Calendar calendar = new Calendar(calendarName);
+            this.calendar = new Calendar(calendarName);
             CalendarSaveHandler.save(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
             changeToCalendarViewWindow(event, this.root);
             calendarViewController.initialize(calendar);
+            }
+            catch (IllegalArgumentException e) {
+                lblFeedback.setText("The Calendar name can not contain spaces. Please try again.");
             }
             catch (IOException e) {
                 lblFeedback.setText("An error occured. Could not create new calendar.");
@@ -121,7 +125,7 @@ public class WelcomeWindowController {
 
         try {
             // Loads the Calendar object with name calendarName
-            Calendar calendar = CalendarSaveHandler.load(calendarName);
+            this.calendar = CalendarSaveHandler.load(calendarName);
             
             // Changes window to CalenderView and sets up the respective controller with the calendar
             changeToCalendarViewWindow(event, this.root);
@@ -152,5 +156,8 @@ public class WelcomeWindowController {
         stage.show();
     }
 
-
+    // For testing
+    public Calendar getCalendar() {
+        return this.calendar;
+    }
 }

@@ -149,7 +149,7 @@ public class CalendarViewController {
             if (alert.showAndWait().get() == ButtonType.OK){
                 currentCalendar.removeAppointment(chosenAppointment);
                 //Set preview of selected appointment to first appointment in list
-                chossenAppointmentCard.setVisible(false);
+                chosenAppointmentCard.setVisible(false);
                 try {
                     CalendarSaveHandler.save(currentCalendar);
                     viewCalendar();

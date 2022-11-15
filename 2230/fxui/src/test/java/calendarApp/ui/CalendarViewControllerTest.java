@@ -27,7 +27,7 @@ public class CalendarViewControllerTest extends ApplicationTest {
     private Appointment appointment1, appointment2, appointment3; // The appointments to compare with
     
     @Override
-    public void start(final Stage stage) throws Exception {
+    public void start(final Stage stage) throws IOException {
       final FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarView.fxml"));
       final Parent root = loader.load();
       this.controller = loader.getController();
