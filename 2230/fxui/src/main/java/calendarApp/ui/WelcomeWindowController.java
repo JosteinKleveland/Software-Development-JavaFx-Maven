@@ -41,7 +41,7 @@ public class WelcomeWindowController {
 
     @FXML
     CalendarViewController calendarViewController;
- 
+
     private void decideLocalOrRemoteSaving(Calendar calendar) {
         CalendarLogicAccess calendarLogicAccess = null;
         CalendarLogic calendarLogic = new CalendarLogic(calendar);
@@ -111,8 +111,8 @@ public class WelcomeWindowController {
         try {
             // Creates and saves the new calendar and 
             Calendar calendar = new Calendar(calendarName);
-            CalendarSaveHandler.save(calendar);
             decideLocalOrRemoteSaving(calendar);
+            CalendarSaveHandler.save(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
             changeToCalendarViewWindow(event, this.root);
@@ -189,6 +189,4 @@ public class WelcomeWindowController {
         stage.setScene(scene);
         stage.show();
     }
-
-
 }
