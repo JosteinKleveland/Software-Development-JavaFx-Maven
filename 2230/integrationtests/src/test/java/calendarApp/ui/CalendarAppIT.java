@@ -19,7 +19,8 @@ import org.testfx.framework.junit5.ApplicationTest;
 //public class TodoAppIT extends ApplicationTest {
 public class CalendarAppIT extends ApplicationTest {
 
-  private CalendarLogicController controller;
+  //private CalendarLogicController controller;
+  private CalendarViewController controller;
   
 
   @Override
