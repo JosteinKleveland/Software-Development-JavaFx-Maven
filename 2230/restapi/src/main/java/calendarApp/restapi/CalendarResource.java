@@ -5,7 +5,9 @@ import jakarta.ws.rs.core.MediaType;
 import calendarApp.core.CalendarLogic;
 import calendarApp.core.Calendar;
 import calendarApp.json.CalendarSaveHandler;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.io.IOException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -27,7 +29,7 @@ import jakarta.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class CalendarResource {
     
-    //private Logger 
+    private static final Logger LOG = LoggerFactory.getLogger(CalendarLogic.class);
     private final CalendarLogic calendarLogic;
     private final String calendarName;
     private final Calendar calendar;
@@ -66,6 +68,7 @@ public class CalendarResource {
     @GET
     public Calendar getCalendar() {
         checkCalendar();
+        LOG.debug("getCalendar({})", calendarName);
         return this.calendar;
     }
 
@@ -73,8 +76,8 @@ public class CalendarResource {
         if(calendarSaveHandler != null) {
             try {
                 CalendarSaveHandler.save(this.calendar);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IllegalStateException | IOException e) {
+                LOG.error("Couldn't autosave Calender: ", e);
             }
         }
     }
@@ -87,6 +90,7 @@ public class CalendarResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean putCalendar(Calendar calendar) {
+        LOG.debug("putCalendar({})", calendar);
         Calendar oldCalendar = this.calendarLogic.setCurrentCalendar(calendar);
         autoSaveCalendarLogic();
         return oldCalendar == null;
@@ -127,6 +131,7 @@ public class CalendarResource {
     public boolean removeCalendar() {
         checkCalendar();
         //this.calendarLogic.deleteCalendar(this.calendar); //Metode som skal implementeres i saveHandler antakeligvis
+
         autoSaveCalendarLogic();
         return true;
     }

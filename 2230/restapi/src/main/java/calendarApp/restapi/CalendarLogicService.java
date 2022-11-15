@@ -3,6 +3,8 @@ package calendarApp.restapi;
 import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarSaveHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -20,9 +22,8 @@ public class CalendarLogicService {
     //prefix for all requests that are sent to instances of this particular class
     public static final String CALENDAR_LOGIC_SERVICE_PATH = "calendar";
 
-    //Logger?
+    private static final Logger LOG = LoggerFactory.getLogger(CalendarLogic.class);
 
-    //@Inject?
     @Context
     private CalendarLogic calendarLogic;
 
@@ -36,8 +37,8 @@ public class CalendarLogicService {
      */
     @GET
     public CalendarLogic getCalendarLogic() {
-        //LOG.debug ...
-        return calendarLogic;
+      LOG.debug("getCalendarLogic: " + calendarLogic);
+      return calendarLogic;
     }
 
     /**
@@ -58,9 +59,9 @@ public class CalendarLogicService {
   @Path("/list/{name}")
   public CalendarResource getCalendar(@PathParam("name") String name) {
     Calendar calendar = getCalendarLogic().getCurrentCalendar();
+    LOG.debug("Sub-resource for Calendar " + name + ": " + calendar);
     CalendarResource calendarResource = new CalendarResource(calendarLogic, name, calendar);
     calendarResource.setCalendarSaveHandler(calendarSaveHandler);
     return calendarResource;
   }
 }
-
