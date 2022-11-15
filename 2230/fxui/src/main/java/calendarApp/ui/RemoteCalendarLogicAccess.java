@@ -73,7 +73,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
      * @param name the (new) name
      * @return true if the name is value, false otherwise
      */
-
     public boolean isValidCalendarName(String calendarName) {
         return getCalendarLogic().isValidCalendarName(calendarName);
     }
@@ -83,8 +82,10 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     private String uriParam(String s) {
         return URLEncoder.encode(s, StandardCharsets.UTF_8);
     }
+    
     private URI calendarUri(String calendarName) {
         return endpointBaseUri.resolve("/").resolve(uriParam(calendarName));
+    }
 
     /**
      * 
@@ -99,19 +100,19 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
             HttpRequest request = 
                 HttpRequest.newBuilder(calendarUri(calendarName[0]))
                     .header("Accept", "application/json").GET().build();
-        try {
-            final HttpResponse<String> response = 
-                HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
-            String responseString = response.body();
-            Calendar calendar = objectMapper.readValue(responseString, Calendar.class);
-            if (! (calendar == null)) {
-                Calendar newCalendar = new Calendar(calendar.getCalendarName());
-                calendar = newCalendar;
+            try {
+                final HttpResponse<String> response = 
+                    HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+                String responseString = response.body();
+                Calendar calendar = objectMapper.readValue(responseString, Calendar.class);
+                if (! (calendar == null)) {
+                    Calendar newCalendar = new Calendar(calendar.getCalendarName());
+                    calendar = newCalendar;
+                }
+                this.calendarLogic.setCurrentCalendar(calendar);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            this.calendarLogic.setCurrentCalendar(calendar);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         }
         return oldCalendar;
     }

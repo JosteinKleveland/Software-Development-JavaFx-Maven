@@ -110,5 +110,4 @@ public class CalendarLogicController {
       todoListsView.getSelectionModel().select(todoListsView.getItems().size() > 1 ? 1 : 0);
     }
   }*/
-/*
-
+}
