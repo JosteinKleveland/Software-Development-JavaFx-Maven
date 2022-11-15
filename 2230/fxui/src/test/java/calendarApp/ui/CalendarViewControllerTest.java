@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -21,23 +22,26 @@ import javafx.stage.Stage;
 
 public class CalendarViewControllerTest extends ApplicationTest {
 
-    private CalendarViewController controller;
-    private Calendar calendar;
-    private Appointment appointment1, appointment2, appointment3;
+    private CalendarViewController controller; // The CalendarViewController instance we perform the tests on
+    private Calendar calendar; // The user's calendar
+    private Appointment appointment1, appointment2, appointment3; // The appointments to compare with
     
     @Override
     public void start(final Stage stage) throws Exception {
-      final FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarViewController.fxml"));
+      final FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarView.fxml"));
       final Parent root = loader.load();
       this.controller = loader.getController();
       stage.setScene(new Scene(root));
       stage.show();
     }
 
+    /**
+     * Sets up the CalendarViewController instance with a fresh calendar and appointments for new tests
+     */
     @BeforeEach
-    public void setupAppointments() throws IOException {
+    public void setupAppointments() {
 
-        this.calendar = new Calendar("Fresh Calendar");
+        this.calendar = new Calendar("FreshCalendar");
 
         this.appointment1 = new Appointment("Fotball", "Husk å ta med fotball", DaysOfTheWeek.MONDAY, 18, 19, 0, 30);
         this.appointment2 = new Appointment("Yoga", "Ved blåbærvegen 8", DaysOfTheWeek.WEDNESDAY, 17, 18, 0, 30);
@@ -52,6 +56,7 @@ public class CalendarViewControllerTest extends ApplicationTest {
         controller.initialize(calendar);
     }
 
+
     /**
      *  Tests if the Calendar actually contains the appointments in the setup
      */
@@ -61,16 +66,16 @@ public class CalendarViewControllerTest extends ApplicationTest {
         assertNotNull(this.controller);
         assertNotNull(this.calendar);
 
-        checkCalendarAppointments(this.calendar.getAppointments(), appointment1, appointment2, appointment3);
+        checkCalendarAppointments(this.controller.getData(), appointment1, appointment2, appointment3);
     }
     
     /**
-     *  
+     *  Test if the correct appointments are shown in the "chosen appointment section"
      */
     @Test
     public void testSetChosenAppointment() {
-        // Clicks on the first appointment pane
-        clickOn("#0");
+
+        // Tests if the first appointment automatically shows up in the "chosen appointment section"
         Label lblChosenAppointmentName = (Label) lookup("#lblChosenAppointmentName");
         Label lblChosenAppointmentDescription = (Label) lookup("#lblChosenAppointmentDescription");
         Label lblChosenAppointmentTime = (Label) lookup("#lblChosenAppointmentTime");
@@ -80,6 +85,36 @@ public class CalendarViewControllerTest extends ApplicationTest {
         assertEquals(appointment1.getAppointmentName(), lblChosenAppointmentName.getText());
         assertEquals(appointment1.getAppointmentDescription(), lblChosenAppointmentDescription.getText());
         assertEquals(timeStringToCompare, lblChosenAppointmentTime.getText());
+
+        // Tests if the second appointment shows up in the "chose appointment section" once it is clicked on
+        clickOn("#1");
+        lblChosenAppointmentName = (Label) lookup("#lblChosenAppointmentName");
+        lblChosenAppointmentDescription = (Label) lookup("#lblChosenAppointmentDescription");
+        lblChosenAppointmentTime = (Label) lookup("#lblChosenAppointmentTime");
+
+        timeStringToCompare = appointment2.getStartHour()+":"+appointment2.getStartMinute()+" - "+ appointment2.getStopHour()+":"+ appointment2.getStopMinute();
+
+        assertEquals(appointment2.getAppointmentName(), lblChosenAppointmentName.getText());
+        assertEquals(appointment2.getAppointmentDescription(), lblChosenAppointmentDescription.getText());
+        assertEquals(timeStringToCompare, lblChosenAppointmentTime.getText());
+    }
+
+    /**
+     * Tests if the "delete appointment button" actually deletes the chosen appointment
+     */
+    @Test
+    public void testDeleteAppointment() {
+        // Clicks on the pane belonging to the second appointment
+        // then on the "delete appointment" button
+        // then on "Ok" once the Alert shows up
+        clickOn("#1");
+        clickOn("#deleteAppointment");
+        clickOn("OK");
+
+        // The updated calendar's appointments
+        List<Appointment> appointments = this.controller.getData();
+        // Checks if the remaining appointments are equal to exactly appointment1 and appointment3 
+        checkCalendarAppointments(appointments, appointment1, appointment3);
     }
 
 

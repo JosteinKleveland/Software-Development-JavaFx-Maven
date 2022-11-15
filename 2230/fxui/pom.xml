@@ -103,7 +103,6 @@
                     --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
                     </argLine>
                 </configuration>
-
 	    </plugin>
 
         <plugin>

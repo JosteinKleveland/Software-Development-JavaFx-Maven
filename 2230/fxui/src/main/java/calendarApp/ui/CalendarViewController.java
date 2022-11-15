@@ -78,7 +78,7 @@ public class CalendarViewController {
         viewCalendar();
     }
 
-    private List<Appointment> getData(){
+    public List<Appointment> getData(){
         List<Appointment> appointments = this.currentCalendar.getAppointments();
         this.appointmentList = appointments;
         return appointments;
@@ -164,10 +164,7 @@ public class CalendarViewController {
             makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
 
             changeScene(event, root, nextScene);
-        }
-
-      
-       
+        } 
     }
 
 
