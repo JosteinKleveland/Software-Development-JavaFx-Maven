@@ -48,7 +48,7 @@ public class MakeAppointmentController {
 
     private Calendar currentCalendar; // the current calendar of the user
     //private CalendarLogic calendarLogic;
-    private CalendarLogicAccess calendarLogicAccess;
+    //private CalendarLogicAccess calendarLogicAccess;
 
     private boolean inEditMode; // true if the user is editing an appointment, and false otherwise
     private Appointment editAppointment; // the appointment being edited, can be null
@@ -61,11 +61,11 @@ public class MakeAppointmentController {
      * @param inEditMode flags if the user is in edit mode, or simply creates a new appointment
      * @param editAppointment the potential Appointment in edit mode
      */
-    protected void intialize(Calendar currentCalendar, CalendarLogicAccess calendarLogicAccess, boolean inEditMode, Appointment editAppointment) {
+    protected void intialize(Calendar currentCalendar, boolean inEditMode, Appointment editAppointment) {
         drdSetAppointmentDay.getItems().addAll(days);
         this.currentCalendar = currentCalendar;
         //this.calendarLogic = new CalendarLogic(currentCalendar);
-        this.calendarLogicAccess = calendarLogicAccess;
+        //this.calendarLogicAccess = calendarLogicAccess;
         this.inEditMode = inEditMode;
 
         if (inEditMode){
@@ -82,7 +82,6 @@ public class MakeAppointmentController {
 
             
     }
-    
     
     /**
      * Makes a new Appointment in the Calendar and if in edit mode - deletes the previous one
@@ -111,9 +110,8 @@ public class MakeAppointmentController {
         // before creating a new one with the desired attributes
        
         Appointment newAppointment = new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay.toUpperCase()), startHour, stopHour, startMinute, stopMinute);
-        calendarLogicAccess.addAppointmentToCalendar(currentCalendar, newAppointment);
-       
-
+        currentCalendar.addAppointment(newAppointment);
+    
         // Saves the updated version of the calendar in the respective JSON file
         CalendarSaveHandler.save(currentCalendar);
 

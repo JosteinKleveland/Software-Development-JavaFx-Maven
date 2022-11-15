@@ -189,7 +189,7 @@ public class CalendarViewController {
                 // Since the same controller is also used to create new appointments from scratch,
                 // the arguments "inEditMode" and "editAppointment" are set to true and to the appointmentInView
                 MakeAppointmentController makeAppointmentController = loader.getController();
-                makeAppointmentController.intialize(this.currentCalendar, calendarLogicAccess, true, this.chosenAppointment);
+                makeAppointmentController.intialize(this.currentCalendar, true, this.chosenAppointment);
 
                 changeScene(event, root, nextScene);
             }
@@ -225,7 +225,7 @@ public class CalendarViewController {
             // Since the same controller is used to edit appointments,
             // the arguments "inEditMode" and "editAppointment" are set to false and null
             MakeAppointmentController makeAppointmentController = loader.getController();
-            makeAppointmentController.intialize(currentCalendar, calendarLogicAccess, false, null);
+            makeAppointmentController.intialize(currentCalendar, false, null);
             changeScene(event, root, nextScene);
         } catch (IOException e) {
             lblFeedbackText.setText("Something went wrong, please contact support");
@@ -328,8 +328,6 @@ public class CalendarViewController {
         gridCalendar.add(sa,6,0);
         gridCalendar.add(su,7,0);
 
-
-
     }
 
     private String convertToTwoDidgets(int numberToCheck ){
@@ -341,11 +339,9 @@ public class CalendarViewController {
         return Integer.toString(numberToCheck);
     }
 
-    
     private void clickAppointment(MouseEvent event, Appointment a) {
         chossenAppointmentCard.setVisible(true);
         setChosenAppointment(a);
-
     }
 
     private void viewCalendar() throws IOException {
