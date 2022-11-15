@@ -24,6 +24,7 @@ import calendarApp.json.CalendarSaveHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class WelcomeWindowControllerTest extends ApplicationTest {
@@ -41,8 +42,14 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * Prepares the tests with the creation/deletion of respective json files
+     * @throws JsonProcessingException
+     * @throws IOException
+     */
     @BeforeEach
     public void cleanAndPrepareTests() throws JsonProcessingException, IOException {
+
         // Deletes a potential "TestNewCalendar.json", to prepare for testCreateCalendar & testCreateCalendarFeedback
         if (calendarSaveHandler.checkIfFileExists("TestNewCalendar"))
             CalendarSaveHandler.delete("TestNewCalendar");
@@ -55,8 +62,13 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         CalendarSaveHandler.save(calendarLoaded);  
     } 
 
+
+    /**
+     * Tests if the controller sets a recently created Calendar, and if it has the same name as the user intended
+     */
     @Test
     public void testCreateCalendar() {
+
         clickOn("#txtCalendarNameInput").write("TestNewCalendar");
         clickOn("#btnNewCalendar");
 
@@ -65,24 +77,51 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         assertEquals(0, controller.getCalendar().getAppointments().size()); // Checks if the new Calendar has 0 appointments
     }
 
+
+    /**
+     * Tests if the correct feedback is given if the calendar already exists
+     */
     @Test
     public void testCreateCalendarFeedback() {
 
+        clickOn("#txtCalendarNameInput").write("TestNewCalendar");
+        clickOn("#btnNewCalendar");
+
+        Label feedback = (Label) lookup("#lblFeedback");
+        assertEquals("Calendar name already exists, choose another", feedback.getText());
     }
 
-    @Test
-    public void testLoadCalendar() throws JsonProcessingException, IOException {
 
-        String calendarName = "TestExistingCalendar";  
+    /**
+     * Tests if the controller loads a Calendar object from TestExistingCalendar.json
+     */
+    @Test
+    public void testLoadCalendar() {
+
+        String calendarName = "TestExistingCalendar"; 
+
         clickOn("#txtCalendarNameInput").write(calendarName);
         clickOn("#btnLoadCalendar");
-        
+
         assertEquals(calendarName, controller.getCalendar().getCalendarName());
     }
 
+    /**
+     * Tests if the correct feedback is given if the calendar doesn't exist
+     */
     @Test
     public void testLoadCalendarFeedback() {
-        
-        clickOn("#txtCalendarNameInput").write();
+
+        String calendarName = "DoesNotExist"; 
+
+        // If DoesNotExist.json exists, deletes it, in preperation for the test
+        if (calendarSaveHandler.checkIfFileExists(calendarName))
+            CalendarSaveHandler.delete(calendarName);
+
+        clickOn("#txtCalendarNameInput").write(calendarName);
+        clickOn("#btnLoadCalendar");
+
+        Label feedback = (Label) lookup("#lblFeedback");
+        assertEquals("Calendar name does not exists", feedback.getText());
     }
 }
