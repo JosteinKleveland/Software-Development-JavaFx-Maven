@@ -7,20 +7,12 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse.BodyHandler;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
-import calendarApp.json.CalendarAppModule;
 import calendarApp.json.CalendarSaveHandler;
-import calendarApp.core.Appointment;
 
 /**
  * Class that centralizes access to a CalendarLogicAccess. Makes it easier to support transparent use of a
@@ -54,17 +46,6 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
             throw new RuntimeException(e);
         }
         return calendarLogic;
-    }
-
-    /**
-     * 
-     * @param c1 is the Calendar that is getting Appointments added
-     * @param newAppointment is Appointment to be added
-     * @throws IllegalArgumentException if the new appointment collides with an existing one in the callendar
-     */
-    @Override
-    public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment) {
-        
     }
 
     /**
@@ -152,16 +133,13 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         putCurrentCalendar(calendar);
     }
 
-
-    // ----------------- Kommet ned hit -----------------------
-
     /**
      * Removes the Calendar with the given name from the underlying CalendarLogic.
      *
      * @param name the name of the Calendar to remove
      */
    @Override
-    public void removeCalendar(String name) {       //implementere egen metode for sletting?
+    public void deleteCalendar(String name) {       //implementere egen metode for sletting?
         try {
         HttpRequest request = HttpRequest.newBuilder(calendarUri(name))
             .header("Accept", "application/json")
@@ -172,7 +150,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         String responseString = response.body();
         Boolean removed = objectMapper.readValue(responseString, Boolean.class);
         if (removed != null) {
-            //calendarLogic.removeCalendar(calendarLogic.getCurrentCalendar(name)); legges inn når metoden er implementert
+            CalendarSaveHandler.delete(getCurrentCalendar().getCalendarName());
         }
         } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);
@@ -205,16 +183,5 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         throw new RuntimeException(e);
         }
     }
-
-    /**
-     * Notifies that the TodoList has changed, e.g. TodoItems
-     * have been mutated, added or removed.
-     *
-     * @param todoList the TodoList that has changed
-     */
-   /* @Override
-    public void notifyCalendarChanged(Calendar calendar) {
-        putCurrentCalendar(calendar);
-    }*/
 }
 

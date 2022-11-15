@@ -3,6 +3,7 @@ package calendarApp.ui;
 import calendarApp.core.Calendar;
 import calendarApp.core.Appointment;
 import calendarApp.core.CalendarLogic;
+import calendarApp.json.CalendarSaveHandler;
 
 /**
  * Class that centralizes access to a CalendarLogic
@@ -17,10 +18,6 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
         this.calendarLogic.setCurrentCalendar(calendarLogic.getCurrentCalendar());
     }
 
-    public void addAppointmentToCalendar(Calendar c1, Appointment newAppointment) {
-        calendarLogic.addAppointmentToCalendar(c1, newAppointment);
-    }
-
     public Calendar getCurrentCalendar(String... calendarName) {
         return calendarLogic.getCurrentCalendar(calendarName);
     }
@@ -29,8 +26,8 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
         calendarLogic.setCurrentCalendar(currentCalendar);
     }
 
-    public void removeCalendar(String name) {
-        //calendarLogic.removeCalendar();
+    public void deleteCalendar(String name) {
+        CalendarSaveHandler.delete(getCurrentCalendar().getCalendarName());
     }
 
     public void renameCalendar(String oldName, String newName) {
@@ -39,8 +36,13 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
         throw new IllegalArgumentException("No Calendar named \"" + oldName + "\" found");
         }
         if (calendarLogic.getCurrentCalendar(newName) != null) {
-        throw new IllegalArgumentException("A TodoList named \"" + newName + "\" already exists");
+        throw new IllegalArgumentException("A Calendar named \"" + newName + "\" already exists");
         }
         calendar.setCalendarName(newName);
+    }
+
+    @Override
+    public boolean isValidCalendarName(String name) {
+        return calendarLogic.isValidCalendarName(name);
     }
 }
