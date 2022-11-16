@@ -34,7 +34,6 @@ public class CalendarConfig extends ResourceConfig {
   public CalendarConfig(CalendarLogic calendarLogic) {
     setCalendarLogic(calendarLogic);
     calendarSaveHandler = new CalendarSaveHandler();
-    calendarSaveHandler.setSaveFile("server-calendar.json");
     register(CalendarLogicService.class);
     register(CalendarModuleObjectMapperProvider.class);
     register(JacksonFeature.class);

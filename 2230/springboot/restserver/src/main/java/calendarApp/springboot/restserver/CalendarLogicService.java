@@ -30,7 +30,6 @@ public class CalendarLogicService {
   public CalendarLogicService(CalendarLogic calendarLogic) {
     this.calendarLogic = calendarLogic;
     this.calendarSaveHandler = new CalendarSaveHandler();
-    calendarSaveHandler.setSaveFile("springbootserver-calendar.json");
   }
 
   public CalendarLogicService() {
