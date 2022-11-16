@@ -33,8 +33,6 @@ public class WelcomeWindowController {
     /**
      * FXML-string values for referencing to local path vs. localhost-path
      */
-    @FXML
-    String userCalendarLogicPath;
 
     @FXML
     String endpointUri;
@@ -42,33 +40,27 @@ public class WelcomeWindowController {
     @FXML
     CalendarViewController calendarViewController;
 
-    private void decideLocalOrRemoteSaving(Calendar calendar) {
-        CalendarLogicAccess calendarLogicAccess = null;
-        CalendarLogic calendarLogic = new CalendarLogic(calendar);
-        if (endpointUri != null) {
-        RemoteCalendarLogicAccess remoteAccess;
-        try {
-            System.out.println("Using remote endpoint @ " + endpointUri);
-            remoteAccess = new RemoteCalendarLogicAccess(new URI(endpointUri));
-            calendarLogicAccess = remoteAccess;
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        }
-        if (calendarLogicAccess == null) {
-            CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
-            calendarSaveHandler.setSaveFile(userCalendarLogicPath);
-            DirectCalendarLogicAccess directAccess = new DirectCalendarLogicAccess(calendarLogic);
-            calendarLogicAccess = directAccess;
-        }
-        calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
-    }
+    private CalendarLogicAccess calendarLogicAccess = null;
+    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
     
-    CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
-
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    private void decideLocalOrRemoteSaving(Calendar calendar) {
+       
+        CalendarLogic calendarLogic = new CalendarLogic(calendar);
+
+        if (endpointUri == null) {
+            calendarLogicAccess = new DirectCalendarLogicAccess(calendarLogic);;
+        } else  {
+            try {
+                calendarLogicAccess = new RemoteCalendarLogicAccess(new URI(endpointUri));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Creates a new calendar and activates the calendar view
@@ -112,6 +104,7 @@ public class WelcomeWindowController {
             // Creates and saves the new calendar and 
             Calendar calendar = new Calendar(calendarName);
             decideLocalOrRemoteSaving(calendar);
+            calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
             CalendarSaveHandler.save(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
@@ -161,6 +154,8 @@ public class WelcomeWindowController {
             // Loads the Calendar object with name calendarName
             Calendar calendar = CalendarSaveHandler.load(calendarName);
             CalendarLogic calendarLogic = new CalendarLogic(calendar);
+            decideLocalOrRemoteSaving(calendar);
+            calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
             // Changes window to CalenderView and sets up the respective controller with the calendar
             changeToCalendarViewWindow(event, this.root);
             calendarViewController.initialize(calendar);   
