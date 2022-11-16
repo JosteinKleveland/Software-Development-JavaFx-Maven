@@ -67,6 +67,8 @@ public class CalendarViewController {
     private Calendar currentCalendar;
     private Appointment chosenAppointment;
 
+    public boolean isActivated = false;
+
     private Stage stage;
     private Scene scene;
     
@@ -79,6 +81,7 @@ public class CalendarViewController {
         try {
             this.currentCalendar = calendar;
             viewCalendar();
+            isActivated = true;
         } catch (IOException e) {
             lblFeedbackText.setText("Failed to load calendar, please contact support"); 
             e.printStackTrace();
@@ -333,7 +336,6 @@ public class CalendarViewController {
     private void clickAppointment(MouseEvent event, Appointment a) {
         chosenAppointmentCard.setVisible(true);
         setChosenAppointment(a);
-
     }
 
     private void viewCalendar() throws IOException {
@@ -352,10 +354,10 @@ public class CalendarViewController {
         Label appointmentLabel;
         Pane background;
 
+        // For testing - fxid counter for appointment panes' id
+        int fxid = 0;
+
         for (Appointment a : appointmentList){
-            
-            // For testing - fxid counter for appointment panes
-            Integer fxid = 0;
 
             // Variables for appointment placement
 
@@ -366,9 +368,8 @@ public class CalendarViewController {
             background = new Pane();
             color = selectAppointmentColor();
             background.setStyle("-fx-background-color: #"+color+"-fx-background-radius: 5;");
-            background.setId(fxid.toString());
+            background.setId("A"+Integer.toString(fxid));
 
-            // Dette gir feil hvis avtalen er bare 15min!
             appointmentLabel = new Label();
             appointmentLabel.setText(a.getAppointmentName());
             background.setOnMouseClicked(event -> clickAppointment(event,a));
@@ -376,8 +377,7 @@ public class CalendarViewController {
             gridCalendar.add(background, checkDay(a),firstBlock, 1,numberOfBlocks);
             gridCalendar.add(appointmentLabel, checkDay(a),firstBlock);
 
-            fxid++;
-  
+            fxid+=1;
         }
 }
 
