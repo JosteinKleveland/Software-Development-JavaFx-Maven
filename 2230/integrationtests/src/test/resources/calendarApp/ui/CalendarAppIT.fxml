@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.CalendarViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.WelcomeWindowController">
    <children>
-      <Pane layoutX="54.0" layoutY="114.0" prefHeight="591.0" prefWidth="895.0">
-         <children>
-            <GridPane fx:id="gridShowCalendar" layoutX="30.0" layoutY="32.0" prefWidth="223.0"/>
-         </children>
-      </Pane>
-      <Label fx:id="lblCalendarNamePreview" layoutX="416.0" layoutY="52.0" text="Calendar name " textAlignment="CENTER" />
-
-      <Button id="btnExitCalendar" layoutX="64.0" layoutY="756.0" mnemonicParsing="false" onAction="#exitCalendar" text="Exit calendar" />
-      <Button fx:id="btnNewAppointment" layoutX="434.0" layoutY="755.0" mnemonicParsing="false" onAction="#createNewAppointment" text="Create new appointment" />
-      <Button fx:id="btnDeleteCalendar" layoutX="838.0" layoutY="758.0" mnemonicParsing="false" onAction="#deleteCalendar" text="Delete calendar" />
-      <Label fx:id="lblFeedback" layoutX="494.0" layoutY="721.0" textAlignment="CENTER" />
+      <Button fx:id="btnNewCalendar" layoutX="99.0" layoutY="138.0" mnemonicParsing="false" onAction="#newCalendar" prefHeight="25.0" prefWidth="149.0" text="Create new calendar" />
+      <TextField fx:id="txtCalendarNameInput" layoutX="101.0" layoutY="102.0" promptText="Calendar name" />
+      <Button fx:id="btnLoadCalendar" layoutX="101.0" layoutY="173.0" mnemonicParsing="false" onAction="#loadCalendar" prefHeight="25.0" prefWidth="149.0" text="Load calendar" />
+      <Text layoutX="68.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calendar app" textAlignment="CENTER" wrappingWidth="214.853515625"/>
+      <Label fx:id="lblFeedback" layoutX="162.0" layoutY="212.0" text="" textAlignment="CENTER" />
    </children>
+   <fx:include fx:id="CalendarView" source="CalendarViewIT.fxml"/>
 </AnchorPane>
+
