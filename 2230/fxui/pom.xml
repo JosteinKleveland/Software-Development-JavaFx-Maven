@@ -126,7 +126,42 @@
                 <configuration>
                 <!--May be necessary to change the adress to mainClass later!-->
                 <mainClass>calendarApp.ui/calendarApp.ui.CalendarApp</mainClass>
+                <!-- rest of options are for jlink -->
+                <compress>2</compress>
+                <noHeaderFiles>true</noHeaderFiles>
+                <stripDebug>true</stripDebug>
+                <noManPages>true</noManPages>
+                <launcher>calendarappfx</launcher>
+                <jlinkImageName>calendarappfx</jlinkImageName>
+                <jlinkZipName>calendarappfx</jlinkZipName>
                 </configuration>
+        </plugin>
+
+        <!-- config above and below taken from https://dev.to/cherrychain/javafx-jlink-and-jpackage-h9 -->
+        <plugin>
+            <groupId>org.panteleyev</groupId>
+            <artifactId>jpackage-maven-plugin</artifactId>
+            <version>1.4.0</version>
+            <configuration>
+                <name>CalendarAppFX</name>
+                <appVersion>1.0.0</appVersion>
+                <vendor>it1901</vendor>
+                <destination>target/dist</destination>
+                <module>calendarApp.ui/calendarApp.ui.CalendarApp</module>
+                <runtimeImage>target/calendarappfx</runtimeImage>
+                <javaOptions>
+                    <option>-Dfile.encoding=UTF-8</option>
+                </javaOptions>
+                <!-- linux options --> 
+                <linuxShortcut>true</linuxShortcut>
+                <linuxMenuGroup>CalendarAppFX</linuxMenuGroup>
+
+                <!-- windows options --> 
+                <winDirChooser>true</winDirChooser>
+                <winShortcut>true</winShortcut>
+                <winMenu>true</winMenu>
+                <winMenuGroup>CalendarAppFX</winMenuGroup>
+            </configuration>
         </plugin>
 
         <!-- Run the checkstyle code quality tool -->
