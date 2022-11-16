@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class CalendarAppIT extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarAppIT.fxml"));
+    final FXMLLoader loader = new FXMLLoader(getClass().getResource("CalendarViewIT.fxml"));
     final Parent root = loader.load();
     this.controller = loader.getController();
     stage.setScene(new Scene(root));
@@ -35,10 +36,10 @@ public class CalendarAppIT extends ApplicationTest {
   @BeforeEach
   public void setupItems() throws URISyntaxException {
     // same as in test-todolist.json (should perhaps read it instead)
-    try (Reader reader = new InputStreamReader(getClass().getResourceAsStream("it-calendarlogic.json"))) { //create new json-file
+    try (Reader reader = new InputStreamReader(getClass().getResourceAsStream("it-calendarlogic.json"))) { 
       String port = System.getProperty("calendar.port");
       assertNotNull(port, "No calendar.port system property set");
-      URI baseUri = new URI("http://localhost:" + port + "/calendar/"); // "/todo/"
+      URI baseUri = new URI("http://localhost:" + port + "/calendar/");
       System.out.println("Base RemoteCalendarLogicAccess URI: " + baseUri);
       this.controller.setCalendarLogicAccess(new RemoteCalendarLogicAccess(baseUri));
     } catch (IOException ioe) {
