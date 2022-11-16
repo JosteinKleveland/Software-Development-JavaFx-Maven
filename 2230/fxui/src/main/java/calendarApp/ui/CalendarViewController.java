@@ -336,7 +336,6 @@ public class CalendarViewController {
     private void clickAppointment(MouseEvent event, Appointment a) {
         chosenAppointmentCard.setVisible(true);
         setChosenAppointment(a);
-
     }
 
     private void viewCalendar() throws IOException {
@@ -371,7 +370,6 @@ public class CalendarViewController {
             background.setStyle("-fx-background-color: #"+color+"-fx-background-radius: 5;");
             background.setId("A"+Integer.toString(fxid));
 
-            // Dette gir feil hvis avtalen er bare 15min!
             appointmentLabel = new Label();
             appointmentLabel.setText(a.getAppointmentName());
             background.setOnMouseClicked(event -> clickAppointment(event,a));

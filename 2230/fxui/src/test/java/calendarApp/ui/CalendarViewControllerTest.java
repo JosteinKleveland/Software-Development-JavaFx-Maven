@@ -5,11 +5,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -26,14 +25,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 public class CalendarViewControllerTest extends ApplicationTest {
 
     private CalendarViewController controller; // The CalendarViewController instance we perform the tests on
@@ -121,6 +119,41 @@ public class CalendarViewControllerTest extends ApplicationTest {
         assertEquals(timeStringToCompare, lblChosenAppointmentTime.getText());
     }
 
+    @Test
+    @DisplayName("Test change scene to MakeAppointment.fxml")
+    public void testCreateAppointmentButton() throws InterruptedException {
+
+        Thread.sleep(100);
+
+        // Checks if an MakeAppointment.fxml element exists after pressing the create button
+        clickOn("#btnNewAppointment");
+        assertNotNull((ChoiceBox) lookup("#drdSetAppointmentDay").query());
+    }
+
+    @Test
+    @DisplayName("Test exit")
+    public void testExit() throws InterruptedException {
+
+        Thread.sleep(100);
+
+        // Checks if a WelcomeWindow.fxml element exists in the scene after pressing the exit button
+        clickOn("#btnExitCalendar");
+        assertNotNull((Button) lookup("#btnNewCalendar").query());
+    }  
+
+    @Test
+    @DisplayName("Test deletion of the calendar")
+    public void testDeleteCalendar() throws InterruptedException {
+
+        Thread.sleep(100);
+        CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+
+        // Checks if "FreshCalendar.json" exists after pressing the delete button
+        clickOn("#btnDeleteCalendar");
+        clickOn("OK");
+        assertFalse(calendarSaveHandler.checkIfFileExists("FreshCalendar"));
+    }  
+
 
     @Test
     @DisplayName("Test deletion of selected appointment")
@@ -145,7 +178,9 @@ public class CalendarViewControllerTest extends ApplicationTest {
     public void cleanUp() {
         CalendarSaveHandler.delete("FreshCalendar");
     } 
+    
 
+    // Utility methods
 
     /**
      * Method that checks if an Appointment object has state variables equal to the respective arguments
