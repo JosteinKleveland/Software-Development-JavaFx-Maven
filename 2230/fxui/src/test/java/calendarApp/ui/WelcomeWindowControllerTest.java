@@ -3,16 +3,20 @@ package calendarApp.ui;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,10 +31,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+
 public class WelcomeWindowControllerTest extends ApplicationTest {
 
     private WelcomeWindowController controller; // The CalendarViewController instance we perform the tests on
-    private Calendar calendarLoaded;
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
     
     @Override
@@ -42,11 +46,8 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         stage.show();
     }
 
-    /**
-     * Prepares the tests with the creation/deletion of respective json files
-     * @throws JsonProcessingException
-     * @throws IOException
-     */
+
+    // Prepares the tests with the creation/deletion of respective json files
     @BeforeEach
     public void cleanAndPrepareTests() throws JsonProcessingException, IOException {
 
@@ -58,15 +59,12 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         String calendarName = "TestExistingCalendar";
         if (calendarSaveHandler.checkIfFileExists(calendarName))
             CalendarSaveHandler.delete(calendarName);
-        calendarLoaded = new Calendar(calendarName);
-        CalendarSaveHandler.save(calendarLoaded);  
+        CalendarSaveHandler.save(new Calendar(calendarName));  
     } 
 
 
-    /**
-     * Tests if the controller sets a recently created Calendar, and if it has the same name as the user intended
-     */
     @Test
+    @DisplayName("Test creation of a calendar")
     public void testCreateCalendar() {
 
         clickOn("#txtCalendarNameInput").write("TestNewCalendar");
@@ -78,24 +76,23 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
     }
 
 
-    /**
-     * Tests if the correct feedback is given if the calendar already exists
-     */
     @Test
-    public void testCreateCalendarFeedback() {
+    @DisplayName("Test feedback on creating a calendar")
+    public void testCreateCalendarFeedback() throws JsonProcessingException, IOException {
+        
+        CalendarSaveHandler.save(new Calendar("TestNewCalendar")); 
 
         clickOn("#txtCalendarNameInput").write("TestNewCalendar");
         clickOn("#btnNewCalendar");
 
-        Label feedback = (Label) lookup("#lblFeedback");
+        Label feedback = (Label) lookup("#lblFeedback").query();
         assertEquals("Calendar name already exists, choose another", feedback.getText());
     }
 
 
-    /**
-     * Tests if the controller loads a Calendar object from TestExistingCalendar.json
-     */
+
     @Test
+    @DisplayName("Test loading of an existing calendar")
     public void testLoadCalendar() {
 
         String calendarName = "TestExistingCalendar"; 
@@ -106,10 +103,9 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         assertEquals(calendarName, controller.getCalendar().getCalendarName());
     }
 
-    /**
-     * Tests if the correct feedback is given if the calendar doesn't exist
-     */
+
     @Test
+    @DisplayName("Test feedback on 'load calendar'")
     public void testLoadCalendarFeedback() {
 
         String calendarName = "DoesNotExist"; 
@@ -121,7 +117,13 @@ public class WelcomeWindowControllerTest extends ApplicationTest {
         clickOn("#txtCalendarNameInput").write(calendarName);
         clickOn("#btnLoadCalendar");
 
-        Label feedback = (Label) lookup("#lblFeedback");
+        Label feedback = (Label) lookup("#lblFeedback").query();
         assertEquals("Calendar name does not exists", feedback.getText());
+    }
+
+
+    @AfterAll
+    public static void cleanUp() {
+        CalendarSaveHandler.delete("TestExistingCalendar");
     }
 }
