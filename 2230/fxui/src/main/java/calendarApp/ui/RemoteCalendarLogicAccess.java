@@ -25,6 +25,14 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     private ObjectMapper objectMapper;
     private CalendarLogic calendarLogic;
 
+    private static final String APPLICATION_JSON = "application/json";
+
+    private static final String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
+
+    private static final String ACCEPT_HEADER = "Accept";
+
+    private static final String CONTENT_TYPE_HEADER = "Content-Type";
+
 
     public RemoteCalendarLogicAccess(URI endpointBaseUri) {
         this.endpointBaseUri = endpointBaseUri;
@@ -34,7 +42,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     private CalendarLogic getCalendarLogic() {
         if (calendarLogic == null) {
             this.request = HttpRequest.newBuilder(endpointBaseUri)
-                .header("Accept", "application/json")
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .GET()
                 .build();
         }
@@ -57,13 +65,9 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     public boolean isValidCalendarName(String calendarName) {
         return getCalendarLogic().isValidCalendarName(calendarName);
     }
-    
-    //Her hadde de en metode som returne en liste over alle todolistene sine. 
-
     private String uriParam(String s) {
         return URLEncoder.encode(s, StandardCharsets.UTF_8);
     }
-    
     private URI calendarUri(String calendarName) {
         return endpointBaseUri.resolve("/").resolve(uriParam(calendarName));
     }
@@ -80,7 +84,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         if (oldCalendar == null) { // || (! (oldCalendar instanceof Calendar))) {
             HttpRequest request = 
                 HttpRequest.newBuilder(calendarUri(calendarName[0]))
-                    .header("Accept", "application/json").GET().build();
+                    .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
             try {
                 final HttpResponse<String> response = 
                     HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
@@ -106,8 +110,8 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         try {
             String json = objectMapper.writeValueAsString(calendar);
             HttpRequest request = HttpRequest.newBuilder(calendarUri(calendar.getCalendarName()))
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .PUT(BodyPublishers.ofString(json))
                 .build();
             final HttpResponse<String> response = 
@@ -139,10 +143,10 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
      * @param name the name of the Calendar to remove
      */
    @Override
-    public void deleteCalendar(String name) {       //implementere egen metode for sletting?
+    public void deleteCalendar(String name) { 
         try {
         HttpRequest request = HttpRequest.newBuilder(calendarUri(name))
-            .header("Accept", "application/json")
+            .header(ACCEPT_HEADER, APPLICATION_JSON)
             .DELETE()
             .build();
         final HttpResponse<String> response =
@@ -167,8 +171,8 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
     public void renameCalendar(String oldName, String newName) {
         try {
         HttpRequest request = HttpRequest.newBuilder(calendarUri(oldName))
-            .header("Accept", "application/json")
-            .header("Content-Type", "application/x-www-form-urlencoded")
+            .header(ACCEPT_HEADER, APPLICATION_JSON)
+            .header(CONTENT_TYPE_HEADER, APPLICATION_FORM_URLENCODED)
             .POST(BodyPublishers.ofString("newName=" + uriParam(newName)))
             .build();
         final HttpResponse<String> response =
