@@ -27,7 +27,8 @@ public class WelcomeWindowController {
     @FXML private TextField txtCalendarNameInput;
     @FXML private Label lblFeedback;
     
-    CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private Calendar calendar;
 
     private Stage stage;
     private Scene scene;
@@ -38,7 +39,7 @@ public class WelcomeWindowController {
      * @param event
      * @throws IllegalArgumentException if the calendar name input field is empty or if the calendar name already exists
      */
-    public void newCalendar(ActionEvent event) throws IllegalArgumentException {
+    public void newCalendar(ActionEvent event) {
 
         //Getting the text input from the text field
         String calendarName = txtCalendarNameInput.getText();
@@ -47,13 +48,13 @@ public class WelcomeWindowController {
         //Checking whether the text field is empty or not
         if(calendarName.length() == 0 || calendarName.length() < 2){
             lblFeedback.setText("Calendar name cannot be empty or less than two characters");
-            throw new IllegalArgumentException("Calendar name cannot be empty or less than two characters");
+            return;
         }
 
         //Checks whether the calendar name exists from before.
         if(calendarSaveHandler.checkIfFileExists(calendarName)) {
             lblFeedback.setText("Calendar name already exists, choose another");
-            throw new IllegalArgumentException("This calendar name already exists");
+            return;
         }
 
         // Prepares the root for the method that switches scenes
@@ -73,12 +74,15 @@ public class WelcomeWindowController {
         
         try {
             // Creates and saves the new calendar and 
-            Calendar calendar = new Calendar(calendarName);
+            this.calendar = new Calendar(calendarName);
             CalendarSaveHandler.save(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
             changeToCalendarViewWindow(event, this.root);
             calendarViewController.initialize(calendar);
+            }
+            catch (IllegalArgumentException e) {
+                lblFeedback.setText("The Calendar name can not contain spaces. Please try again.");
             }
             catch (IOException e) {
                 lblFeedback.setText("An error occured. Could not create new calendar.");
@@ -90,9 +94,8 @@ public class WelcomeWindowController {
     /**
      * Loads the requested calendar and activates calendar view
      * @param event
-     * @throws IllegalArgumentException if requested calendar does not exist
      */
-    public void loadCalendar(ActionEvent event) throws IllegalArgumentException {
+    public void loadCalendar(ActionEvent event) {
 
         //Getting the text input from the text field
         String calendarName = txtCalendarNameInput.getText();
@@ -101,7 +104,7 @@ public class WelcomeWindowController {
         //Checks whether the calendar name exists from before
         if(!calendarSaveHandler.checkIfFileExists(calendarName)) {
             lblFeedback.setText("Calendar name does not exists");
-            throw new IllegalArgumentException("Calendar name does not exist");
+            return;
         }
         
         // Prepares the root for the method that switches scenes
@@ -112,6 +115,7 @@ public class WelcomeWindowController {
         } catch (IOException e1) {
             lblFeedback.setText("An error occured. Could not create new calendar.");
             e1.printStackTrace();
+            return;
         }
 
         // Gets the controller that is connected to the CalendarView.fxml
@@ -121,7 +125,7 @@ public class WelcomeWindowController {
 
         try {
             // Loads the Calendar object with name calendarName
-            Calendar calendar = CalendarSaveHandler.load(calendarName);
+            this.calendar = CalendarSaveHandler.load(calendarName);
             
             // Changes window to CalenderView and sets up the respective controller with the calendar
             changeToCalendarViewWindow(event, this.root);
@@ -152,5 +156,8 @@ public class WelcomeWindowController {
         stage.show();
     }
 
-
+    // For testing
+    public Calendar getCalendar() {
+        return this.calendar;
+    }
 }
