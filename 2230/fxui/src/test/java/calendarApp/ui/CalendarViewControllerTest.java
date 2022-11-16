@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -175,7 +176,7 @@ public class CalendarViewControllerTest extends ApplicationTest {
     }
 
     @AfterAll
-    public void cleanUp() {
+    public static void cleanUp() {
         CalendarSaveHandler.delete("FreshCalendar");
     } 
     
