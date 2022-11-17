@@ -53,14 +53,29 @@ public class CalendarConfig extends ResourceConfig {
     this(createDefaultCalendarLogic());
   }
 
+  /**
+   * Getter for the calendar logic with the calendar
+   * 
+   * @return the calendarLogic object
+   */
   public CalendarLogic getCalendarLogic() {
     return new CalendarLogic(calendarLogic.getCurrentCalendar());
   }
 
+  /**
+   * sets the internal calendarLogic
+   * 
+   * @param calendarLogic to set
+   */
   public void setCalendarLogic(CalendarLogic calendarLogic) {
     this.calendarLogic = new CalendarLogic(calendarLogic.getCurrentCalendar());
   }
 
+  /**
+   * creates a default calendarLogic with a Calendar
+   * 
+   * @return the calendarLogic
+   */
   private static CalendarLogic createDefaultCalendarLogic() {
     CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
     URL url = CalendarConfig.class.getResource("default-calendarlogic.json");

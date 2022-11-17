@@ -39,6 +39,11 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
         objectMapper = CalendarSaveHandler.createObjectMapper();
     }
 
+    /**
+     * Method yo get the calendarLogic
+     * 
+     * @return CalendarLogic object
+     */
     private CalendarLogic getCalendarLogic() {
         if (calendarLogic == null) {
             this.request = HttpRequest.newBuilder(endpointBaseUri)

@@ -53,7 +53,7 @@ public class CalendarLogicService {
     }
 
     /**
-     * 
+     * Autosaves the calendar logic
      */
     private void autoSaveCalendarLogic() {
       if(calendarSaveHandler != null) {
@@ -65,21 +65,26 @@ public class CalendarLogicService {
       }
     }
 
-    //throw an exception in case of missing Calendar  
+    /**
+     * Checks if the calendar is null
+     * 
+     * Throw an exception in case of missing Calendar
+     */ 
     private void checkCalendar() {
       if (this.calendar == null) {
         throw new NotFoundException("No calendar \"" + calendarName + "\"");  
       }
     }
 
-      /**
+  /**
    * Returns the CalendarResource containing the
    * currentCalendar in the CalendarLogic
    * (as a resource to support chaining path elements).
-   * This supports all requests referring to TodoLists by name.
+   * This supports all requests referring to Calendar by name.
    * Note that the Calendar needn't exist, since it can be a PUT.
    *
    * @param name the name of the calendar
+   * @return Calendar the calendar
    */
   @Path("/{name}")
   public Calendar getCalendar(@PathParam("name") String name) {
@@ -89,10 +94,11 @@ public class CalendarLogicService {
     return calendar;
   }
 
-      /**
+    /**
      * Replaces or adds a Calendar 
+     * 
      * @param Calendar to add 
-     * @param return true if it was added, false if it was replaced
+     * @return true if it was added, false if it was replaced
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -103,7 +109,7 @@ public class CalendarLogicService {
         return oldCalendar == null;
     }
 
-         /**
+     /**
      * Replaces or adds a Calendar with the given name, if it does not exist already
      * @param Calendar to add 
      * @param return true if it was added, false if it was replaced
@@ -113,8 +119,9 @@ public class CalendarLogicService {
        return putCalendar(new Calendar(calendarName));
     }
 
-        /**
-     * Rename Calendar
+     /**
+     * Rename the Calendar
+     * 
      * @param newName to rename the existing calendar
      * @return true if name was changed, else throws exception
      */
@@ -132,6 +139,7 @@ public class CalendarLogicService {
 
     /**
      * Removes the Calendar 
+     * 
      * @return true if Calendar was removed, else exception is thrown
      */
     @DELETE
