@@ -84,33 +84,31 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
      */
     @Override
     public Calendar getCurrentCalendar(String... calendarName) {
-        Calendar oldCalendar = this.calendarLogic.getCurrentCalendar();
-        // if existing calendar has no appointments, try to (re)load
-        if (oldCalendar == null) { // || (! (oldCalendar instanceof Calendar))) {
-            HttpRequest request = 
-                HttpRequest.newBuilder(calendarUri(calendarName[0]))
-                    .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
-            try {
-                final HttpResponse<String> response = 
-                    HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
-                String responseString = response.body();
-                Calendar calendar = objectMapper.readValue(responseString, Calendar.class);
-                if (! (calendar == null)) {
-                    Calendar newCalendar = new Calendar(calendar.getCalendarName());
-                    calendar = newCalendar;
-                }
-                this.calendarLogic.setCurrentCalendar(calendar);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+
+        HttpRequest request = 
+            HttpRequest.newBuilder(calendarUri(calendarName[0]))
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+        try {
+            final HttpResponse<String> response = 
+                HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+            String responseString = response.body();
+            Calendar calendar = objectMapper.readValue(responseString, Calendar.class);
+            /*if (! (calendar == null)) {
+                Calendar newCalendar = new Calendar(calendar.getCalendarName());
+                calendar = newCalendar;
+            }*/
+            this.calendarLogic.setCurrentCalendar(calendar);
+            return calendar;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return oldCalendar;
     }
 
     /** Helper-method for setCurrentCalender to not give direct access. 
      * 
      * @param calendar to be set 
      */
+
     private void putCurrentCalendar(Calendar calendar) { 
         try {
             String json = objectMapper.writeValueAsString(calendar);
@@ -122,8 +120,9 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
             final HttpResponse<String> response = 
                 HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            Boolean added = objectMapper.readValue(responseString, Boolean.class);
-            if (added != null) {
+            Calendar added[] = objectMapper.readValue(responseString, Calendar[].class);
+            if (added[0] instanceof Calendar) {
+                System.out.println("Calendar was successfully added");
                 calendarLogic.setCurrentCalendar(calendar);
             }
         }
@@ -158,8 +157,10 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
             HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
         String responseString = response.body();
         Boolean removed = objectMapper.readValue(responseString, Boolean.class);
-        if (removed != null) {
-            CalendarSaveHandler.delete(getCurrentCalendar().getCalendarName());
+        if (removed == true) {
+            System.out.println("Calendar with name " + name + " was removed");        
+        } else {
+            System.out.println("Calendar with name " + name + " could not be deleted");        
         }
         } catch (IOException | InterruptedException e) {
         throw new RuntimeException(e);

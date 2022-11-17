@@ -78,8 +78,6 @@ public class CalendarSaveHandler {
         // Writes the serialized string (json) to the file
         writer.write(json);
         writer.close();
-
-
     }   
 
     public static ObjectMapper createObjectMapper() {

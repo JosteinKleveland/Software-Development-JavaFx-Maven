@@ -6,6 +6,10 @@ import calendarApp.json.CalendarSaveHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -70,9 +74,9 @@ public class CalendarLogicService {
      * 
      * Throw an exception in case of missing Calendar
      */ 
-    private void checkCalendar() {
-      if (this.calendar == null) {
-        throw new NotFoundException("No calendar \"" + calendarName + "\"");  
+    private void checkCalendar(Calendar calendar) {
+      if (calendar == null) {
+        throw new NotFoundException("No calendar with this name is found");  
       }
     }
 
@@ -87,10 +91,20 @@ public class CalendarLogicService {
    * @return Calendar the calendar
    */
   @Path("/{name}")
-  public Calendar getCalendar(@PathParam("name") String name) {
-    Calendar calendar = getCalendarLogic().getCurrentCalendar();
-    checkCalendar();
+  public Calendar getCurrentCalendar(@PathParam("name") String name) {
+    //Calendar calendar = getCalendarLogic().getCurrentCalendar();
+    Calendar calendar = null;
+    try {
+      calendar = CalendarSaveHandler.load(name);
+  } catch (JsonParseException e) {
+      e.printStackTrace();
+  } catch (JsonMappingException e) {
+      e.printStackTrace();
+  } catch (IOException e) {
+      e.printStackTrace();
+  }    
     LOG.debug("Sub-resource for Calendar " + name + ": " + calendar);
+    checkCalendar(calendar);
     return calendar;
   }
 
@@ -99,24 +113,19 @@ public class CalendarLogicService {
      * 
      * @param Calendar to add 
      * @return true if it was added, false if it was replaced
+     * @throws IOException
+     * @throws JsonProcessingException
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean putCalendar(Calendar calendar) {
+    public Calendar putCalendar(Calendar calendar) throws JsonProcessingException, IOException {
         LOG.debug("putCalendar({})", calendar);
-        Calendar oldCalendar = this.calendarLogic.setCurrentCalendar(calendar);
-        autoSaveCalendarLogic();
-        return oldCalendar == null;
-    }
-
-     /**
-     * Replaces or adds a Calendar with the given name, if it does not exist already
-     * @param Calendar to add 
-     * @param return true if it was added, false if it was replaced
-     */
-    @PUT
-    public boolean putCalendar() {
-       return putCalendar(new Calendar(calendarName));
+        CalendarSaveHandler.save(calendar);
+        if (CalendarSaveHandler.getFile(calendar.getCalendarName()).isFile()){
+          return calendar;
+        } else {
+          return null;
+        }
     }
 
      /**
@@ -124,12 +133,14 @@ public class CalendarLogicService {
      * 
      * @param newName to rename the existing calendar
      * @return true if name was changed, else throws exception
+     * @throws IOException
+     * @throws JsonMappingException
+     * @throws JsonParseException
      */
     @POST
     @Path("/rename")
-    public boolean renameCalendar(@QueryParam("newName") String newName) {
-        checkCalendar();
-        if(this.calendarLogic.getCurrentCalendar() != null) {
+    public boolean renameCalendar(@QueryParam("newName") String newName) throws JsonParseException, JsonMappingException, IOException {
+        if(CalendarSaveHandler.load(newName) != null) {
             throw new IllegalArgumentException("A Calendar name \"" + newName + "\" already exist");
         }
         this.calendar.setCalendarName(newName); //setCalendarName er private, og kan ikke nås
@@ -144,10 +155,7 @@ public class CalendarLogicService {
      */
     @DELETE
     public boolean removeCalendar() {
-        checkCalendar();
-        CalendarSaveHandler.delete(this.calendarName);
-        autoSaveCalendarLogic();
-        return true;
+        return CalendarSaveHandler.delete(this.calendarName);
     }
 
 }
