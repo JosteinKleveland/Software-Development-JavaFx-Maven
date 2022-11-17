@@ -9,10 +9,10 @@
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendarApp.ui.WelcomeWindowController">
-   <fx:define>
-        <String fx:id="endpointUri" fx:value="http://localhost:8080/calendar/"/>
-    </fx:define>
    <children>
+      <fx:define>
+        <String fx:id="endpointUri" fx:value="http://localhost:8080/calendar/"/>
+      </fx:define>
       <Button fx:id="btnNewCalendar" layoutX="99.0" layoutY="138.0" mnemonicParsing="false" onAction="#newCalendar" prefHeight="25.0" prefWidth="149.0" text="Create new calendar" />
       <TextField fx:id="txtCalendarNameInput" layoutX="101.0" layoutY="102.0" promptText="Calendar name" />
       <Button fx:id="btnLoadCalendar" layoutX="101.0" layoutY="173.0" mnemonicParsing="false" onAction="#loadCalendar" prefHeight="25.0" prefWidth="149.0" text="Load calendar" />

@@ -52,14 +52,25 @@ public class WelcomeWindowController {
         CalendarLogic calendarLogic = new CalendarLogic(calendar);
 
         if (endpointUri == null) {
-            calendarLogicAccess = new DirectCalendarLogicAccess(calendarLogic);;
+            System.out.println("Null");
+            calendarLogicAccess = new DirectCalendarLogicAccess(calendarLogic);
         } else  {
+            System.out.println("EN");
             try {
                 calendarLogicAccess = new RemoteCalendarLogicAccess(new URI(endpointUri));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
         }
+        //The String endpointUri seems to have problem beeing set, therefore, to run remoteapp, comment out the if-statement above
+        // and use this try instead. Here the correct localhost-path is given directly.
+        /*
+        try {
+            calendarLogicAccess = new RemoteCalendarLogicAccess(new URI("http://localhost:8080/calendar/"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        */
     }
 
     /**
