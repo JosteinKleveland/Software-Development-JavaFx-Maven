@@ -38,17 +38,17 @@ public class CalendarModuleTest {
         calendar.addAppointment(appointment1);          
         Appointment appointment2 = new Appointment("Math", "test description", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         calendar.addAppointment(appointment2);
-        //CalendarLogic calendarLogic = new CalendarLogic(calendar);
+        CalendarLogic calendarLogic = new CalendarLogic(calendar);
         try {
             assertEquals(calendarWithTwoAppointments, mapper.writeValueAsString(calendar));
         } catch (JsonProcessingException e) {
             fail();
         }
-        /*try {
+        try {
             assertEquals(calendarLogicWithCalendarWithTwoAppointments, mapper.writeValueAsString(calendarLogic));
         } catch (JsonProcessingException e) {
             fail();
-        }*/
+        }
     }
 
     @Test
@@ -91,10 +91,10 @@ public class CalendarModuleTest {
     public void testDeserializers() {
         try {
             Calendar calendar2 = mapper.readValue(calendarWithTwoAppointments, Calendar.class);
-            //CalendarLogic calendarLogic2 = mapper.readValue(calendarLogicWithCalendarWithTwoAppointments, CalendarLogic.class);
+            CalendarLogic calendarLogic2 = mapper.readValue(calendarLogicWithCalendarWithTwoAppointments, CalendarLogic.class);
             assertTrue(calendar2.getAppointments().size() == 2);
-            //assertTrue(calendarLogic2.getCurrentCalendar().getAppointments().size() == 2);
-            //assertTrue(calendarLogic2.getCurrentCalendar().getCalendarName().equals("jsonTest"));
+            assertTrue(calendarLogic2.getCurrentCalendar().getAppointments().size() == 2);
+            assertTrue(calendarLogic2.getCurrentCalendar().getCalendarName().equals("jsonTest"));
             checkAppointmentFormat(calendar2.getAppointments().get(0), "Fotball", "test description", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
             checkAppointmentFormat(calendar2.getAppointments().get(1), "Math", "test description", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         } catch (JsonProcessingException e) {
