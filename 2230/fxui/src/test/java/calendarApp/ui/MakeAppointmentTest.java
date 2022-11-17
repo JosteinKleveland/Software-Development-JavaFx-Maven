@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
 import calendarApp.core.DaysOfTheWeek;
+import calendarApp.json.CalendarSaveHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -58,6 +60,7 @@ public class MakeAppointmentTest extends ApplicationTest{
       Platform.runLater(() -> {
         controller.intialize(this.calendar, true, appointment); 
         });
+
       Thread.sleep(100);
 
       assertEquals(true,controller.getInEditmBoolean());
@@ -198,10 +201,11 @@ public class MakeAppointmentTest extends ApplicationTest{
 
     }
 
-
-
-
-
-
-    
+    @AfterAll
+    public static void cleanUp() {
+        CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+        if (calendarSaveHandler.checkIfFileExists("TestCalendar")) {
+            CalendarSaveHandler.delete("TestCalendar");
+        }
+    }
 }
