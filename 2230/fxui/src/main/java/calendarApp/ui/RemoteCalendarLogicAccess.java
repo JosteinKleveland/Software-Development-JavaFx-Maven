@@ -121,7 +121,7 @@ public class RemoteCalendarLogicAccess implements CalendarLogicAccess {
                 HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
             Calendar added[] = objectMapper.readValue(responseString, Calendar[].class);
-            if (added[0] instanceof Calendar) {
+            if (added[0] != null) {
                 System.out.println("Calendar was successfully added");
                 calendarLogic.setCurrentCalendar(calendar);
             }

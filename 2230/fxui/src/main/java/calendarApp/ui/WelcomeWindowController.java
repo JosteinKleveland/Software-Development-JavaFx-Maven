@@ -31,9 +31,6 @@ public class WelcomeWindowController {
     @FXML private TextField txtCalendarNameInput;
     @FXML private Label lblFeedback;
     
-    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
-    private Calendar calendar;
-
     /**
      * FXML-string values for referencing to local path vs. localhost-path
      */
@@ -46,6 +43,7 @@ public class WelcomeWindowController {
 
     private CalendarLogicAccess calendarLogicAccess = null;
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private Calendar calendar;
     
     private Stage stage;
     private Scene scene;
@@ -107,9 +105,11 @@ public class WelcomeWindowController {
         try {
             // Creates and saves the new calendar and 
             Calendar calendar = new Calendar(calendarName);
+            this.calendar = calendar;
             decideLocalOrRemoteSaving(calendar);
-            calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
             calendarLogicAccess.setCurrentCalendar(calendar);
+            calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
+            
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
             changeToCalendarViewWindow(event, this.root);
@@ -159,10 +159,10 @@ public class WelcomeWindowController {
 
         try {
             // Loads the Calendar object with name calendarName
-            //CalendarSaveHandler.load(calendarName);
             Calendar newCalendar = new Calendar("newCalendar");
             decideLocalOrRemoteSaving(newCalendar);
             Calendar calendar = calendarLogicAccess.getCurrentCalendar(calendarName);
+            this.calendar = calendar;
             calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
             // Changes window to CalenderView and sets up the respective controller with the calendar
             changeToCalendarViewWindow(event, this.root);

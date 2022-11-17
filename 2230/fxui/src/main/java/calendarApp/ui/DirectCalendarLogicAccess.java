@@ -49,7 +49,7 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
     }
 
     public void deleteCalendar(String name) {
-        CalendarSaveHandler.delete(getCurrentCalendar().getCalendarName());
+        CalendarSaveHandler.delete(name);
     }
 
     public void renameCalendar(String oldName, String newName) {

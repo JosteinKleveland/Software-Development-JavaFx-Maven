@@ -46,8 +46,7 @@ public class MakeAppointmentController {
     private Scene scene;
 
     private Calendar currentCalendar; // the current calendar of the user
-    //private CalendarLogic calendarLogic;
-    //private CalendarLogicAccess calendarLogicAccess;
+    private CalendarLogic calendarLogic;
 
     private boolean inEditMode; // true if the user is editing an appointment, and false otherwise
     private Appointment editAppointment; // the appointment being edited, can be null
@@ -63,8 +62,7 @@ public class MakeAppointmentController {
     protected void intialize(Calendar currentCalendar, boolean inEditMode, Appointment editAppointment) {
         drdSetAppointmentDay.getItems().addAll(days);
         this.currentCalendar = currentCalendar;
-        //this.calendarLogic = new CalendarLogic(currentCalendar);
-        //this.calendarLogicAccess = calendarLogicAccess;
+        this.calendarLogic = new CalendarLogic(currentCalendar);
         this.inEditMode = inEditMode;
 
         if (inEditMode){
