@@ -63,6 +63,8 @@ public class CalendarViewController {
     private final String[] appointmentcolors = {"f16c31;\n","FFC285;\n","EE7FF7;\n","6F7DF7;\n","FC38B2;\n","A2FF88;\n","FF3939;\n","FFEC39;\n","C2D632;\n","74E2B0;\n","74B6E2;\n","2CFF95;\n","FCC0E9;\n","B4E29F;\n","EF7D30;\n"};
     private int lastAppointmentColor = 0;
 
+    private CalendarLogicAccess calendarLogicAccess;
+
     /**
      * Sets up the state of the controller and activates the calendar view
      * The function is called when moving from another scene to CalendarView.fxml
