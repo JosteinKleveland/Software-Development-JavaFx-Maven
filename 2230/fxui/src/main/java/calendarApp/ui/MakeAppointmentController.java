@@ -19,8 +19,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 // Handles the making of new appointments, as well as editing of existing ones
 public class MakeAppointmentController {
@@ -53,7 +51,7 @@ public class MakeAppointmentController {
     private String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
 
     /**
-     * Sets up the state of the class
+     * Sets up the state of the class and if in edit mode - prefilles the window with the chosen appointment's details
      * @param currentCalendar the users current calendar
      * @param inEditMode flags if the user is in edit mode, or simply creates a new appointment
      * @param editAppointment the potential Appointment in edit mode
@@ -152,8 +150,12 @@ public class MakeAppointmentController {
 
     }
 
-    //Helper method that decodes clock of the format 00:00
-    //@returns an int array with 2 memory places [0] -> int hour, [1] -> int minute
+    /**
+     * Decodes clock of the format xx:xx, e.g. 12:15, and returns ints representing hour and minute
+     * @param time
+     * @return an int array where int[0] -> represent the hour, and [1] represent minute
+     * @throws IllegalArgumentException if the argument is not on the format xx:xx
+     */
     private int[] decodeClock(String time) throws IllegalArgumentException {
         try {
             int[] timeIntArray = new int[2];
@@ -178,6 +180,12 @@ public class MakeAppointmentController {
         }
     }
 
+    /**
+     * Converts a one-digit int representing hour or minute and returns a two-digit version in a String
+     * e.g. 3 -> "03"
+     * @param numberToCheck
+     * @return a String of the two-digit version of numberToCheck
+     */
     private String convertToTwoDidgets(int numberToCheck ){
         String result;
         if (Integer.toString(numberToCheck).length() < 2){
@@ -188,7 +196,11 @@ public class MakeAppointmentController {
     }
 
 
-     //Method for switching between scenes
+     /**
+     * Method for switching between scenes
+     * @param event
+     * @param root FXML scene root 
+     */
      private void changeScene(ActionEvent event, Parent root, String sceneName) throws IOException{
         stage = (Stage)(((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);

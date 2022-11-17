@@ -50,9 +50,10 @@ public class CalendarSaveHandler {
     }
 
     /**
-     * Saves a calendar object in a json file with serialization
-     * @param calendar - calendar object
-     * @throws IOException - throws IOException
+     * Saves a Calendar object in a json file with serialization
+     * @param calendar the Calendar object
+     * @throws IOException
+     * @throws JsonProcessingException
      */
     public static void save(Calendar calendar) throws IOException, JsonProcessingException{
         

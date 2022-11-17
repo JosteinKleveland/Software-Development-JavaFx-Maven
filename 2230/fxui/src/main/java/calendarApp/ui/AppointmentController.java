@@ -4,7 +4,6 @@ import calendarApp.core.Appointment;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 //Manages Appointments shown in grid
 public class AppointmentController {
