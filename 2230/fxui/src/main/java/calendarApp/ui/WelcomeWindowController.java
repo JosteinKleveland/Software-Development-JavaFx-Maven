@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 // Each of these functions opens the calendar view scene
 public class WelcomeWindowController {
     
+    // fxml elements
     @FXML private Button btnNewCalendar;
     @FXML private Button btnLoadCalendar;
     @FXML private TextField txtCalendarNameInput;
@@ -67,7 +68,7 @@ public class WelcomeWindowController {
     /**
      * Creates a new calendar and activates the calendar view
      * @param event
-     * @throws IllegalArgumentException if the calendar name input field is empty or if the calendar name already exists
+     * @throws IllegalArgumentException if the calendar name input is on a wrong format or if the calendar name already exists
      */
     public void newCalendar(ActionEvent event) {
 
@@ -123,7 +124,6 @@ public class WelcomeWindowController {
                 e.printStackTrace();
             }
     }
-
   
     /**
      * Loads the requested calendar and activates calendar view

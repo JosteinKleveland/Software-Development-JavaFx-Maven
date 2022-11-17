@@ -5,9 +5,8 @@ package calendarApp.core;
  */
 public class CalendarLogic {
     
-    private Calendar currentCalendar; // Current calendar object
+    private Calendar currentCalendar;
 
-    //Dummy-constructor to be able to test from CalendarLogicTest
     public CalendarLogic(Calendar calendar) {
         setCurrentCalendar(calendar);
     }
@@ -105,5 +104,5 @@ public class CalendarLogic {
                 }
             }
         return false;
-        }
+    }
 }
