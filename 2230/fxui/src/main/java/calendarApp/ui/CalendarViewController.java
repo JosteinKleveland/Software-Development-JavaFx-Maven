@@ -1,25 +1,16 @@
 package calendarApp.ui;
 
 import java.io.IOException;
-import java.lang.annotation.Retention;
-import java.net.URL;
 import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
 
 import java.util.ArrayList;
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
-import calendarApp.core.CalendarLogic;
 import calendarApp.core.DaysOfTheWeek;
 import calendarApp.json.CalendarSaveHandler;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -29,19 +20,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-// Manages the main view of the app. Showing the selected calender, selected appointments, navigation back to welcome window, delete appointment, delete calendar and create new appointment
+// Manages the main view of the app. Showing the selected calender, selecting appointments,
+// navigating back to the welcome window, deleting appointments, deleting the calendar, and setting up the creation of new appointments
 public class CalendarViewController {
     
     //FXML elements
-    //Showing chosen appointment
     @FXML private VBox chosenAppointmentCard;
     @FXML private Label lblChosenAppointmentTime;
     @FXML private Label lblChosenAppointmentDescription;
@@ -63,7 +52,6 @@ public class CalendarViewController {
     @FXML private Button btnExitCalendar;
 
     //State variables
-   // private CalendarLogic calendarLogic;
     private Calendar currentCalendar;
     private Appointment chosenAppointment;
 
@@ -75,6 +63,11 @@ public class CalendarViewController {
     private final String[] appointmentcolors = {"f16c31;\n","FFC285;\n","EE7FF7;\n","6F7DF7;\n","FC38B2;\n","A2FF88;\n","FF3939;\n","FFEC39;\n","C2D632;\n","74E2B0;\n","74B6E2;\n","2CFF95;\n","FCC0E9;\n","B4E29F;\n","EF7D30;\n"};
     private int lastAppointmentColor = 0;
 
+    /**
+     * Sets up the state of the controller and activates the calendar view
+     * The function is called when moving from another scene to CalendarView.fxml
+     * @param calendar the user's Calendar
+     */
     protected void initialize(Calendar calendar) {
         try {
             this.currentCalendar = calendar;
@@ -85,13 +78,20 @@ public class CalendarViewController {
         } 
     }
 
+    /**
+     * Helper method of viewCalendar() that sets the state variable appointmentList to the calendar's appointments
+     * @return a list of all Appointment objects in the user's calendar
+     */
     public List<Appointment> getData(){
         List<Appointment> appointments = this.currentCalendar.getAppointments();
         this.appointmentList = appointments;
         return appointments;
     } 
 
-
+    /**
+     * Sets the chosen-appointment details card to the respective values of the desired appointment
+     * @param appointment the desired appointment
+     */
     private void setChosenAppointment(Appointment appointment){
 
         if (appointment == null){
@@ -111,7 +111,10 @@ public class CalendarViewController {
 
     }
 
-    // Method to delete current calendar
+    /**
+     * Deletes the user's calendar forever and returns to the welcome window
+     * @param event
+     */
     public void deleteCalendar(ActionEvent event) {
         
         //Allert the user that the delete action is permanent
@@ -136,7 +139,10 @@ public class CalendarViewController {
         }
     }
 
-     // Method to delete selected appointment
+     /**
+      * Delete the user's already selected appointment
+      * @param event
+      */
      public void deleteAppointment(ActionEvent event) {
             //Allert the user that the delete action is permanent
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -162,6 +168,7 @@ public class CalendarViewController {
 
     /**
      * Opens the edit window (MakeAppointmend.fxml) and readies the respective controller
+     * with the appointment the user wants to edit
      * @param event
      * @throws IOException
      */
@@ -188,7 +195,10 @@ public class CalendarViewController {
     }
 
 
-   // Exiting current calendar, and going back to welcome window
+   /**
+    * Exiting current calendar, and going back to welcome window
+    * @param event
+    */
    public void exitCalendar(ActionEvent event) {
         try {
             String nextScene = "WelcomeWindow.fxml";
@@ -201,8 +211,11 @@ public class CalendarViewController {
         }
     }
   
-    
-    
+    /**
+     * Opens the MakeAppointment.fxml scene and tells the respective controller
+     * that the user wants to create a new appointment
+     * @param event
+     */
     public void createNewAppointment(ActionEvent event) {
         try {
             String nextScene = "MakeAppointment.fxml";
@@ -221,9 +234,11 @@ public class CalendarViewController {
         }
     }
 
-
-    // navigation
-    //Method for switching between scenes
+    /**
+     * Method for switching between scenes
+     * @param event
+     * @param root FXML scene root 
+     */
     private void changeScene(ActionEvent event, Parent root, String sceneName) throws IOException{
         stage = (Stage)(((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);
@@ -231,8 +246,11 @@ public class CalendarViewController {
         stage.show();
     }
 
-    // Calendar prevew
-     //Help method to check and return the correct place for the appointment
+    /**
+     * Help method to check and return the correct "column" for the appointment
+     * @param appointment
+     * @return an int representing the respective weekday column
+     */
     private int checkDay(Appointment appointment) {
         if (appointment.getDayOfTheWeek() == DaysOfTheWeek.MONDAY){return 1;}
         else if (appointment.getDayOfTheWeek() == DaysOfTheWeek.TUESDAY){return 2;}
@@ -246,22 +264,32 @@ public class CalendarViewController {
         }
     }
 
-    //Help method to fint the first block of the event
+    /**
+     * Helper method to viewCalendar() to find the first time block of the appointment
+     * @param appointment  
+     * @return an int representing the first time block of the appointment
+     */
     private int findFirstBlock(Appointment appointment){
         int firstBlock = (appointment.getStartHour()*4)+(appointment.getStartMinute()/15);
         return firstBlock+1;
     }
 
     
-    //Help method to calculate the number of 15 min blocks needed to disply the appointment in the grid
+    /**
+     * Helper method to viewCalendar() to calculate the number of 15 min blocks needed to disply the appointment in the grid
+     * @param appointment Appointment to be displayed
+     * @return an int representing the number of blocks needed
+     */
     private int calculateNumberOfBlocks(Appointment appointment){
         int hours = (appointment.getStopHour()-appointment.getStartHour());
         int minutes = (appointment.getStopMinute() - appointment.getStartMinute());
         return (hours*4+(minutes/15));
     }
 
-    //Help method to set preview card
-
+    /**
+     * Sets the chosen-appointment details card to the first appointment in the Calendar
+     * Called in viewCalendar() to setup the default view
+     */
     private void setPreviewCard(){
         appointmentList.addAll(getData());
         if(appointmentList.size()>0){
@@ -281,6 +309,9 @@ public class CalendarViewController {
 
     }
 
+    /**
+     * Helper function of viewCalendar() that adds time labels to the grid
+     */
 
     private void addTimeLabels(){
 
@@ -321,6 +352,12 @@ public class CalendarViewController {
 
     }
 
+    /**
+     * Converts a one-digit int representing hour or minute and returns a two-digit version in a String
+     * e.g. 3 -> "03"
+     * @param numberToCheck
+     * @return a String of the two-digit version of numberToCheck
+     */
     private String convertToTwoDidgets(int numberToCheck ){
         String result;
         if (Integer.toString(numberToCheck).length() < 2){
@@ -330,12 +367,19 @@ public class CalendarViewController {
         return Integer.toString(numberToCheck);
     }
 
-    
+    /**
+     * Activates the chosen-appointment's "details view" if an appointment is clicked on
+     * @param event
+     * @param a Appointment clicked on
+     */
     private void clickAppointment(MouseEvent event, Appointment a) {
         chosenAppointmentCard.setVisible(true);
         setChosenAppointment(a);
     }
 
+    /**
+     * Sets up the view of the user's calendar and all its appointments
+     */
     private void viewCalendar() throws IOException {
         getData();
         gridCalendar.getChildren().clear();
@@ -377,9 +421,12 @@ public class CalendarViewController {
 
             fxid+=1;
         }
-}
+    }  
 
-    // Method to randomly generate a color for the appointmentblocks
+    /**
+     * Method to randomly generate a color for the appointmentblocks
+     * @return the color represented through a String
+     */
     private String selectAppointmentColor() {
         if (lastAppointmentColor == appointmentcolors.length) {
             this.lastAppointmentColor = 0;
