@@ -2,6 +2,7 @@ package calendarApp.json;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
@@ -59,7 +60,9 @@ public class CalendarSaveHandler {
      * @throws IOException - throws IOException
      */
     public static void save(Calendar calendar) throws IOException, JsonProcessingException{
-        
+        //Checks if saveFolder exists, if not -> creates one on users local machine
+        ensureSaveFolderExists();
+
         // Serializes the calendar through CalendarAppModule
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
@@ -95,6 +98,8 @@ public class CalendarSaveHandler {
      * @throws JsonParseException
      */
     public static Calendar load(String calendarName) throws JsonParseException, JsonMappingException, IOException {
+        //Checks if saveFolder exists, if not -> creates one on users local machine
+        ensureSaveFolderExists();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new CalendarAppModule());
 
@@ -133,6 +138,17 @@ public class CalendarSaveHandler {
      */
     public static Path getSaveFolderFilePath() {
         return Paths.get(System.getProperty("user.home"), "CalendarApp");
+    }
+
+    //
+    public static void ensureSaveFolderExists() throws IOException {
+
+        File file = new File(getSaveFolderFilePath().toString());
+        
+        if (!file.exists() || !file.isDirectory()) {
+            System.out.println(file + " does not exist");
+            Files.createDirectories(getSaveFolderFilePath());
+        }
     }
 
     public CalendarLogic readCalendarLogic(Reader reader) throws IOException {
