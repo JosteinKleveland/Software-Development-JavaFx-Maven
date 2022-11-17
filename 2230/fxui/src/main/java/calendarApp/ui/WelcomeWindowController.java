@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
 import calendarApp.json.CalendarSaveHandler;
 import javafx.event.ActionEvent;
@@ -158,6 +159,10 @@ public class WelcomeWindowController {
 
     // For testing
     public Calendar getCalendar() {
-        return this.calendar;
+        Calendar calendarCopy = new Calendar(calendar.getCalendarName());
+        for (Appointment appointment : calendar.getAppointments()) {
+            calendarCopy.addAppointment(appointment);
+        }
+        return calendarCopy;
     }
 }
