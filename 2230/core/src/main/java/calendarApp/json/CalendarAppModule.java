@@ -10,6 +10,7 @@ import calendarApp.core.DaysOfTheWeek;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 */
+import calendarApp.core.CalendarLogic;
 
 // Module to access appointment- and calendar- serializers and deserializers
 public class CalendarAppModule extends SimpleModule {
@@ -18,12 +19,14 @@ public class CalendarAppModule extends SimpleModule {
     
     // Connects the Appointment and Calendar classes with their respective serializers/deseralizers
     public CalendarAppModule() {
-      super(NAME, VERSION_UTIL.version());
-      addSerializer(Appointment.class, new AppointmentSerializer());
-      addSerializer(Calendar.class, new CalendarSerializer());
-      addDeserializer(Appointment.class, new AppointmentDeserializer());
-      addDeserializer(Calendar.class, new CalendarDeserializer());
-    }
+        super(NAME, VERSION_UTIL.version());
+        addSerializer(Appointment.class, new AppointmentSerializer());
+        addSerializer(Calendar.class, new CalendarSerializer());
+        addSerializer(CalendarLogic.class, new CalendarLogicSerializer());
+        addDeserializer(Appointment.class, new AppointmentDeserializer());
+        addDeserializer(Calendar.class, new CalendarDeserializer());
+        addDeserializer(CalendarLogic.class, new CalendarLogicDeserializer());
+      }
 
     /*
     public static void main(String[] args) {
