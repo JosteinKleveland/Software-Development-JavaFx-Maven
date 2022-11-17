@@ -109,8 +109,7 @@ public class MakeAppointmentController {
        
         Appointment newAppointment = new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay.toUpperCase()), startHour, stopHour, startMinute, stopMinute);
         calendarLogic.addAppointmentToCalendar(currentCalendar, newAppointment);
-       
-
+        
         // Saves the updated version of the calendar in the respective JSON file
         CalendarSaveHandler.save(currentCalendar);
 
@@ -196,6 +195,20 @@ public class MakeAppointmentController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+    // Getter methods for controller testinng
+
+    public Calendar getCalendar(){
+        Calendar calendar = this.currentCalendar;
+        return calendar;
+    }
+
+
+    public Boolean getInEditmBoolean(){
+        return inEditMode;
     }
 
 
