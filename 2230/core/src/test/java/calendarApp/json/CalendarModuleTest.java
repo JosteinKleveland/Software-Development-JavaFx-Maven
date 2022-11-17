@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
+import calendarApp.core.CalendarLogic;
 import calendarApp.core.DaysOfTheWeek;
 
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ public class CalendarModuleTest {
 
     private static ObjectMapper mapper;
     private final static String calendarWithTwoAppointments = "{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":11,\"stopHour\":12,\"startMin\":30,\"stopMin\":0}]}";
-
+    private final static String calendarLogicWithCalendarWithTwoAppointments = "{\"calendarName\":\"jsonTest\",\"appointments\":[{\"appointmentName\":\"Fotball\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"WEDNESDAY\",\"startHour\":7,\"stopHour\":9,\"startMin\":0,\"stopMin\":30},{\"appointmentName\":\"Math\",\"appointmentDescription\":\"test description\",\"dayOfTheWeek\":\"THURSDAY\",\"startHour\":11,\"stopHour\":12,\"startMin\":30,\"stopMin\":0}]}";
 
     @BeforeAll
     public static void testSetup() {
@@ -30,15 +31,21 @@ public class CalendarModuleTest {
     }
 
     @Test
-    @DisplayName("Check that serializers for Appointment and Calendar-objects work correctly")
+    @DisplayName("Check that serializers for Appointment, Calendar and CalendarLogic-objects work correctly")
     public void testSerializers() {
         Calendar calendar = new Calendar("jsonTest");
         Appointment appointment1 = new Appointment("Fotball", "test description", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
         calendar.addAppointment(appointment1);          
         Appointment appointment2 = new Appointment("Math", "test description", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         calendar.addAppointment(appointment2);
+        CalendarLogic calendarLogic = new CalendarLogic(calendar);
         try {
             assertEquals(calendarWithTwoAppointments, mapper.writeValueAsString(calendar));
+        } catch (JsonProcessingException e) {
+            fail();
+        }
+        try {
+            assertEquals(calendarLogicWithCalendarWithTwoAppointments, mapper.writeValueAsString(calendarLogic));
         } catch (JsonProcessingException e) {
             fail();
         }
@@ -80,11 +87,14 @@ public class CalendarModuleTest {
     }
 
     @Test
-    @DisplayName("Check that deserializers for Appointment and Calendar reads from json correctly, and creates Objects")
+    @DisplayName("Check that deserializers for Appointment, Calendar and CalendarLogic reads from json correctly, and creates Objects")
     public void testDeserializers() {
         try {
             Calendar calendar2 = mapper.readValue(calendarWithTwoAppointments, Calendar.class);
+            CalendarLogic calendarLogic2 = mapper.readValue(calendarLogicWithCalendarWithTwoAppointments, CalendarLogic.class);
             assertTrue(calendar2.getAppointments().size() == 2);
+            assertTrue(calendarLogic2.getCurrentCalendar().getAppointments().size() == 2);
+            assertTrue(calendarLogic2.getCurrentCalendar().getCalendarName().equals("jsonTest"));
             checkAppointmentFormat(calendar2.getAppointments().get(0), "Fotball", "test description", DaysOfTheWeek.WEDNESDAY, 7, 9, 0, 30);
             checkAppointmentFormat(calendar2.getAppointments().get(1), "Math", "test description", DaysOfTheWeek.THURSDAY, 11, 12, 30, 0);
         } catch (JsonProcessingException e) {
