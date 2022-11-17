@@ -63,6 +63,8 @@ public class CalendarViewController {
     private final String[] appointmentcolors = {"f16c31;\n","FFC285;\n","EE7FF7;\n","6F7DF7;\n","FC38B2;\n","A2FF88;\n","FF3939;\n","FFEC39;\n","C2D632;\n","74E2B0;\n","74B6E2;\n","2CFF95;\n","FCC0E9;\n","B4E29F;\n","EF7D30;\n"};
     private int lastAppointmentColor = 0;
 
+    private CalendarLogicAccess calendarLogicAccess;
+
     /**
      * Sets up the state of the controller and activates the calendar view
      * The function is called when moving from another scene to CalendarView.fxml
@@ -79,9 +81,15 @@ public class CalendarViewController {
     }
 
     /**
-     * Helper method of viewCalendar() that sets the state variable appointmentList to the calendar's appointments
-     * @return a list of all Appointment objects in the user's calendar
-     */
+   * Sets the CalendarLogicAccess for this controller,
+   * so data can come from different sources.
+   *
+   * @param calendarLogicAccess the new CalendarLogicAccess to use
+   */
+    protected void setCalendarLogicAccess(CalendarLogicAccess calendarLogicAccess) {
+        this.calendarLogicAccess = calendarLogicAccess;
+    }
+
     public List<Appointment> getData(){
         List<Appointment> appointments = this.currentCalendar.getAppointments();
         this.appointmentList = appointments;
@@ -127,7 +135,7 @@ public class CalendarViewController {
         //Delete the calendar if the user agree
         if (alert.showAndWait().get() == ButtonType.OK){
             try {
-                CalendarSaveHandler.delete(currentCalendar.getCalendarName());
+                this.calendarLogicAccess.deleteCalendar(currentCalendar.getCalendarName());
                 String nextScene = "WelcomeWindow.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(nextScene));
                 Parent root = loader.load();
@@ -347,8 +355,6 @@ public class CalendarViewController {
         gridCalendar.add(fr,5,0);
         gridCalendar.add(sa,6,0);
         gridCalendar.add(su,7,0);
-
-
 
     }
 

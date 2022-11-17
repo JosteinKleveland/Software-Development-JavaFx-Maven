@@ -20,6 +20,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
+import calendarApp.core.CalendarLogic;
 import calendarApp.core.DaysOfTheWeek;
 import calendarApp.json.CalendarSaveHandler;
 import javafx.application.Platform;
@@ -145,6 +146,11 @@ public class CalendarViewControllerTest extends ApplicationTest {
     @Test
     @DisplayName("Test deletion of the calendar")
     public void testDeleteCalendar() throws InterruptedException {
+
+        //Creates CalendarLogicAccess and sets this so delete-test can be run
+        CalendarLogic calendarLogic = new CalendarLogic(this.calendar);
+        CalendarLogicAccess calendarLogicAccess = new DirectCalendarLogicAccess(calendarLogic);
+        this.controller.setCalendarLogicAccess(calendarLogicAccess);
 
         Thread.sleep(100);
         CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();

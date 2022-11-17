@@ -36,6 +36,14 @@
             <scope>test</scope>
       </dependency>
 
+      <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.12.4</version>
+                <scope>test</scope>
+            </dependency>
+
       <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
       <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -89,13 +97,13 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.1.1</version> <!--Mulig at 3.2.0 er ute-->
+          <version>3.2.0</version> <!--Mulig at 3.2.0 er ute-->
           
           <dependencies>
             <dependency>
                 <groupId>com.puppycrawl.tools</groupId>
                 <artifactId>checkstyle</artifactId>
-                <version>9.0</version>
+                <version>10.3.4</version>
             </dependency>
           </dependencies>
 
@@ -121,7 +129,7 @@
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>4.5.0.0</version>
+          <version>4.7.2.0</version>
           <configuration>
               <xmlOutput>false</xmlOutput>
               <htmlOutput>true</htmlOutput>
@@ -142,7 +150,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.7</version>
+          <version>0.8.8</version>
           <executions>
               <execution>
                   <id>jacoco-prepare-agent</id>
@@ -168,5 +176,8 @@
     <module>core</module>
     <module>fxui</module>
     <module>data</module>
+    <module>restapi</module>
+    <module>springboot/restserver</module>
+    <module>integrationtests</module>
   </modules>
 </project>

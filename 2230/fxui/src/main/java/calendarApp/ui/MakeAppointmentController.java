@@ -7,6 +7,7 @@ import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.core.DaysOfTheWeek;
 import calendarApp.json.CalendarSaveHandler;
+import calendarApp.ui.CalendarLogicAccess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,7 +77,6 @@ public class MakeAppointmentController {
 
             
     }
-    
     
     /**
      * Makes a new Appointment in the Calendar and if in edit mode - deletes the previous one

@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 
 public class WelcomeWindowControllerTest extends ApplicationTest {
 
-    private WelcomeWindowController controller; // The CalendarViewController instance we perform the tests on
+    private WelcomeWindowController controller; // The WelcomeWindowController instance we perform the tests on
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
     
     @Override
