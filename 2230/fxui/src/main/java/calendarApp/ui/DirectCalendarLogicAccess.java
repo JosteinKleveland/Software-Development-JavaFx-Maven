@@ -14,8 +14,7 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
     private final CalendarLogic calendarLogic;
 
     public DirectCalendarLogicAccess(CalendarLogic calendarLogic) {
-        this.calendarLogic = calendarLogic;
-        this.calendarLogic.setCurrentCalendar(calendarLogic.getCurrentCalendar());
+        this.calendarLogic = new CalendarLogic(calendarLogic.getCurrentCalendar());
     }
 
     public Calendar getCurrentCalendar(String... calendarName) {

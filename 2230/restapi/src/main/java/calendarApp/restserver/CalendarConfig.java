@@ -54,11 +54,11 @@ public class CalendarConfig extends ResourceConfig {
   }
 
   public CalendarLogic getCalendarLogic() {
-    return calendarLogic;
+    return new CalendarLogic(calendarLogic.getCurrentCalendar());
   }
 
   public void setCalendarLogic(CalendarLogic calendarLogic) {
-    this.calendarLogic = calendarLogic;
+    this.calendarLogic = new CalendarLogic(calendarLogic.getCurrentCalendar());
   }
 
   private static CalendarLogic createDefaultCalendarLogic() {

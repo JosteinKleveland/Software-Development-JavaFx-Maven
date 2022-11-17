@@ -29,6 +29,6 @@ public class CalendarModuleObjectMapperProvider implements ContextResolver<Objec
 
   @Override
   public ObjectMapper getContext(final Class<?> type) {
-    return objectMapper;
+    return CalendarSaveHandler.createObjectMapper();
   }
 }
