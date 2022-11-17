@@ -1,6 +1,13 @@
 package calendarApp.ui;
 
 import calendarApp.core.Calendar;
+
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import calendarApp.core.Appointment;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarSaveHandler;
@@ -18,11 +25,27 @@ public class DirectCalendarLogicAccess implements CalendarLogicAccess {
     }
 
     public Calendar getCurrentCalendar(String... calendarName) {
-        return calendarLogic.getCurrentCalendar(calendarName);
+        try {
+            return CalendarSaveHandler.load(calendarName[0]);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void setCurrentCalendar(Calendar currentCalendar) {
         calendarLogic.setCurrentCalendar(currentCalendar);
+        try {
+            CalendarSaveHandler.save(currentCalendar);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteCalendar(String name) {
