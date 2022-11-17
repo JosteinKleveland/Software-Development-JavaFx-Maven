@@ -1,12 +1,15 @@
 package calendarApp.ui;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
+import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarSaveHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,9 +34,37 @@ public class WelcomeWindowController {
     private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
     private Calendar calendar;
 
+    /**
+     * FXML-string values for referencing to local path vs. localhost-path
+     */
+
+    @FXML
+    String endpointUri;
+
+    @FXML
+    CalendarViewController calendarViewController;
+
+    private CalendarLogicAccess calendarLogicAccess = null;
+    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    private void decideLocalOrRemoteSaving(Calendar calendar) {
+       
+        CalendarLogic calendarLogic = new CalendarLogic(calendar);
+
+        if (endpointUri == null) {
+            calendarLogicAccess = new DirectCalendarLogicAccess(calendarLogic);
+        } else  {
+            try {
+                calendarLogicAccess = new RemoteCalendarLogicAccess(new URI(endpointUri));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Creates a new calendar and activates the calendar view
@@ -75,8 +106,10 @@ public class WelcomeWindowController {
         
         try {
             // Creates and saves the new calendar and 
-            this.calendar = new Calendar(calendarName);
-            CalendarSaveHandler.save(calendar);
+            Calendar calendar = new Calendar(calendarName);
+            decideLocalOrRemoteSaving(calendar);
+            calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
+            calendarLogicAccess.setCurrentCalendar(calendar);
 
             // Changes window to CalenderView and sets up the respective controller with the calendar   
             changeToCalendarViewWindow(event, this.root);
@@ -126,8 +159,11 @@ public class WelcomeWindowController {
 
         try {
             // Loads the Calendar object with name calendarName
-            this.calendar = CalendarSaveHandler.load(calendarName);
-            
+            //CalendarSaveHandler.load(calendarName);
+            Calendar newCalendar = new Calendar("newCalendar");
+            decideLocalOrRemoteSaving(newCalendar);
+            Calendar calendar = calendarLogicAccess.getCurrentCalendar(calendarName);
+            calendarViewController.setCalendarLogicAccess(calendarLogicAccess);
             // Changes window to CalenderView and sets up the respective controller with the calendar
             changeToCalendarViewWindow(event, this.root);
             calendarViewController.initialize(calendar);   

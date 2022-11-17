@@ -7,6 +7,7 @@ import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.core.DaysOfTheWeek;
 import calendarApp.json.CalendarSaveHandler;
+import calendarApp.ui.CalendarLogicAccess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,8 @@ public class MakeAppointmentController {
     private Scene scene;
 
     private Calendar currentCalendar; // the current calendar of the user
-    private CalendarLogic calendarLogic;
+    //private CalendarLogic calendarLogic;
+    //private CalendarLogicAccess calendarLogicAccess;
 
     private boolean inEditMode; // true if the user is editing an appointment, and false otherwise
     private Appointment editAppointment; // the appointment being edited, can be null
@@ -61,7 +63,8 @@ public class MakeAppointmentController {
     protected void intialize(Calendar currentCalendar, boolean inEditMode, Appointment editAppointment) {
         drdSetAppointmentDay.getItems().addAll(days);
         this.currentCalendar = currentCalendar;
-        this.calendarLogic = new CalendarLogic(currentCalendar);
+        //this.calendarLogic = new CalendarLogic(currentCalendar);
+        //this.calendarLogicAccess = calendarLogicAccess;
         this.inEditMode = inEditMode;
 
         if (inEditMode){
@@ -78,7 +81,6 @@ public class MakeAppointmentController {
 
             
     }
-    
     
     /**
      * Makes a new Appointment in the Calendar and if in edit mode - deletes the previous one
