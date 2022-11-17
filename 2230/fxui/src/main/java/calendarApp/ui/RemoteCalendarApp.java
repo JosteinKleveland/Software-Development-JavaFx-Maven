@@ -18,6 +18,6 @@ public class RemoteCalendarApp extends Application {
     }
 
     public static void main( String[] args ) {
-        launch(CalendarApp.class, args);
+        launch(RemoteCalendarApp.class, args);
     }
 }

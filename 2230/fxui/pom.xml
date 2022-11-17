@@ -141,54 +141,6 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>jpro</id>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>jpro - sandec repository</id>
-                    <url>https://sandec.bintray.com/repo</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <repositories>
-                <repository>
-                    <id>jpro - sandec repository</id>
-                    <url>https://sandec.bintray.com/repo</url>
-                </repository>
-            </repositories>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.sandec.jpro</groupId>
-                        <artifactId>jpro-maven-plugin</artifactId>
-                        <version>2020.1.5</version>
-                        <configuration>
-                            <visible>false</visible>
-                            <JVMArgs>
-                                <!-- <JVMArg>your-args</JVMArg> -->
-                            </JVMArgs>
-                            <mainClassName>calendarApp.ui/calendarApp.ui.CalendarApp</mainClassName>
-                            <openingPath>/</openingPath>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>headless</id>
-            <properties>
-                <headlessTests>true</headlessTests>
-            </properties>
-            <dependencies>
-                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
-                <dependency>
-                    <groupId>org.testfx</groupId>
-                    <artifactId>openjfx-monocle</artifactId>
-                    <version>jdk-12.0.1+2</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
     </profiles>
 
     <build>
