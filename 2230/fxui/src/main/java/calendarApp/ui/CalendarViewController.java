@@ -67,21 +67,18 @@ public class CalendarViewController {
     private Calendar currentCalendar;
     private Appointment chosenAppointment;
 
-    public boolean isActivated = false;
-
     private Stage stage;
     private Scene scene;
     
     private List<Appointment> appointmentList = new ArrayList<>();
 
     private final String[] appointmentcolors = {"f16c31;\n","FFC285;\n","EE7FF7;\n","6F7DF7;\n","FC38B2;\n","A2FF88;\n","FF3939;\n","FFEC39;\n","C2D632;\n","74E2B0;\n","74B6E2;\n","2CFF95;\n","FCC0E9;\n","B4E29F;\n","EF7D30;\n"};
-    private CalendarListener calendarListener;
+    private int lastAppointmentColor = 0;
 
     protected void initialize(Calendar calendar) {
         try {
             this.currentCalendar = calendar;
             viewCalendar();
-            isActivated = true;
         } catch (IOException e) {
             lblFeedbackText.setText("Failed to load calendar, please contact support"); 
             e.printStackTrace();
@@ -269,7 +266,7 @@ public class CalendarViewController {
         appointmentList.addAll(getData());
         if(appointmentList.size()>0){
             setChosenAppointment(appointmentList.get(0));
-            calendarListener = new CalendarListener() {
+            CalendarListener calendarListener = new CalendarListener() {
                 //Set default appointment in view at start
                 @Override
                 public void onClickListener(Appointment appointment){
@@ -383,10 +380,13 @@ public class CalendarViewController {
 
     // Method to randomly generate a color for the appointmentblocks
     private String selectAppointmentColor() {
-        Random color = new Random();
-        int number;
+        if (lastAppointmentColor == appointmentcolors.length) {
+            this.lastAppointmentColor = 0;
+        }
+        else {
+            lastAppointmentColor +=1;
+        }
 
-        number = color.nextInt(appointmentcolors.length);
-        return appointmentcolors[number];
+        return appointmentcolors[lastAppointmentColor];
     }
 }

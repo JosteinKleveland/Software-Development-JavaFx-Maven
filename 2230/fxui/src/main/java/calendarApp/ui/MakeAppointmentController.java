@@ -199,11 +199,10 @@ public class MakeAppointmentController {
 
 
 
-    // Getter methods for controller testinng
+    // Getter methods for controller testing
 
     public Calendar getCalendar(){
-        Calendar calendar = this.currentCalendar;
-        return calendar;
+        return this.currentCalendar;
     }
 
 
