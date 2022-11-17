@@ -49,7 +49,7 @@ public class CalendarLogicService {
     @GET
     public CalendarLogic getCalendarLogic() {
       LOG.debug("getCalendarLogic: " + calendarLogic);
-      return calendarLogic;
+      return new CalendarLogic(calendarLogic.getCurrentCalendar());
     }
 
     /**
