@@ -121,6 +121,83 @@ public class MakeAppointmentTest extends ApplicationTest{
         
     }
 
+    @DisplayName("Not possible to create appointments with illegal format")
+    @Test
+    public void makeIllegalAppointmentTest() throws IOException {
+
+      Platform.runLater(() -> {
+        controller.intialize(this.calendar, false, null); 
+        });
+                  
+        String appointmentName = "Yoga";
+        String startTime = "12:55";
+        String stopTime = "12:00";
+        String appointmentDescription = "Relaxing morning yoga";
+        
+        clickOn("#drdSetAppointmentDay");
+        type(KeyCode.DOWN);
+        type(KeyCode.DOWN);
+        type(KeyCode.DOWN);
+        type(KeyCode.DOWN);
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+        
+        clickOn("#txtAppointmentName").write(appointmentName);
+        clickOn("#txtSetStartTime").write(startTime);
+        clickOn("#txtSetStopTime").write(stopTime);
+        clickOn("#txtSetAppointmentDescription").write(appointmentDescription);
+
+        clickOn("#btnSaveAppointment");
+
+        Label txtFeedbackEdit = (Label) lookup("#txtFeedbackEdit").query();
+
+        assertFalse(txtFeedbackEdit.getText()=="");
+    }
+
+    @DisplayName("Edit existing appointment")
+    @Test
+    public void editAppointmentTest() throws IOException, InterruptedException {
+      Platform.runLater(() -> {
+        controller.intialize(this.calendar, true, appointment); 
+        });
+    
+        Thread.sleep(100);
+
+        assertEquals(true,controller.getInEditmBoolean());
+
+        TextField txtAppointmentName = (TextField) lookup("#txtAppointmentName").query();
+        TextField txtSetStartTime = (TextField) lookup("#txtSetStartTime").query();
+        TextField txtSetStopTime = (TextField) lookup("#txtSetStopTime").query();
+        ChoiceBox drdSetAppointmentDay = (ChoiceBox) lookup("#drdSetAppointmentDay").query();
+
+      //Making changes to the appointment
+
+        clickOn("#drdSetAppointmentDay");
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+
+        String newAppointmentName = "Fotballtrening";
+        String newStartTime = "16:30";
+        String newStopTime = "20:30";
+
+        txtAppointmentName.setText("");
+        txtSetStartTime.setText("");
+        txtSetStopTime.setText("");
+
+        clickOn("#txtAppointmentName").write(newAppointmentName);
+        clickOn("#txtSetStartTime").write(newStartTime);
+        clickOn("#txtSetStopTime").write(newStopTime);
+        clickOn("#btnSaveAppointment");
+
+        //Check that new changes are made
+
+        Appointment newAppointment = calendar.getAppointments().get(0);
+        assertEquals(newAppointmentName, newAppointment.getAppointmentName());
+        assertEquals(newStartTime,Integer.toString(newAppointment.getStartHour()) +":"+ Integer.toString(newAppointment.getStartMinute()));
+        assertEquals("TUESDAY",drdSetAppointmentDay.getValue().toString().toUpperCase());
+
+    }
+
 
 
 
