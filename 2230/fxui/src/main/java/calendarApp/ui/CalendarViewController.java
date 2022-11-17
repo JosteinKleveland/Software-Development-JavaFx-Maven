@@ -42,8 +42,8 @@ public class CalendarViewController {
     
     //FXML elements
     //Showing chosen appointment
-    @FXML private VBox chossenAppointmentCard;
-    @FXML private Label lbChosenAppointmentTime;
+    @FXML private VBox chosenAppointmentCard;
+    @FXML private Label lblChosenAppointmentTime;
     @FXML private Label lblChosenAppointmentDescription;
     @FXML private Label lblChosenAppointmentName;
     @FXML private Label lblFeedbackText;
@@ -108,14 +108,14 @@ public class CalendarViewController {
         if (appointment == null){
             lblChosenAppointmentName.setText("");
             lblChosenAppointmentDescription.setText("");
-            lbChosenAppointmentTime.setText("");
-            chossenAppointmentCard.setVisible(false);
+            lblChosenAppointmentTime.setText("");
+            chosenAppointmentCard.setVisible(false);
         }
 
         else {
         lblChosenAppointmentName.setText(appointment.getAppointmentName());
         lblChosenAppointmentDescription.setText(appointment.getAppointmentDescription());
-        lbChosenAppointmentTime.setText(convertToTwoDidgets(appointment.getStartHour())+":"+convertToTwoDidgets(appointment.getStartMinute())+" - "+convertToTwoDidgets(appointment.getStopHour())+":"+ convertToTwoDidgets(appointment.getStopMinute()));
+        lblChosenAppointmentTime.setText(convertToTwoDidgets(appointment.getStartHour())+":"+convertToTwoDidgets(appointment.getStartMinute())+" - "+convertToTwoDidgets(appointment.getStopHour())+":"+ convertToTwoDidgets(appointment.getStopMinute()));
         
         this.chosenAppointment = appointment;
         }
@@ -160,7 +160,7 @@ public class CalendarViewController {
             if (alert.showAndWait().get() == ButtonType.OK){
                 currentCalendar.removeAppointment(chosenAppointment);
                 //Set preview of selected appointment to first appointment in list
-                chossenAppointmentCard.setVisible(false);
+                chosenAppointmentCard.setVisible(false);
                 try {
                     CalendarSaveHandler.save(currentCalendar);
                     viewCalendar();
@@ -277,13 +277,14 @@ public class CalendarViewController {
         appointmentList.addAll(getData());
         if(appointmentList.size()>0){
             setChosenAppointment(appointmentList.get(0));
-            calendarListener = new CalendarListener() {
+            CalendarListener calendarListener = new CalendarListener() {
                 //Set default appointment in view at start
                 @Override
                 public void onClickListener(Appointment appointment){
                     setChosenAppointment(appointment);
                 }
             };
+            calendarListener.getClass();
         }
         else {
             setChosenAppointment(null);
@@ -339,7 +340,7 @@ public class CalendarViewController {
     }
 
     private void clickAppointment(MouseEvent event, Appointment a) {
-        chossenAppointmentCard.setVisible(true);
+        chosenAppointmentCard.setVisible(true);
         setChosenAppointment(a);
     }
 
@@ -359,8 +360,11 @@ public class CalendarViewController {
         Label appointmentLabel;
         Pane background;
 
+        // For testing - fxid counter for appointment panes' id
+        int fxid = 0;
+
         for (Appointment a : appointmentList){
-        
+
             // Variables for appointment placement
 
             numberOfBlocks = calculateNumberOfBlocks(a);
@@ -370,24 +374,28 @@ public class CalendarViewController {
             background = new Pane();
             color = selectAppointmentColor();
             background.setStyle("-fx-background-color: #"+color+"-fx-background-radius: 5;");
+            background.setId("A"+Integer.toString(fxid));
 
-            // Dette gir feil hvis avtalen er bare 15min!
             appointmentLabel = new Label();
             appointmentLabel.setText(a.getAppointmentName());
             background.setOnMouseClicked(event -> clickAppointment(event,a));
 
             gridCalendar.add(background, checkDay(a),firstBlock, 1,numberOfBlocks);
             gridCalendar.add(appointmentLabel, checkDay(a),firstBlock);
-  
+
+            fxid+=1;
         }
 }
 
     // Method to randomly generate a color for the appointmentblocks
     private String selectAppointmentColor() {
-        Random color = new Random();
-        int number;
+        if (lastAppointmentColor == appointmentcolors.length) {
+            this.lastAppointmentColor = 0;
+        }
+        else {
+            lastAppointmentColor +=1;
+        }
 
-        number = color.nextInt(appointmentcolors.length);
-        return appointmentcolors[number];
+        return appointmentcolors[lastAppointmentColor];
     }
 }

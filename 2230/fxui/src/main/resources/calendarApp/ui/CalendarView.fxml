@@ -28,7 +28,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <VBox fx:id="chossenAppointmentCard" prefHeight="339.0" prefWidth="400.0" styleClass="chosen-appointment-card" stylesheets="@style.css">
+                  <VBox fx:id="chosenAppointmentCard" prefHeight="339.0" prefWidth="400.0" styleClass="chosen-appointment-card" stylesheets="@style.css">
                      <children>
                         <HBox alignment="CENTER" prefHeight="127.0" prefWidth="400.0">
                            <children>
@@ -50,7 +50,7 @@
                               <Insets left="30.0" right="30.0" />
                            </VBox.margin>
                            <children>
-                              <Label fx:id="lbChosenAppointmentTime" alignment="CENTER" prefHeight="17.0" prefWidth="316.0" text="00:00 - 00:00" textAlignment="CENTER" textFill="WHITE">
+                              <Label fx:id="lblChosenAppointmentTime" alignment="CENTER" prefHeight="17.0" prefWidth="316.0" text="00:00 - 00:00" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Label>
@@ -69,7 +69,7 @@
                               <Insets left="30.0" right="30.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="543.0" text="Delete Appointment">
+                        <Button fx:id = "btnDeleteAppointment" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="543.0" text="Delete Appointment">
                            <VBox.margin>
                               <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
                            </VBox.margin>
@@ -121,7 +121,7 @@
                            </HBox.margin>
                            <content>
                               <GridPane fx:id="gridCalendar" gridLinesVisible="true" prefHeight="74.0" prefWidth="972.0" styleClass="calendar-grid" stylesheets="@style.css">
-                                <columnConstraints>
+                                 <columnConstraints>
                                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

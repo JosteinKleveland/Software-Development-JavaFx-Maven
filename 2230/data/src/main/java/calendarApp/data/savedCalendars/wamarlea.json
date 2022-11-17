@@ -1,1 +1,1 @@
-{"name":"wamarlea"}
+{"calendarName":"wamarlea","appointments":[{"appointmentName":"Fotball","appointmentDescription":"Test","dayOfTheWeek":"MONDAY","startHour":12,"stopHour":13,"startMin":0,"stopMin":30},{"appointmentName":"Handball","appointmentDescription":"H","dayOfTheWeek":"MONDAY","startHour":14,"stopHour":16,"startMin":30,"stopMin":0}]}

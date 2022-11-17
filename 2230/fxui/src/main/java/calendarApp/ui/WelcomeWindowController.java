@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import calendarApp.core.Appointment;
 import calendarApp.core.Calendar;
 import calendarApp.core.CalendarLogic;
 import calendarApp.json.CalendarSaveHandler;
@@ -29,6 +30,9 @@ public class WelcomeWindowController {
     @FXML private Button btnLoadCalendar;
     @FXML private TextField txtCalendarNameInput;
     @FXML private Label lblFeedback;
+    
+    private CalendarSaveHandler calendarSaveHandler = new CalendarSaveHandler();
+    private Calendar calendar;
 
     /**
      * FXML-string values for referencing to local path vs. localhost-path
@@ -67,7 +71,7 @@ public class WelcomeWindowController {
      * @param event
      * @throws IllegalArgumentException if the calendar name input field is empty or if the calendar name already exists
      */
-    public void newCalendar(ActionEvent event) throws IllegalArgumentException {
+    public void newCalendar(ActionEvent event) {
 
         //Getting the text input from the text field
         String calendarName = txtCalendarNameInput.getText();
@@ -76,13 +80,13 @@ public class WelcomeWindowController {
         //Checking whether the text field is empty or not
         if(calendarName.length() == 0 || calendarName.length() < 2){
             lblFeedback.setText("Calendar name cannot be empty or less than two characters");
-            throw new IllegalArgumentException("Calendar name cannot be empty or less than two characters");
+            return;
         }
 
         //Checks whether the calendar name exists from before.
         if(calendarSaveHandler.checkIfFileExists(calendarName)) {
             lblFeedback.setText("Calendar name already exists, choose another");
-            throw new IllegalArgumentException("This calendar name already exists");
+            return;
         }
 
         // Prepares the root for the method that switches scenes
@@ -111,6 +115,9 @@ public class WelcomeWindowController {
             changeToCalendarViewWindow(event, this.root);
             calendarViewController.initialize(calendar);
             }
+            catch (IllegalArgumentException e) {
+                lblFeedback.setText("The Calendar name can not contain spaces. Please try again.");
+            }
             catch (IOException e) {
                 lblFeedback.setText("An error occured. Could not create new calendar.");
                 e.printStackTrace();
@@ -121,9 +128,8 @@ public class WelcomeWindowController {
     /**
      * Loads the requested calendar and activates calendar view
      * @param event
-     * @throws IllegalArgumentException if requested calendar does not exist
      */
-    public void loadCalendar(ActionEvent event) throws IllegalArgumentException {
+    public void loadCalendar(ActionEvent event) {
 
         //Getting the text input from the text field
         String calendarName = txtCalendarNameInput.getText();
@@ -132,7 +138,7 @@ public class WelcomeWindowController {
         //Checks whether the calendar name exists from before
         if(!calendarSaveHandler.checkIfFileExists(calendarName)) {
             lblFeedback.setText("Calendar name does not exists");
-            throw new IllegalArgumentException("Calendar name does not exist");
+            return;
         }
         
         // Prepares the root for the method that switches scenes
@@ -143,6 +149,7 @@ public class WelcomeWindowController {
         } catch (IOException e1) {
             lblFeedback.setText("An error occured. Could not create new calendar.");
             e1.printStackTrace();
+            return;
         }
 
         // Gets the controller that is connected to the CalendarView.fxml
@@ -184,5 +191,14 @@ public class WelcomeWindowController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    // For testing
+    public Calendar getCalendar() {
+        Calendar calendarCopy = new Calendar(calendar.getCalendarName());
+        for (Appointment appointment : calendar.getAppointments()) {
+            calendarCopy.addAppointment(appointment);
+        }
+        return calendarCopy;
     }
 }

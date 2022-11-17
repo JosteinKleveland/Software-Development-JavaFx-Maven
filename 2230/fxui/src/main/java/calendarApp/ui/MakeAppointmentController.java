@@ -18,7 +18,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.collections.FXCollections;
@@ -27,7 +26,7 @@ import javafx.collections.ObservableList;
 // Handles the making of new appointments, as well as editing of existing ones
 public class MakeAppointmentController {
     
-    ObservableList list = FXCollections.observableArrayList();
+    // ObservableList list = FXCollections.observableArrayList();
 
     // FXML elements
     @FXML TextField txtAppointmentName;
@@ -110,8 +109,8 @@ public class MakeAppointmentController {
         // before creating a new one with the desired attributes
        
         Appointment newAppointment = new Appointment(appointmentName, appointmentDescription, DaysOfTheWeek.valueOf(weekDay.toUpperCase()), startHour, stopHour, startMinute, stopMinute);
-        currentCalendar.addAppointment(newAppointment);
-    
+        calendarLogic.addAppointmentToCalendar(currentCalendar, newAppointment);
+        
         // Saves the updated version of the calendar in the respective JSON file
         CalendarSaveHandler.save(currentCalendar);
 
@@ -197,6 +196,23 @@ public class MakeAppointmentController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+    // Getter methods for controller testing
+
+    public Calendar getCalendar(){
+        Calendar calendarCopy = new Calendar(currentCalendar.getCalendarName());
+        for (Appointment appointment : currentCalendar.getAppointments()) {
+            calendarCopy.addAppointment(appointment);
+        }
+        return calendarCopy;
+    }
+
+
+    public Boolean getInEditmBoolean(){
+        return inEditMode;
     }
 
 
