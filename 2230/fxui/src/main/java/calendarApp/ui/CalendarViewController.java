@@ -273,6 +273,7 @@ public class CalendarViewController {
                     setChosenAppointment(appointment);
                 }
             };
+            calendarListener.getClass();
         }
         else {
             setChosenAppointment(null);

@@ -17,7 +17,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.collections.FXCollections;
@@ -26,7 +25,7 @@ import javafx.collections.ObservableList;
 // Handles the making of new appointments, as well as editing of existing ones
 public class MakeAppointmentController {
     
-    ObservableList list = FXCollections.observableArrayList();
+    // ObservableList list = FXCollections.observableArrayList();
 
     // FXML elements
     @FXML TextField txtAppointmentName;
@@ -202,7 +201,11 @@ public class MakeAppointmentController {
     // Getter methods for controller testing
 
     public Calendar getCalendar(){
-        return this.currentCalendar;
+        Calendar calendarCopy = new Calendar(currentCalendar.getCalendarName());
+        for (Appointment appointment : currentCalendar.getAppointments()) {
+            calendarCopy.addAppointment(appointment);
+        }
+        return calendarCopy;
     }
 
 
