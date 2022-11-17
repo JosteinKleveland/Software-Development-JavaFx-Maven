@@ -50,5 +50,81 @@ public class MakeAppointmentTest extends ApplicationTest{
         this.appointment = new Appointment("Fotball", "Husk å ta med fotball", DaysOfTheWeek.SATURDAY, 18, 19, 0, 30);
         this.calendar.addAppointment(appointment);
       }
+
+      @DisplayName("Check that all fields get correct value when opening in editmode")
+    @Test
+    public void testFieldContentTest() throws InterruptedException{
+
+      Platform.runLater(() -> {
+        controller.intialize(this.calendar, true, appointment); 
+        });
+      Thread.sleep(100);
+
+      assertEquals(true,controller.getInEditmBoolean());
+
+      TextField txtAppointmentName = (TextField) lookup("#txtAppointmentName").query();
+      TextField txtSetStartTime = (TextField) lookup("#txtSetStartTime").query();
+      TextField txtSetStopTime = (TextField) lookup("#txtSetStopTime").query();
+      TextArea txtSetAppointmentDescription = (TextArea) lookup("#txtSetAppointmentDescription").query();
+      ChoiceBox drdSetAppointmentDay = (ChoiceBox) lookup("#drdSetAppointmentDay").query();
+
+      assertEquals(appointment.getAppointmentName(),txtAppointmentName.getText());
+      assertEquals(Integer.toString(appointment.getStartHour()) +":"+"0"+ Integer.toString(appointment.getStartMinute()),txtSetStartTime.getText());
+      assertEquals(Integer.toString(appointment.getStopHour()) +":"+ Integer.toString(appointment.getStopMinute()),txtSetStopTime.getText());
+      assertEquals(appointment.getAppointmentDescription(), txtSetAppointmentDescription.getText());
+      assertEquals(appointment.getDayOfTheWeek().toString(),drdSetAppointmentDay.getValue().toString().toUpperCase());
+      }
+      
+      
+    @DisplayName("Create new appointment")
+    @Test
+    public void makeAppointmentTest() throws IOException, InterruptedException {
+      Platform.runLater(() -> {
+      controller.intialize(this.calendar, false, null); 
+      });
+
+      Thread.sleep(100);
+
+      assertEquals(false,controller.getInEditmBoolean());
+
+      String appointmentName = "Yoga";
+      String startTime = "10:30";
+      String stopTime = "12:00";
+      String appointmentDescription = "Relaxing morning yoga";
+      DaysOfTheWeek day = DaysOfTheWeek.SATURDAY;
+      
+      clickOn("#drdSetAppointmentDay");
+      type(KeyCode.DOWN);
+      type(KeyCode.DOWN);
+      type(KeyCode.DOWN);
+      type(KeyCode.DOWN);
+      type(KeyCode.DOWN);
+      type(KeyCode.ENTER);
+      
+      clickOn("#txtAppointmentName").write(appointmentName);
+      clickOn("#txtSetStartTime").write(startTime);
+      clickOn("#txtSetStopTime").write(stopTime);
+      clickOn("#txtSetAppointmentDescription").write(appointmentDescription);
+
+      //Check that a new appointment is added to the calendar when save button is pressed
+      assertEquals(calendar.getAppointments().size(), 1);
+      clickOn("#btnSaveAppointment");
+      assertEquals(calendar.getAppointments().size(), 2);
+
+      //Check that new appointment corresponds to given data
+      assertEquals(calendar.getAppointments().get(1).getAppointmentName(), "Yoga");
+      assertEquals(calendar.getAppointments().get(1).getStartHour(), 10);
+      assertEquals(calendar.getAppointments().get(1).getStartMinute(), 30);
+      assertEquals(calendar.getAppointments().get(1).getStopHour(), 12);
+      assertEquals(calendar.getAppointments().get(1).getStopMinute(), 0);
+      assertEquals(appointment.getDayOfTheWeek().toString(),day.toString().toUpperCase());
+        
+    }
+
+
+
+
+
+
     
 }
